@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 
 abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
 
-    protected val scope = CoroutineScope(Dispatchers.Unconfined + Job())
+    internal val scope = CoroutineScope(Dispatchers.Unconfined + Job())
 
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()
@@ -24,15 +24,5 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
 
     fun setEffect(effect: StoreEffect) {
         _effect.tryEmit(effect)
-    }
-
-    fun launch(action: suspend () -> Unit) {
-        scope.launch {
-            try {
-                action()
-            } catch (e: Exception) {
-                println("store exception: $e")
-            }
-        }
     }
 }
