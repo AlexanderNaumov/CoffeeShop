@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import me.haymob.coffeeshop.*
-import me.haymob.coffeeshop.catalog.CatalogStore
-import me.haymob.coffeeshop.catalog.actions.loadCatalog
+import me.haymob.coffeeshop.domain.catalog.CatalogStore
+import me.haymob.coffeeshop.domain.catalog.actions.loadCatalog
 
 class MainActivity : AppCompatActivity() {
 

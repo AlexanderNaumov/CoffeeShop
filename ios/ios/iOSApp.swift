@@ -10,7 +10,10 @@ struct iOSApp: App {
     
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+            TabView {
+                CatalogView()
+                CartView()
+            }.accentColor(.black)
 		}
 	}
 }

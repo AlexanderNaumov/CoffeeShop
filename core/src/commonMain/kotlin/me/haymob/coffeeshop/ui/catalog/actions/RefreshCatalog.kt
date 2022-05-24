@@ -1,0 +1,9 @@
+package me.haymob.coffeeshop.ui.catalog.actions
+
+import me.haymob.coffeeshop.domain.catalog.actions.loadCatalog
+import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
+
+fun CatalogUIStore.refreshCatalog() {
+    setState { copy(isRefreshing = true) }
+    catalogStore.loadCatalog()
+}

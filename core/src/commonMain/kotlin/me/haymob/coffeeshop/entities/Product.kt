@@ -11,5 +11,6 @@ data class Product(
     val thumbnail: String,
     val price: Price,
     val categories: List<String>,
-    val qty: Int
+    val qty: Int,
+    val isLoading: Boolean
 )

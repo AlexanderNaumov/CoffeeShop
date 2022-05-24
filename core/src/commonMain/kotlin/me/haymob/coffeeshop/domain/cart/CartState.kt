@@ -1,4 +1,4 @@
-package me.haymob.coffeeshop.cart
+package me.haymob.coffeeshop.domain.cart
 
 import me.haymob.coffeeshop.entities.Cart
 import me.haymob.coffeeshop.store.State

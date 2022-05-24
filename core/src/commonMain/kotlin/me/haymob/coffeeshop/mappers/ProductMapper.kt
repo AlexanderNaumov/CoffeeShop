@@ -15,6 +15,7 @@ internal object ProductMapper {
         product.thumbnail.url,
         PriceMapper.priceFromDto(product.price),
         product.categories.edges.map { it.node.objectId },
-        0
+        0,
+        false
     )
 }

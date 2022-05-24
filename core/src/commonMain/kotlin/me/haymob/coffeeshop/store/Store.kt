@@ -1,6 +1,7 @@
 package me.haymob.coffeeshop.store
 
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.*
 
 abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
@@ -19,10 +20,12 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
         didSetState?.invoke()
     }
 
-    private val _effect = MutableSharedFlow<StoreEffect>()
-    val effect = _effect.asSharedFlow()
+    private val _effect = Channel<StoreEffect>()
+    val effect = _effect.receiveAsFlow()
 
     fun setEffect(effect: StoreEffect) {
-        _effect.tryEmit(effect)
+        scope.launch {
+            _effect.send(effect)
+        }
     }
 }

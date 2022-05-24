@@ -1,9 +1,9 @@
-package me.haymob.coffeeshop.catalog.actions
+package me.haymob.coffeeshop.domain.catalog.actions
 
-import me.haymob.coffeeshop.catalog.CatalogStore
+import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.entities.Product
 
-fun CatalogStore.productsQtyUpdate(products: List<Product>) {
+internal fun CatalogStore.productsQtyUpdate(products: List<Product>) {
     setState {
         copy(
             categories = currentState.categories.map { category ->

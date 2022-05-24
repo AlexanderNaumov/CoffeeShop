@@ -1,4 +1,4 @@
-package me.haymob.coffeeshop.services
+package me.haymob.coffeeshop.domain.services
 
 import me.haymob.preferences.Preferences
 

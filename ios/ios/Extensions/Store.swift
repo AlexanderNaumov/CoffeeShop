@@ -11,6 +11,9 @@ func inject<_State: core.State, Effect, _Store: core.Store<_State, Effect>>() ->
     return store
 }
 
+func store<_State: core.State, Effect, _Store: core.Store<_State, Effect>>() -> _Store {
+    return CoreKt.app.koin.get(type: _Store.self) as! _Store
+}
 
 @propertyWrapper struct Store<_State: core.State, Effect, _Store: core.Store<_State, Effect>>: DynamicProperty {
     @ObservedObject private(set) var wrappedValue: _Store
