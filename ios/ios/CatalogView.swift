@@ -63,7 +63,7 @@ struct ProductItem: View {
                 Text("\(product.price)")
                     .font(.system(size: 15, weight: .semibold))
                 if product.qty == 0 {
-                    ActionButton(text: "+") {
+                    ActionButton(text: "+", width: 60) {
                         inc()
                     }
                 } else {
@@ -103,19 +103,19 @@ struct ProductImage: View {
     }
 }
 
-func ActionButtons(qty: Int32, inc: @escaping () -> Void, dec: @escaping () -> Void) -> some View {
+func ActionButtons(qty: Int32, width: CGFloat = 40, inc: @escaping () -> Void, dec: @escaping () -> Void) -> some View {
     HStack {
-        ActionButton(text: "-") {
+        ActionButton(text: "-", width: width) {
             dec()
         }
         Text("\(qty)")
-        ActionButton(text: "+") {
+        ActionButton(text: "+", width: width) {
             inc()
         }
     }
 }
 
-func ActionButton(text: String, action: @escaping () -> Void) -> some View {
+func ActionButton(text: String, width: CGFloat, action: @escaping () -> Void) -> some View {
     Button {
         action()
     } label: {
@@ -123,7 +123,7 @@ func ActionButton(text: String, action: @escaping () -> Void) -> some View {
             .foregroundColor(.black)
             .font(.system(size: 20, weight: .semibold))
     }
-    .frame(width: 40, height: 20)
+    .frame(width: width, height: 20)
     .background(Color(0xF0F0F0))
     .cornerRadius(6)
 }

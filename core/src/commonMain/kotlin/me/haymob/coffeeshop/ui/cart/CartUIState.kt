@@ -7,5 +7,8 @@ data class CartUIState(
     val cart: Cart? = null,
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
-    val selectedAllItems: Boolean = false
-): State
+    val isSelectedAllItems: Boolean = false,
+    val selectedItems: List<String> = emptyList()
+): State {
+    fun itemSelected(item: Cart.Item) = selectedItems.contains(item.id)
+}

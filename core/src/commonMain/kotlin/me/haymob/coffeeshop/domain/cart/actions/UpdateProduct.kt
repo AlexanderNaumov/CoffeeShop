@@ -2,14 +2,16 @@ package me.haymob.coffeeshop.domain.cart.actions
 
 import kotlinx.coroutines.flow.*
 import me.haymob.coffeeshop.domain.cart.CartStore
-import me.haymob.coffeeshop.domain.catalog.actions.productLoadingUpdate
+import me.haymob.coffeeshop.domain.catalog.actions.productSetLoading
 import me.haymob.coffeeshop.domain.catalog.actions.productsQtyUpdate
 import me.haymob.coffeeshop.entities.Product
+import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
 
 internal fun CartStore.updateProduct(product: Product) {
     setState { copy(isLoading = true) }
-    catalogStore.productLoadingUpdate(product, true)
+    catalogStore.productSetLoading(product, true)
+    productSetLoading(product, true)
 
     (currentState.cart?.let { cart ->
         val item = cart.items.find { it.product.id == product.id }
@@ -23,25 +25,17 @@ internal fun CartStore.updateProduct(product: Product) {
         cartService.setCartId(it.objectId)
     }.flatMapMerge {
         shopService.addProduct(it.objectId, product.id, product.qty)
-    }).catch {
-        setState {
-            copy(
-                cart = null,
-                isLoading = false
-            )
-        }
-        catalogStore.productLoadingUpdate(product, false)
-        catalogStore.productsQtyUpdate(emptyList())
-    }.onEach { cart ->
-        val newCart = CartMapper.cartFromDto(cart)
+    }).onResult { result ->
+        val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(
                 cart = newCart,
                 isLoading = false
             )
         }
-
-        catalogStore.productLoadingUpdate(product, false)
-        catalogStore.productsQtyUpdate(newCart.items.map { it.product })
+        catalogStore.productSetLoading(product, false)
+        productSetLoading(product, false)
+        val products = newCart?.items?.map { it.product } ?: emptyList()
+        catalogStore.productsQtyUpdate(products)
     }.launchIn(scope)
 }

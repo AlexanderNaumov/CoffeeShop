@@ -6,7 +6,7 @@ import me.haymob.coffeeshop.entities.Product
 internal fun CatalogStore.productsQtyUpdate(products: List<Product>) {
     setState {
         copy(
-            categories = currentState.categories.map { category ->
+            categories = categories.map { category ->
                 category.copy(
                     products = category.products.map { product ->
                         products.find { it.id == product.id } ?: product.copy(qty = 0)

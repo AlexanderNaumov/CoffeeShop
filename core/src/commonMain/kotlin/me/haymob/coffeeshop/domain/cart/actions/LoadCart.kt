@@ -6,29 +6,24 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.catalog.actions.productsQtyUpdate
+import me.haymob.coffeeshop.flow.onResult
 
 internal fun CartStore.loadCart() {
     val cartId = cartService.cartId() ?: return
 
     setState { copy(isLoading = true) }
-    shopService.loadCart(cartId).catch {
-        setState {
-            copy(
-                cart = null,
-                isLoading = false
-            )
-        }
-        catalogStore.productsQtyUpdate(emptyList())
-        cartService.removeCartId()
-    }.onEach { cart ->
-        val newCart = CartMapper.cartFromDto(cart)
+    shopService.loadCart(cartId).onResult { result ->
+        val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(
                 cart = newCart,
                 isLoading = false
             )
         }
-
-        catalogStore.productsQtyUpdate(newCart.items.map { it.product })
+        val products = newCart?.items?.map { it.product } ?: emptyList()
+        catalogStore.productsQtyUpdate(products)
+        if (result.isFailure) {
+            cartService.removeCartId()
+        }
     }.launchIn(scope)
 }

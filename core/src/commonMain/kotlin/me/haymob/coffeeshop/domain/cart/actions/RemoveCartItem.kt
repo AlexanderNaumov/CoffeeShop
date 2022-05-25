@@ -1,12 +1,11 @@
 package me.haymob.coffeeshop.domain.cart.actions
 
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.CartStore
-import me.haymob.coffeeshop.domain.catalog.actions.productLoadingUpdate
+import me.haymob.coffeeshop.domain.catalog.actions.productSetLoading
 import me.haymob.coffeeshop.domain.catalog.actions.productsQtyUpdate
 import me.haymob.coffeeshop.entities.Cart
+import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
 
 internal fun CartStore.removeCartItem(item: Cart.Item) {
@@ -14,25 +13,20 @@ internal fun CartStore.removeCartItem(item: Cart.Item) {
         copy(isLoading = true)
     }
 
-    catalogStore.productLoadingUpdate(item.product, true)
+    catalogStore.productSetLoading(item.product, true)
 
-    shopService.removeItem(item.id).catch {
-        setState {
-            copy(isLoading = false)
-        }
-
-        catalogStore.productLoadingUpdate(item.product, false)
-        catalogStore.productsQtyUpdate(emptyList())
-    }.onEach { cart ->
-        val newCart = CartMapper.cartFromDto(cart)
+    shopService.removeItem(item.id).onResult { result ->
+        val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(
-                cart = newCart,
+                cart = newCart ?: cart,
                 isLoading = false
             )
         }
 
-        catalogStore.productLoadingUpdate(item.product, false)
-        catalogStore.productsQtyUpdate(newCart.items.map { it.product })
+        catalogStore.productSetLoading(item.product, false)
+
+        val products = newCart?.items?.map { it.product } ?: emptyList()
+        catalogStore.productsQtyUpdate(products)
     }.launchIn(scope)
 }

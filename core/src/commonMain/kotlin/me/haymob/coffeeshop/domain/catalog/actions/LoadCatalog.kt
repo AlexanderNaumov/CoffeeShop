@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.*
 import me.haymob.coffeeshop.domain.cart.actions.loadCart
 import me.haymob.coffeeshop.domain.catalog.CatalogEffect
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
+import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CategoryMapper
 import me.haymob.coffeeshop.mappers.ProductMapper
 
@@ -21,12 +22,10 @@ internal fun CatalogStore.loadCatalog() {
                 )
             }
         }
-    }.catch {
-        emit(emptyList())
-    }.onEach {
+    }.onResult {
         setState {
             copy(
-                categories = it,
+                categories = it.getOrNull() ?: emptyList(),
                 isLoading = false
             )
         }
