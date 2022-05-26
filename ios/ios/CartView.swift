@@ -20,7 +20,7 @@ struct CartView: View {
                                 }
                                 Spacer()
                                 Button("Remove selected") {
-                                    
+                                    store.removeSelectedItems()
                                 }
                             },
                             content: {

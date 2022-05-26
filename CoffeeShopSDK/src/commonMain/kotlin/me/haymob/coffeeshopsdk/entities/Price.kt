@@ -6,5 +6,5 @@ import me.haymob.coffeeshopsdk.core.*
 @Serializable
 data class Price(
     val value: Double,
-    val currency: String
+    val currency: String = ""
 ): GQLObject

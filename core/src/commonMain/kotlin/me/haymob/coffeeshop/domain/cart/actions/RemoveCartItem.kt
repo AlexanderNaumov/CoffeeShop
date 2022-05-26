@@ -1,5 +1,6 @@
 package me.haymob.coffeeshop.domain.cart.actions
 
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.catalog.actions.productSetLoading
@@ -8,14 +9,23 @@ import me.haymob.coffeeshop.entities.Cart
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
 
-internal fun CartStore.removeCartItem(item: Cart.Item) {
+internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
     setState {
         copy(isLoading = true)
     }
 
-    catalogStore.productSetLoading(item.product, true)
+    items.forEach {
+        productSetLoading(it.product, true)
+        catalogStore.productSetLoading(it.product, true)
+    }
 
-    shopService.removeItem(item.id).onResult { result ->
+    combine(
+        items.map {
+            shopService.removeItem(it.id)
+        }
+    ) {
+        it.last()
+    }.onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(
@@ -24,7 +34,10 @@ internal fun CartStore.removeCartItem(item: Cart.Item) {
             )
         }
 
-        catalogStore.productSetLoading(item.product, false)
+        items.forEach {
+            productSetLoading(it.product, false)
+            catalogStore.productSetLoading(it.product, false)
+        }
 
         val products = newCart?.items?.map { it.product } ?: emptyList()
         catalogStore.productsQtyUpdate(products)
