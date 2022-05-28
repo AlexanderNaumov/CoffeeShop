@@ -10,7 +10,6 @@ import me.haymob.coffeeshop.mappers.CartMapper
 internal fun CartStore.updateProduct(product: Product) {
     setState { copy(isLoading = true) }
     setEffect(CartEffect.ProductSetLoading(product, true))
-    productSetLoading(product, true)
 
     (currentState.cart?.let { cart ->
         val item = cart.items.find { it.product.id == product.id }
@@ -33,7 +32,6 @@ internal fun CartStore.updateProduct(product: Product) {
             )
         }
         setEffect(CartEffect.ProductSetLoading(product, false))
-        productSetLoading(product, false)
         val products = newCart?.items?.map { it.product } ?: emptyList()
         setEffect(CartEffect.DidLoad(products))
     }.launchIn(scope)

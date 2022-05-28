@@ -15,7 +15,6 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
 
     items.forEach {
         setEffect(CartEffect.ProductSetLoading(it.product, true))
-        productSetLoading(it.product, true)
     }
 
     combine(
@@ -35,7 +34,6 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
 
         items.forEach {
             setEffect(CartEffect.ProductSetLoading(it.product, false))
-            productSetLoading(it.product, false)
         }
 
         val products = newCart?.items?.map { it.product } ?: emptyList()
