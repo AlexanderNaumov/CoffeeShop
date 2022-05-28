@@ -13,23 +13,25 @@ struct CatalogView: View {
     
     var body: some View {
         return NavigationView {
-            ScrollView {
-                VStack {
-                    LazyVGrid(columns: columns) {
-                        ForEach(store.currentState.categories) { category in
-                            ForEach(category.products) { product in
-                                ProductItem(product: product) {
-                                    store.incrementProduct(product: product)
-                                } dec: {
-                                    store.decrementProduct(product: product)
-                                }
-                            }.padding(10)
+            Container {
+                ScrollView {
+                    VStack {
+                        LazyVGrid(columns: columns) {
+                            ForEach(store.currentState.categories) { category in
+                                ForEach(category.products) { product in
+                                    ProductItem(product: product) {
+                                        store.incrementProduct(product: product)
+                                    } dec: {
+                                        store.decrementProduct(product: product)
+                                    }
+                                }.padding(10)
+                            }
                         }
-                    }
-                }.padding(10)
+                    }.padding(10)
+                }
+                .navigationTitle("Coffe".uppercased())
+                .background(Color(0xF0F2F5))
             }
-            .navigationTitle("Coffe".uppercased())
-            .background(Color(0xF0F2F5))
         }
         .tabItem {
             //                Image(systemName: "phone.fill")

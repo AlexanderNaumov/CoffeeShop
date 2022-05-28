@@ -4,5 +4,5 @@ import me.haymob.coffeeshop.domain.services.ShopService
 import me.haymob.coffeeshop.store.Store
 
 class CatalogStore(
-    val shopService: ShopService,
+    internal val shopService: ShopService
 ): Store<CatalogState, CatalogEffect>(CatalogState())

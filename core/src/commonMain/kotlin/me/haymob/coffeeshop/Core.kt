@@ -1,6 +1,7 @@
 package me.haymob.coffeeshop
 
 import me.haymob.coffeeshop.di.coreModule
+import me.haymob.coffeeshop.domain.mediators.ProductMediator
 import me.haymob.coffeeshopsdk.*
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -18,5 +19,7 @@ fun coreInit() {
     app = startKoin {
         modules(coreModule)
     }
+
+    app.koin.get<ProductMediator>()
 }
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
+		11219FFA284001D300DF0D40 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11219FF9284001D300DF0D40 /* View.swift */; };
 		113122BB2837CBBE00D33CE9 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113122BA2837CBBE00D33CE9 /* CartView.swift */; };
 		11346E3528131AB400EB57D9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11346E3428131AB400EB57D9 /* Store.swift */; };
 		11DDDA24281429B90098389D /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDDA23281429B90098389D /* Identifiable.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		11219FF9284001D300DF0D40 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		113122BA2837CBBE00D33CE9 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
 		11346E3428131AB400EB57D9 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		11DDDA23281429B90098389D /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				11DDDA23281429B90098389D /* Identifiable.swift */,
 				11DDDA2528142E050098389D /* Color.swift */,
 				11DDDA27281440030098389D /* Price.swift */,
+				11219FF9284001D300DF0D40 /* View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11219FFA284001D300DF0D40 /* View.swift in Sources */,
 				11346E3528131AB400EB57D9 /* Store.swift in Sources */,
 				113122BB2837CBBE00D33CE9 /* CartView.swift in Sources */,
 				11DDDA24281429B90098389D /* Identifiable.swift in Sources */,
