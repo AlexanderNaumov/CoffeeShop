@@ -13,7 +13,7 @@ fun coreInit() {
         "http://vm71618.haymob.serv-dns.ru:1337/graphql",
         "lrfQ9bQKJDpFFVffvfZN",
         "2MQDMG5ett10fdzOvDWUp46hHRhd5w",
-        false
+        true
     ))
 
     app = startKoin {

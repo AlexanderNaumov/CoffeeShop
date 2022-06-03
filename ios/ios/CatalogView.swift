@@ -13,29 +13,71 @@ struct CatalogView: View {
     
     var body: some View {
         return NavigationView {
-            Container {
-                ScrollView {
-                    VStack {
-                        LazyVGrid(columns: columns) {
-                            ForEach(store.currentState.categories) { category in
-                                ForEach(category.products) { product in
-                                    ProductItem(product: product) {
-                                        store.incrementProduct(product: product)
-                                    } dec: {
-                                        store.decrementProduct(product: product)
-                                    }
-                                }.padding(10)
-                            }
+            ScrollView {
+                VStack {
+                    LazyVGrid(columns: columns) {
+                        ForEach(store.currentState.categories) { category in
+                            ForEach(category.products) { product in
+                                ProductItem(product: product) {
+                                    store.incrementProduct(product: product)
+                                } dec: {
+                                    store.decrementProduct(product: product)
+                                }
+                            }.padding(10)
                         }
-                    }.padding(10)
-                }
-                .navigationTitle("Coffe".uppercased())
-                .background(Color(0xF0F2F5))
+                    }
+                }.padding(10)
+            }.pullToRefresh(isShowing: store.currentState.isRefreshing) {
+                store.refreshCatalog()
             }
+            .navigationTitle("Coffe".uppercased())
+            .background(Color(0xF0F2F5))
         }
         .tabItem {
             //                Image(systemName: "phone.fill")
             Text("Shop")
+        }
+    }
+}
+
+struct LegacyScrollView : UIViewRepresentable {
+    // any data state, if needed
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> UIScrollView {
+        let control = UIScrollView()
+        control.refreshControl = UIRefreshControl()
+        control.refreshControl?.addTarget(context.coordinator, action:
+            #selector(Coordinator.handleRefreshControl),
+                                          for: .valueChanged)
+
+        // Simply to give some content to see in the app
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        label.text = "Scroll View Content"
+        control.addSubview(label)
+
+        return control
+    }
+
+
+    func updateUIView(_ uiView: UIScrollView, context: Context) {
+        // code to update scroll view from view state, if needed
+    }
+
+    class Coordinator: NSObject {
+        var control: LegacyScrollView
+
+        init(_ control: LegacyScrollView) {
+            self.control = control
+        }
+
+        @objc func handleRefreshControl(sender: UIRefreshControl) {
+            // handle the refresh event
+
+            sender.endRefreshing()
         }
     }
 }

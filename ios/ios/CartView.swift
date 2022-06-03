@@ -57,6 +57,9 @@ struct CartView: View {
                                 }
                             })
                     }
+                    .pullToRefresh(isShowing: store.currentState.isRefreshing) {
+                        store.refresh()
+                    }
                     .listStyle(.insetGrouped)
                     .navigationTitle("Cart".uppercased())
                     .background(Color(0xF0F2F5))
