@@ -16,16 +16,18 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
     var didSetState: (() -> Unit)? = null
 
     fun setState(reduce: StoreState.() -> StoreState) {
-        _state.value = currentState.reduce()
-        didSetState?.invoke()
+        scope.launch {
+            _state.emit(currentState.reduce())
+            didSetState?.invoke()
+        }
     }
 
-    private val _effect = Channel<StoreEffect>()
-    val effect = _effect.receiveAsFlow()
+    private val _effect = MutableSharedFlow<StoreEffect>()
+    val effect = _effect.asSharedFlow()
 
     fun setEffect(effect: StoreEffect) {
         scope.launch {
-            _effect.send(effect)
+            _effect.emit(effect)
         }
     }
 }

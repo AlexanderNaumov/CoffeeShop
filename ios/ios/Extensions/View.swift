@@ -17,7 +17,7 @@ class ContainerController<Content: View>: UIHostingController<Content> {
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.async {
-            print("----- \(self.view.subviews)")
+//            print("----- \(self.view.subviews)")
         }
     }
 }

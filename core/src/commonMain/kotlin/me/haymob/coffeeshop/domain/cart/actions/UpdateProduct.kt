@@ -1,15 +1,15 @@
 package me.haymob.coffeeshop.domain.cart.actions
 
 import kotlinx.coroutines.flow.*
-import me.haymob.coffeeshop.domain.cart.CartEffect
 import me.haymob.coffeeshop.domain.cart.CartStore
+import me.haymob.coffeeshop.domain.events.product.ProductEvent
 import me.haymob.coffeeshop.entities.Product
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
 
 internal fun CartStore.updateProduct(product: Product) {
     setState { copy(isLoading = true) }
-    setEffect(CartEffect.ProductSetLoading(product, true))
+    productEmitter.emit(ProductEvent.ProductSetLoading(product, true))
 
     (currentState.cart?.let { cart ->
         val item = cart.items.find { it.product.id == product.id }
@@ -31,8 +31,8 @@ internal fun CartStore.updateProduct(product: Product) {
                 isLoading = false
             )
         }
-        setEffect(CartEffect.ProductSetLoading(product, false))
+        productEmitter.emit(ProductEvent.ProductSetLoading(product, false))
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        productEmitter.emit(ProductEvent.CartDidLoad(products))
     }.launchIn(scope)
 }
