@@ -3,20 +3,19 @@ import core
 
 extension core.Store: ObservableObject {}
 
-func inject<_State: core.State, Effect, _Store: core.Store<_State, Effect>>() -> _Store {
-    let store = CoreKt.app.koin.get(type: _Store.self) as! _Store
+func inject<_State: core.State, Effect, _Store: core.Store<_State, Effect>>(params: [Any] = []) -> _Store {
+    let store = CoreKt.app.koin.get(type: _Store.self, params: params) as! _Store
     store.didSetState = { [weak store] in
         store?.objectWillChange.send()
     }
     return store
 }
 
-func store<_State: core.State, Effect, _Store: core.Store<_State, Effect>>() -> _Store {
-    return CoreKt.app.koin.get(type: _Store.self) as! _Store
-}
-
 @propertyWrapper struct Store<_State: core.State, Effect, _Store: core.Store<_State, Effect>>: DynamicProperty {
-    @ObservedObject private(set) var wrappedValue: _Store
+    @ObservedObject var wrappedValue: _Store
+    init(wrappedValue: _Store) {
+        self.wrappedValue = wrappedValue
+    }
     init() {
         wrappedValue = inject()
     }

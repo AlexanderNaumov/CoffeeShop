@@ -26,27 +26,29 @@ struct CartView: View {
                             content: {
                                 ForEach(cart.items) { item in
                                     ZStack {
-                                        HStack {
-                                            Button {
-                                                store.selectCartItem(item: item)
-                                            } label: {
-                                                Image(systemName: store.currentState.itemSelected(item: item) ? "checkmark.square.fill" : "square")
-                                            }
-                                            
-                                            ProductImage(image: item.product.thumbnail)
-                                                .frame(width: 50, height: 50)
-                                            VStack(alignment: .leading) {
-                                                Text(item.product.name)
-                                                Text("\(item.product.price)")
-                                            }
-                                            Spacer()
-                                            ActionButtons(qty: item.product.qty, width: 20) {
-                                                store.incrementProduct(product: item.product)
-                                            } dec: {
-                                                store.decrementProduct(product: item.product)
-                                            }
+                                        NavigationLink(destination: ProductDetailScreen(product: item.product)) {
+                                            HStack {
+                                                Button {
+                                                    store.selectCartItem(item: item)
+                                                } label: {
+                                                    Image(systemName: store.currentState.itemSelected(item: item) ? "checkmark.square.fill" : "square")
+                                                }
+                                                
+                                                ProductImage(image: item.product.thumbnail)
+                                                    .frame(width: 50, height: 50)
+                                                VStack(alignment: .leading) {
+                                                    Text(item.product.name)
+                                                    Text("\(item.product.price)")
+                                                }
+                                                Spacer()
+                                                ActionButtons(qty: item.product.qty, width: 20) {
+                                                    store.incrementProduct(product: item.product)
+                                                } dec: {
+                                                    store.decrementProduct(product: item.product)
+                                                }
 
-                                        }.buttonStyle(PlainButtonStyle())
+                                            }.buttonStyle(PlainButtonStyle())
+                                        }
                                         if item.product.isLoading {
                                             VStack {
                                                 ProgressView()
