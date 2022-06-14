@@ -9,7 +9,7 @@ data class Region(
     val name: String
 ): GQLObject
 
-internal val regionField = field<Region> {
+internal val regionField = field {
     field(Region::objectId)
     field(Region::name)
 }

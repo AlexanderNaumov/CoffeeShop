@@ -15,7 +15,7 @@ private data class LoginMutation(val logIn: LogIn?) {
     data class LogIn(val viewer: UserViewer): GQLObject
 }
 
-fun login(email: String, password: String) = http(mutation<LoginMutation> {
+fun login(email: String, password: String) = http(mutation {
     field(
         LoginMutation::logIn,
         "input" of argsOf(
@@ -33,7 +33,7 @@ private data class LogoutMutation(val logOut: LogOut?) {
     data class LogOut(val ok: Boolean): GQLObject
 }
 
-fun logout() = http(mutation<LogoutMutation> {
+fun logout() = http(mutation {
     field(
         LogoutMutation::logOut,
         "input" of argsOf()
@@ -53,7 +53,7 @@ fun signup(
     secondName: String,
     email: String,
     password: String
-) = http(mutation<SignupMutation> {
+) = http(mutation {
     field(
         SignupMutation::signUp,
         "input" of argsOf(

@@ -17,7 +17,7 @@ data class Product(
     val categories: NodeContainer<Category>
 ): GQLObject
 
-internal val productField = field<Product> {
+internal val productField = field {
     field(Product::objectId)
     field(Product::body)
     field(Product::roast)

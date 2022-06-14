@@ -10,7 +10,7 @@ data class UserViewer(
     val user: User
 ): GQLObject
 
-internal val userViewerField = field<UserViewer> {
+internal val userViewerField = field {
     field(UserViewer::sessionToken)
     field(UserViewer::user, userField)
 }

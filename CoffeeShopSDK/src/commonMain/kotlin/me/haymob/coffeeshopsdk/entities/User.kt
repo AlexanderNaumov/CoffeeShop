@@ -13,7 +13,7 @@ data class User(
     val addresses: NodeContainer<Address>
 ): GQLObject
 
-internal val userField = field<User> {
+internal val userField = field {
     field(User::objectId)
     field(User::firstName)
     field(User::secondName)

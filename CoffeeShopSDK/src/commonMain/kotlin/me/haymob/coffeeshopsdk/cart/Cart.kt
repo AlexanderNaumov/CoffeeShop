@@ -11,7 +11,7 @@ private data class CartQuery(val cart: Cart): GQLObject
 @Serializable
 private data class CreateCartMutation(val createCart: CartQuery)
 
-fun createCart() = http(mutation<CreateCartMutation> {
+fun createCart() = http(mutation {
     field(
         CreateCartMutation::createCart,
         "input" of argsOf()
@@ -20,14 +20,14 @@ fun createCart() = http(mutation<CreateCartMutation> {
     }
 }).decode<CreateCartMutation>().tryMap { it.createCart.cart }
 
-fun cart(id: String) = http(query<CartQuery> {
+fun cart(id: String) = http(query {
     field(CartQuery::cart, cartField, "id" of id)
 }).decode<CartQuery>().tryMap { it.cart }
 
 @Serializable
 private data class DeleteCartMutation(val deleteCart: CartQuery)
 
-fun deleteCart(id: String) = http(mutation<DeleteCartMutation> {
+fun deleteCart(id: String) = http(mutation {
     field(
         DeleteCartMutation::deleteCart,
         "input" of argsOf("id" of id)
@@ -42,7 +42,7 @@ private data class CartItemQuery(val cartItem: CartQuery): GQLObject
 @Serializable
 private data class CreateCartItemMutation(val createCartItem: CartItemQuery)
 
-fun addProduct(cartId: String, productId: String, qty: Int) = http(mutation<CreateCartItemMutation> {
+fun addProduct(cartId: String, productId: String, qty: Int) = http(mutation {
     field(
         CreateCartItemMutation::createCartItem,
         "input" of argsOf(
@@ -62,7 +62,7 @@ fun addProduct(cartId: String, productId: String, qty: Int) = http(mutation<Crea
 @Serializable
 private data class UpdateCartItemMutation(val updateCartItem: CartItemQuery)
 
-fun updateItem(itemId: String, qty: Int) = http(mutation<UpdateCartItemMutation> {
+fun updateItem(itemId: String, qty: Int) = http(mutation {
     field(
         UpdateCartItemMutation::updateCartItem,
         "input" of argsOf(
@@ -78,7 +78,7 @@ fun updateItem(itemId: String, qty: Int) = http(mutation<UpdateCartItemMutation>
     }
 }).decode<UpdateCartItemMutation>().tryMap { it.updateCartItem.cartItem.cart }
 
-fun removeItem(itemId: String) = http(mutation<UpdateCartItemMutation> {
+fun removeItem(itemId: String) = http(mutation {
     field(
         UpdateCartItemMutation::updateCartItem,
         "input" of argsOf(

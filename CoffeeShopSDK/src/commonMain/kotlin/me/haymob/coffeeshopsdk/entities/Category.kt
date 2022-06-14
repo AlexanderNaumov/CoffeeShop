@@ -9,7 +9,7 @@ data class Category(
     val name: String
 ): GQLObject
 
-internal val categoryField = field<Category> {
+internal val categoryField = field {
     field(Category::objectId)
     field(Category::name)
 }

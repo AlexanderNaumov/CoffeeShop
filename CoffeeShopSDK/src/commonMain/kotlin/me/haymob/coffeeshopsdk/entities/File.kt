@@ -9,7 +9,7 @@ data class File(
     val url: String
 ): GQLObject
 
-internal val fileField = field<File> {
+internal val fileField = field {
     field(File::name)
     field(File::url)
 }

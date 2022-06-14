@@ -7,7 +7,7 @@ import me.haymob.coffeeshopsdk.entities.*
 @Serializable
 private data class CategoriesQuery(val categories: NodeContainer<Category>)
 
-fun categories() = http(query<CategoriesQuery> {
+fun categories() = http(query {
     field(CategoriesQuery::categories) {
         field(NodeContainer<Category>::edges) {
             field(NodeContainer.Node<Category>::node, categoryField)
@@ -18,13 +18,13 @@ fun categories() = http(query<CategoriesQuery> {
 @Serializable
 private data class ProductsQuery(val products: NodeContainer<Product>)
 
-private val productsField = field<NodeContainer<Product>> {
+private val productsField = field {
     field(NodeContainer<Product>::edges) {
         field(NodeContainer.Node<Product>::node, productField)
     }
 }
 
-fun products(categoryIds: List<String>? = null) = http(query<ProductsQuery> {
+fun products(categoryIds: List<String>? = null) = http(query {
     if (categoryIds != null) {
         field(
             ProductsQuery::products,

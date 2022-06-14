@@ -14,7 +14,7 @@ data class Address(
     val postcode: Int
 ): GQLObject
 
-internal val addressField = field<Address> {
+internal val addressField = field {
     field(Address::objectId)
     field(Address::firstName)
     field(Address::secondName)

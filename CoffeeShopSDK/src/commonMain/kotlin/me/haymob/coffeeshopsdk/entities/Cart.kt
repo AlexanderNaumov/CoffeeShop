@@ -17,7 +17,7 @@ data class Cart(
     ): GQLObject
 }
 
-internal val cartField = field<Cart> {
+internal val cartField = field {
     field(Cart::objectId)
     field(Cart::totalPrice)
     field(Cart::items) {
