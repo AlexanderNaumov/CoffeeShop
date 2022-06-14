@@ -50,7 +50,7 @@ private data class SignupMutation(val signUp: SignUp?) {
 
 fun signup(
     firstName: String,
-    secondName: String,
+    lastName: String,
     email: String,
     password: String
 ) = http(mutation {
@@ -59,7 +59,7 @@ fun signup(
         "input" of argsOf(
             "fields" of argsOf(
                 "firstName" of firstName,
-                "secondName" of secondName,
+                "lastName" of lastName,
                 "email" of email.lowercase(),
                 "username" of email.lowercase(),
                 "emailVerified" of true,

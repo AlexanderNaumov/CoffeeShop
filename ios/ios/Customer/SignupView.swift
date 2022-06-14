@@ -1,11 +1,12 @@
 import SwiftUI
 import core
 
-struct LoginView: View {
-    @Store var store: LoginUIStore
+struct SignupView: View {
+    
+    @Store var store: SignupUIStore
     @ObservedObject var error = ErrorState()
     @Binding var router: Routing?
-
+    
     init(router: Binding<Routing?>) {
         _router = router
         setEffect()
@@ -14,9 +15,9 @@ struct LoginView: View {
     func setEffect() {
         store.onEffect { effect in
             switch effect {
-            case let error as LoginUIEffect.Error:
+            case let error as SignupUIEffect.Error:
                 self.error.message = error.message
-            case is LoginUIEffect.Successes:
+            case is SignupUIEffect.Successes:
                 router = nil
             default:
                 break
@@ -33,12 +34,12 @@ struct LoginView: View {
                             store.updateField(type: field.type, value: value)
                         }
                     }
-                    Button("Login") {
-                        store.login()
+                    Button("Signup") {
+                        store.signup()
                     }
                 }
                 .errorAlert(errorState: error)
-                .navigationTitle("Login".uppercased())
+                .navigationTitle("Register".uppercased())
                 .navigationBarItems(leading: Button("X") {
                     router = nil
                 })

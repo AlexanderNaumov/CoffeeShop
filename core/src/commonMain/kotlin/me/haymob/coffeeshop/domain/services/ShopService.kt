@@ -10,7 +10,7 @@ import me.haymob.coffeeshopsdk.cart.cart as sdkCart
 import me.haymob.coffeeshopsdk.cart.deleteCart as sdkDeleteCart
 import me.haymob.coffeeshopsdk.customer.login as sdkLogin
 import me.haymob.coffeeshopsdk.customer.logout as sdkLogout
-import me.haymob.coffeeshopsdk.customer.signup
+import me.haymob.coffeeshopsdk.customer.signup as sdkSignup
 import me.haymob.coffeeshopsdk.setSessionToken as sdkSetSessionToken
 import me.haymob.coffeeshopsdk.removeSessionToken as sdkRemoveSessionToken
 
@@ -27,10 +27,10 @@ class ShopService {
     fun removeSessionToken() = sdkRemoveSessionToken()
     fun login(email: String, password: String) = sdkLogin(email, password)
     fun logout() = sdkLogout()
-    fun register(
+    fun signup(
         firstName: String,
         secondName: String,
         email: String,
         password: String
-    ) = signup(firstName, secondName, email, password)
+    ) = sdkSignup(firstName, secondName, email, password)
 }

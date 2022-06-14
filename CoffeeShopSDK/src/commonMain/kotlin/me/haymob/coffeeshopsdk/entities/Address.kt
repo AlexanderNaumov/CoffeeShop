@@ -8,7 +8,7 @@ import me.haymob.coffeeshopsdk.core.field
 data class Address(
     val objectId: String,
     val firstName: String,
-    val secondName: String,
+    val lastName: String,
     val city: String,
     val street: String,
     val postcode: Int
@@ -17,7 +17,7 @@ data class Address(
 internal val addressField = field {
     field(Address::objectId)
     field(Address::firstName)
-    field(Address::secondName)
+    field(Address::lastName)
     field(Address::city)
     field(Address::street)
     field(Address::postcode)

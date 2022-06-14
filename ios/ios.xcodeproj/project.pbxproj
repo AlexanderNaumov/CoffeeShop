@@ -14,6 +14,9 @@
 		113CB3632852741C0058227B /* CustomerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113CB3622852741C0058227B /* CustomerView.swift */; };
 		113CB36528527B480058227B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113CB36428527B480058227B /* LoginView.swift */; };
 		116AC1292858CAE8002DAC16 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 116AC1282858CAE8002DAC16 /* Introspect */; };
+		11B55873285908B3000C2959 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B55872285908B3000C2959 /* SignupView.swift */; };
+		11B55875285913F8000C2959 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B55874285913F8000C2959 /* ErrorAlert.swift */; };
+		11B558772859153D000C2959 /* AccountTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B558762859153D000C2959 /* AccountTextField.swift */; };
 		11D68549284D38F500FA82F3 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D68548284D38F500FA82F3 /* AsyncImage.swift */; };
 		11D9953E284E58B80061F13D /* ProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9953D284E58B80061F13D /* ProductImage.swift */; };
 		11D99540284E5FC70061F13D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9953F284E5FC70061F13D /* ActionButton.swift */; };
@@ -47,6 +50,9 @@
 		11346E3428131AB400EB57D9 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		113CB3622852741C0058227B /* CustomerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerView.swift; sourceTree = "<group>"; };
 		113CB36428527B480058227B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		11B55872285908B3000C2959 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		11B55874285913F8000C2959 /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
+		11B558762859153D000C2959 /* AccountTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTextField.swift; sourceTree = "<group>"; };
 		11D68548284D38F500FA82F3 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		11D9953D284E58B80061F13D /* ProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImage.swift; sourceTree = "<group>"; };
 		11D9953F284E5FC70061F13D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
@@ -87,7 +93,8 @@
 			children = (
 				113CB3622852741C0058227B /* CustomerView.swift */,
 				113CB36428527B480058227B /* LoginView.swift */,
-				11F95255285367EA001172A1 /* TextFieldOnAction.swift */,
+				11B55872285908B3000C2959 /* SignupView.swift */,
+				11B558762859153D000C2959 /* AccountTextField.swift */,
 			);
 			path = Customer;
 			sourceTree = "<group>";
@@ -95,7 +102,9 @@
 		11D68547284D38E500FA82F3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				11F95255285367EA001172A1 /* TextFieldOnAction.swift */,
 				11D68548284D38F500FA82F3 /* AsyncImage.swift */,
+				11B55874285913F8000C2959 /* ErrorAlert.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -264,6 +273,7 @@
 				11D68549284D38F500FA82F3 /* AsyncImage.swift in Sources */,
 				11D9953E284E58B80061F13D /* ProductImage.swift in Sources */,
 				11346E3528131AB400EB57D9 /* Store.swift in Sources */,
+				11B55875285913F8000C2959 /* ErrorAlert.swift in Sources */,
 				113122BB2837CBBE00D33CE9 /* CartView.swift in Sources */,
 				11F95256285367EA001172A1 /* TextFieldOnAction.swift in Sources */,
 				11F82064284BF3FF001B8595 /* ProductDetail.swift in Sources */,
@@ -273,7 +283,9 @@
 				113CB36528527B480058227B /* LoginView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				11DDDA2628142E050098389D /* Color.swift in Sources */,
+				11B55873285908B3000C2959 /* SignupView.swift in Sources */,
 				7555FF83242A565900829871 /* CatalogView.swift in Sources */,
+				11B558772859153D000C2959 /* AccountTextField.swift in Sources */,
 				11DDDA28281440030098389D /* Price.swift in Sources */,
 				11D99540284E5FC70061F13D /* ActionButton.swift in Sources */,
 			);

@@ -21,6 +21,8 @@ struct iOSApp: App {
                     switch routing {
                     case .login:
                         LoginView(router: $router)
+                    case .signup:
+                        SignupView(router: $router)
                     }
                 }
             }.accentColor(.black)
@@ -32,4 +34,5 @@ enum Routing: Identifiable {
     var id: String { "\(type(of: self))" }
     
     case login
+    case signup
 }

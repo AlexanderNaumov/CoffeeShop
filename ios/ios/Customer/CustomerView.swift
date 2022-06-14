@@ -13,7 +13,7 @@ struct CustomerView: View {
                 if store.currentState.isLoggedIn {
                     ZStack {
                         List {
-                            Text("Hello")
+                            Text("Account")
                         }
                         if store.currentState.isLoading {
                             VStack {
@@ -32,14 +32,9 @@ struct CustomerView: View {
                         .tint(.blue)
                         
                         Button("Register") {
-//                            showingLogin.toggle()
+                            router = .signup
                         }
                         .tint(.blue)
-//                        .sheet(isPresented: $showingLogin) {
-//                            NavigationView {
-//
-//                            }
-//                        }
                     }
                 }
             }

@@ -22,6 +22,13 @@ class FieldsService {
                 }
                 Field(field.type, field.value, error)
             }
+            FieldType.FirstName, FieldType.LastName -> {
+                val error = when {
+                    field.value.isEmpty() -> "Field cannot be empty"
+                    else -> null
+                }
+                Field(field.type, field.value, error)
+            }
         }
     }
 

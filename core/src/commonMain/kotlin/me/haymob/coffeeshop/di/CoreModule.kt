@@ -10,6 +10,7 @@ import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.productDetail.ProductDetailUIStore
 import me.haymob.coffeeshop.ui.customer.CustomerUIStore
 import me.haymob.coffeeshop.ui.customer.login.LoginUIStore
+import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.*
@@ -27,4 +28,5 @@ val coreModule = module {
     factoryOf(::CustomerUIStore)
     factoryOf(::LoginUIStore)
     singleOf(::FieldsService)
+    singleOf(::SignupUIStore)
 }

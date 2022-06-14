@@ -8,7 +8,7 @@ import me.haymob.coffeeshopsdk.core.field
 data class User(
     val objectId: String,
     val firstName: String,
-    val secondName: String,
+    val lastName: String,
     val email: String,
     val addresses: NodeContainer<Address>
 ): GQLObject
@@ -16,7 +16,7 @@ data class User(
 internal val userField = field {
     field(User::objectId)
     field(User::firstName)
-    field(User::secondName)
+    field(User::lastName)
     field(User::email)
     field(User::addresses) {
         field(NodeContainer<Address>::edges) {

@@ -7,7 +7,7 @@ internal object AddressMapper {
     fun addressFromDto(address: AddressDTO) = Address(
         address.objectId,
         address.firstName,
-        address.secondName,
+        address.lastName,
         address.city,
         address.street,
         address.postcode

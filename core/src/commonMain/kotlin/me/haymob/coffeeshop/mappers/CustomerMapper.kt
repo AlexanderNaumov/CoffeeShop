@@ -8,7 +8,7 @@ internal object CustomerMapper {
     fun customerFromDto(customer: CustomerDTO) = Customer(
         customer.objectId,
         customer.firstName,
-        customer.secondName,
+        customer.lastName,
         customer.email,
         customer.addresses.edges.map { AddressMapper.addressFromDto(it.node) }
     )
