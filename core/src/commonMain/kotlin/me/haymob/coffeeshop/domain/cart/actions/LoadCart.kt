@@ -7,7 +7,7 @@ import me.haymob.coffeeshop.domain.events.product.ProductEvent
 import me.haymob.coffeeshop.flow.onResult
 
 internal fun CartStore.loadCart() {
-    val cartId = cartService.cartId() ?: return
+    val cartId = storage.cartId() ?: return
 
     setState { copy(isLoading = true) }
     shopService.loadCart(cartId).onResult { result ->
@@ -21,7 +21,7 @@ internal fun CartStore.loadCart() {
         val products = newCart?.items?.map { it.product } ?: emptyList()
         productEmitter.emit(ProductEvent.CartDidLoad(products))
         if (result.isFailure) {
-            cartService.removeCartId()
+            storage.removeCartId()
         }
     }.launchIn(scope)
 }

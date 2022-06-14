@@ -6,7 +6,7 @@ struct CartView: View {
     @Store var store: CartUIStore
     
     var body: some View {
-        return NavigationView {
+        NavigationView {
             if let cart = store.currentState.cart, !cart.items.isEmpty {
                 VStack {
                     List {

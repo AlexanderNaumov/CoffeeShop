@@ -8,9 +8,7 @@ import me.haymob.coffeeshop.mappers.CategoryMapper
 import me.haymob.coffeeshop.mappers.ProductMapper
 
 fun CatalogStore.loadCatalog() {
-    setState {
-        copy(isLoading = true)
-    }
+    setState { copy(isLoading = true) }
     shopService.categories().flatMapMerge { categories ->
         shopService.products(categories.map { it.objectId }).map { products ->
             categories.map { category ->

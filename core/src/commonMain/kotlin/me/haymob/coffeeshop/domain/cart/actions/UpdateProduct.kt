@@ -20,7 +20,7 @@ internal fun CartStore.updateProduct(product: Product) {
             else -> throw Exception("unknown operation")
         }
     } ?: shopService.createCart().onEach {
-        cartService.setCartId(it.objectId)
+        storage.setCartId(it.objectId)
     }.flatMapMerge {
         shopService.addProduct(it.objectId, product.id, product.qty)
     }).onResult { result ->

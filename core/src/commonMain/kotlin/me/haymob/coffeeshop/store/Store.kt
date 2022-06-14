@@ -14,6 +14,7 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
     get() = state.value
 
     var didSetState: (() -> Unit)? = null
+    private var _onEffect: ((StoreEffect) -> Unit)? = null
 
     fun setState(reduce: StoreState.() -> StoreState) {
         scope.launch {
@@ -28,6 +29,11 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
     fun setEffect(effect: StoreEffect) {
         scope.launch {
             _effect.emit(effect)
+            _onEffect?.invoke(effect)
         }
+    }
+
+    fun onEffect(effect: (StoreEffect) -> Unit) {
+        _onEffect = effect
     }
 }

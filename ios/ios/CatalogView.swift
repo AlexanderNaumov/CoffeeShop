@@ -12,7 +12,7 @@ struct CatalogView: View {
     let columns = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
-        return NavigationView {
+        NavigationView {
             ScrollView {
                 VStack {
                     LazyVGrid(columns: columns) {
@@ -34,8 +34,7 @@ struct CatalogView: View {
             }
             .navigationTitle("Coffe".uppercased())
             .background(Color(0xF0F2F5))
-        }
-        .tabItem {
+        }.tabItem {
             //                Image(systemName: "phone.fill")
             Text("Shop")
         }

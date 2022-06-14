@@ -4,6 +4,8 @@ import core
 @main
 struct iOSApp: App {
     
+    @SwiftUI.State var router: Routing? = nil
+    
     init() {
         CoreKt.coreInit()
     }
@@ -11,9 +13,23 @@ struct iOSApp: App {
 	var body: some Scene {
 		WindowGroup {
             TabView {
-                CatalogView()
-                CartView()
+                Group {
+                    CatalogView()
+                    CartView()
+                    CustomerView(router: $router)
+                }.sheet(item: $router) { routing in
+                    switch routing {
+                    case .login:
+                        LoginView(router: $router)
+                    }
+                }
             }.accentColor(.black)
 		}
 	}
+}
+
+enum Routing: Identifiable {
+    var id: String { "\(type(of: self))" }
+    
+    case login
 }

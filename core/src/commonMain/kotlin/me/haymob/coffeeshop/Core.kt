@@ -2,6 +2,7 @@ package me.haymob.coffeeshop
 
 import me.haymob.coffeeshop.di.coreModule
 import me.haymob.coffeeshop.domain.cart.CartStore
+import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshopsdk.*
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -13,7 +14,7 @@ fun coreInit() {
         "http://vm71618.haymob.serv-dns.ru:1337/graphql",
         "lrfQ9bQKJDpFFVffvfZN",
         "2MQDMG5ett10fdzOvDWUp46hHRhd5w",
-        true
+        false
     ))
 
     app = startKoin {
@@ -21,5 +22,6 @@ fun coreInit() {
     }
 
     app.koin.get<CartStore>()
+    app.koin.get<CustomerStore>()
 }
 

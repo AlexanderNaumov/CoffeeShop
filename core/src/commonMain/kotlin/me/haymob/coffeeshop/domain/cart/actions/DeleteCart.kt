@@ -10,7 +10,7 @@ internal fun CartStore.deleteCart() {
     setState { copy(isLoading = true) }
 
     shopService.deleteCart(cart.id).onEach {
-        cartService.removeCartId()
+        storage.removeCartId()
         setState {
             copy(
                 cart = null,
