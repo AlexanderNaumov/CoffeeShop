@@ -28,6 +28,21 @@ fun login(email: String, password: String) = http(mutation<LoginMutation> {
 }).decode<LoginMutation>().tryMap { it.logIn?.viewer }
 
 @Serializable
+private data class LogoutMutation(val logOut: LogOut?) {
+    @Serializable
+    data class LogOut(val ok: Boolean): GQLObject
+}
+
+fun logout() = http(mutation<LogoutMutation> {
+    field(
+        LogoutMutation::logOut,
+        "input" of argsOf()
+    ) {
+        field(LogoutMutation.LogOut::ok)
+    }
+}).decode<LogoutMutation>().tryMap { it.logOut?.ok }
+
+@Serializable
 private data class SignupMutation(val signUp: SignUp?) {
     @Serializable
     data class SignUp(val viewer: UserViewer): GQLObject

@@ -18,10 +18,11 @@ internal actual fun http(
     url: String,
     appId: String,
     masterKey: String,
+    sessionToken: String?,
     path: String,
     body: String?,
     isLoggingEnabled: Boolean
-) = _http(type, url, appId, masterKey, path, body, isLoggingEnabled)
+) = _http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled)
 
 
 private fun _http(
@@ -29,6 +30,7 @@ private fun _http(
     url: String,
     appId: String,
     masterKey: String,
+    sessionToken: String?,
     path: String,
     body: String?,
     isLoggingEnabled: Boolean,
@@ -64,6 +66,9 @@ private fun _http(
         addValue("application/json", "Content-Type")
         addValue(appId, "X-Parse-Application-Id")
         addValue(masterKey, "X-Parse-Master-Key")
+        if (sessionToken != null) {
+            addValue(sessionToken, "X-Parse-Session-Token")
+        }
     }
 
     return callbackFlow {
@@ -75,7 +80,7 @@ private fun _http(
                     if (listOf(53, -1003, -1005, -1009, -9805, -999).contains(error.code.toInt())) {
                         if (numberOfConnection < 5) {
                             launch {
-                                _http(type, url, appId, masterKey, path, body, isLoggingEnabled,numberOfConnection + 1).collect(::trySend)
+                                _http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled,numberOfConnection + 1).collect(::trySend)
                             }
                         } else {
                             close(Exception("connection_failed"))

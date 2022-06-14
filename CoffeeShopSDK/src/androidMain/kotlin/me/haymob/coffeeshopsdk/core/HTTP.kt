@@ -20,6 +20,7 @@ internal actual fun http(
     url: String,
     appId: String,
     masterKey: String,
+    sessionToken: String?,
     path: String,
     body: String?,
     isLoggingEnabled: Boolean
@@ -31,6 +32,9 @@ internal actual fun http(
         addHeader("Content-Type", "application/json")
         addHeader("X-Parse-Application-Id", appId)
         addHeader("X-Parse-Master-Key", masterKey)
+        if (sessionToken != null) {
+            addHeader("X-Parse-Session-Token", sessionToken)
+        }
     }
     val mediaType = "application/json; charset=utf-8".toMediaType()
 

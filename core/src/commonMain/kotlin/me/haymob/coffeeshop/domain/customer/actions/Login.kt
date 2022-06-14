@@ -19,7 +19,9 @@ fun CustomerStore.login(email: String, password: String) {
         }
         if (result.isSuccess) {
             setEffect(CustomerEffect.Successes)
-            storage.setCustomerToken(viewer!!.sessionToken)
+            val token = viewer!!.sessionToken
+            storage.setCustomerToken(token)
+            shopService.setSessionToken(token)
         }
         if (result.isFailure) {
             setEffect(CustomerEffect.Error(result.exceptionOrNull()?.message ?: "unknown error"))

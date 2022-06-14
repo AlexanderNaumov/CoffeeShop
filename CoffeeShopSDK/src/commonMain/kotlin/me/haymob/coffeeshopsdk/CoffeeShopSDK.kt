@@ -10,6 +10,7 @@ data class Config(
     val url: String,
     val appId: String,
     val masterKey: String,
+    val sessionToken: String? = null,
     val isLoggingEnabled: Boolean = false
 )
 
@@ -19,43 +20,10 @@ fun config(c: Config) {
     config = c
 }
 
-private val scope = CoroutineScope(Dispatchers.Unconfined + Job())
+fun setSessionToken(token: String) {
+    config = config.copy(sessionToken = token)
+}
 
-fun test() {
-    config(Config(
-        "http://vm71618.haymob.serv-dns.ru:1337/graphql",
-        "lrfQ9bQKJDpFFVffvfZN",
-        "2MQDMG5ett10fdzOvDWUp46hHRhd5w",
-        true
-    ))
-
-
-    scope.launch {
-        try {
-//            categories().collect {
-//                println(it)
-//            }
-//            products(listOf("poJjgm0EDZ")).collect {
-//                println(it)
-//            }
-//            createCart().collect {
-//                println(it)
-//            }
-//            addProduct("f3E5pVEbT4", "pHVUM7LxPO", 10).collect {
-//                println(it)
-//            }
-//            updateItem("KPL59fMcrZ", 2).collect {
-//                println(it)
-//            }
-//            removeItem("p5vz6RSG6E").collect {
-//                println(it)
-//            }
-//            deleteCart("f3E5pVEbT4").collect {
-//                println(it)
-//            }
-
-        } catch (e: Exception) {
-            println(e)
-        }
-    }
+fun removeSessionToken() {
+    config = config.copy(sessionToken = null)
 }

@@ -18,11 +18,12 @@ internal expect fun http(
     url: String,
     appId: String,
     masterKey: String,
+    sessionToken: String?,
     path: String,
     body: String?,
     isLoggingEnabled: Boolean
 ): Flow<String>
 
-internal fun http(gql: GQLResult) = http(GraphQL(gql), config.url, config.appId, config.masterKey, "", null, config.isLoggingEnabled)
+internal fun http(gql: GQLResult) = http(GraphQL(gql), config.url, config.appId, config.masterKey, config.sessionToken, "", null, config.isLoggingEnabled)
 
-internal fun http(method: HTTPMethod, path: String, body: String? = null) = http(Rest(method), config.url, config.appId, config.masterKey, path, body, config.isLoggingEnabled)
+internal fun http(method: HTTPMethod, path: String, body: String? = null) = http(Rest(method), config.url, config.appId, config.masterKey, null, path, body, config.isLoggingEnabled)
