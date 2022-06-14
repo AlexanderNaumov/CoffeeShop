@@ -20,7 +20,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("io.insert-koin:koin-core:3.2.0-beta-1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
                 implementation(project(":CoffeeShopSDK"))
                 implementation(project(":Preferences"))
             }

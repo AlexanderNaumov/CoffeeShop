@@ -1,16 +1,16 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+//import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.21"
 }
 
 kotlin {
 
     android()
 
-    val xcf = XCFramework()
+//    val xcf = XCFramework()
     listOf(
         iosX64(),
         iosArm64(),
@@ -18,17 +18,17 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "CoffeeShopSDK"
-            isStatic = true
-            xcf.add(this)
+//            isStatic = true
+//            xcf.add(this)
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
             }
         }
         val commonTest by getting {

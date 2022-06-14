@@ -13,13 +13,13 @@
 		11346E3528131AB400EB57D9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11346E3428131AB400EB57D9 /* Store.swift */; };
 		113CB3632852741C0058227B /* CustomerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113CB3622852741C0058227B /* CustomerView.swift */; };
 		113CB36528527B480058227B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113CB36428527B480058227B /* LoginView.swift */; };
+		116AC1292858CAE8002DAC16 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 116AC1282858CAE8002DAC16 /* Introspect */; };
 		11D68549284D38F500FA82F3 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D68548284D38F500FA82F3 /* AsyncImage.swift */; };
 		11D9953E284E58B80061F13D /* ProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9953D284E58B80061F13D /* ProductImage.swift */; };
 		11D99540284E5FC70061F13D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9953F284E5FC70061F13D /* ActionButton.swift */; };
 		11DDDA24281429B90098389D /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDDA23281429B90098389D /* Identifiable.swift */; };
 		11DDDA2628142E050098389D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDDA2528142E050098389D /* Color.swift */; };
 		11DDDA28281440030098389D /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDDA27281440030098389D /* Price.swift */; };
-		11F8205F284A95D2001B8595 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 11F8205E284A95D2001B8595 /* Introspect */; };
 		11F82062284A95F8001B8595 /* PullToRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F82061284A95F8001B8595 /* PullToRefresh.swift */; };
 		11F82064284BF3FF001B8595 /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F82063284BF3FF001B8595 /* ProductDetail.swift */; };
 		11F95256285367EA001172A1 /* TextFieldOnAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F95255285367EA001172A1 /* TextFieldOnAction.swift */; };
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11F8205F284A95D2001B8595 /* Introspect in Frameworks */,
+				116AC1292858CAE8002DAC16 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,7 +182,7 @@
 			);
 			name = ios;
 			packageProductDependencies = (
-				11F8205E284A95D2001B8595 /* Introspect */,
+				116AC1282858CAE8002DAC16 /* Introspect */,
 			);
 			productName = ios;
 			productReference = 7555FF7B242A565900829871 /* ios.app */;
@@ -213,7 +213,7 @@
 			);
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
-				11F8205D284A95D2001B8595 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				116AC1272858CAE8002DAC16 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -404,6 +404,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ios/Preview Content\"";
+				DEVELOPMENT_TEAM = 793VXRB9B8;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../core/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = ios/Info.plist;
@@ -417,7 +418,7 @@
 					"-framework",
 					core,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = me.haymob.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -430,6 +431,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ios/Preview Content\"";
+				DEVELOPMENT_TEAM = 793VXRB9B8;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../core/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = ios/Info.plist;
@@ -443,7 +445,7 @@
 					"-framework",
 					core,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = me.haymob.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -474,7 +476,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		11F8205D284A95D2001B8595 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+		116AC1272858CAE8002DAC16 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect";
 			requirement = {
@@ -485,9 +487,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		11F8205E284A95D2001B8595 /* Introspect */ = {
+		116AC1282858CAE8002DAC16 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 11F8205D284A95D2001B8595 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			package = 116AC1272858CAE8002DAC16 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
 		};
 /* End XCSwiftPackageProductDependency section */
