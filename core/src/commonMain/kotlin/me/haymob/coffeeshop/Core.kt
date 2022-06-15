@@ -1,8 +1,7 @@
 package me.haymob.coffeeshop
 
 import me.haymob.coffeeshop.di.coreModule
-import me.haymob.coffeeshop.domain.cart.CartStore
-import me.haymob.coffeeshop.domain.customer.CustomerStore
+import me.haymob.coffeeshop.domain.mediators.ProductEffectMediator
 import me.haymob.coffeeshop.domain.services.AppStorage
 import me.haymob.coffeeshopsdk.*
 import org.koin.core.KoinApplication
@@ -25,7 +24,6 @@ fun coreInit() {
         false
     ))
 
-    app.koin.get<CartStore>()
-    app.koin.get<CustomerStore>()
+    app.koin.get<ProductEffectMediator>()
 }
 

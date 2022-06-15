@@ -3,7 +3,7 @@ package me.haymob.coffeeshop.domain.cart.actions
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.mappers.CartMapper
 import kotlinx.coroutines.flow.launchIn
-import me.haymob.coffeeshop.domain.events.product.ProductEvent
+import me.haymob.coffeeshop.domain.cart.CartEffect
 import me.haymob.coffeeshop.flow.onResult
 
 internal fun CartStore.loadCart() {
@@ -19,7 +19,7 @@ internal fun CartStore.loadCart() {
             )
         }
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        productEmitter.emit(ProductEvent.CartDidLoad(products))
+        setEffect(CartEffect.DidLoad(products))
         if (result.isFailure) {
             storage.removeCartId()
         }

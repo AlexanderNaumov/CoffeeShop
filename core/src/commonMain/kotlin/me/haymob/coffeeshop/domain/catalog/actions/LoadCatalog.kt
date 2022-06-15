@@ -1,8 +1,8 @@
 package me.haymob.coffeeshop.domain.catalog.actions
 
 import kotlinx.coroutines.flow.*
+import me.haymob.coffeeshop.domain.catalog.CatalogEffect
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
-import me.haymob.coffeeshop.domain.events.product.ProductEvent
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CategoryMapper
 import me.haymob.coffeeshop.mappers.ProductMapper
@@ -26,6 +26,6 @@ fun CatalogStore.loadCatalog() {
                 isLoading = false
             )
         }
-        productEmitter.emit(ProductEvent.CatalogDidLoad)
+        setEffect(CatalogEffect.DidLoad)
     }.launchIn(scope)
 }

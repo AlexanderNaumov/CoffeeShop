@@ -1,24 +1,20 @@
 package me.haymob.coffeeshop.domain.cart
 
 import kotlinx.coroutines.flow.launchIn
-import me.haymob.coffeeshop.domain.cart.actions.loadCart
+import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.actions.productSetLoading
-import me.haymob.coffeeshop.domain.events.product.ProductEmitter
-import me.haymob.coffeeshop.domain.events.product.ProductEvent
 import me.haymob.coffeeshop.domain.services.ShopService
 import me.haymob.coffeeshop.domain.services.AppStorage
 import me.haymob.coffeeshop.store.Store
 
 class CartStore(
     internal val shopService: ShopService,
-    internal val storage: AppStorage,
-    internal val productEmitter: ProductEmitter
-): Store<CartState, Unit>(CartState()) {
+    internal val storage: AppStorage
+): Store<CartState, CartEffect>(CartState()) {
     init {
-        productEmitter.subscribe {
+        effect.onEach {  it ->
             when (it) {
-                is ProductEvent.ProductSetLoading -> productSetLoading(it.product, it.loading)
-                is ProductEvent.CatalogDidLoad -> loadCart()
+                is CartEffect.ProductSetLoading -> productSetLoading(it.product, it.loading)
                 else -> {}
             }
         }.launchIn(scope)

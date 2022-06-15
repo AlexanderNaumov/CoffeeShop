@@ -2,8 +2,8 @@ package me.haymob.coffeeshop.domain.cart.actions
 
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
+import me.haymob.coffeeshop.domain.cart.CartEffect
 import me.haymob.coffeeshop.domain.cart.CartStore
-import me.haymob.coffeeshop.domain.events.product.ProductEvent
 import me.haymob.coffeeshop.entities.Cart
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
@@ -14,7 +14,7 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
     }
 
     items.forEach {
-        productEmitter.emit(ProductEvent.ProductSetLoading(it.product, true))
+        setEffect(CartEffect.ProductSetLoading(it.product, true))
     }
 
     combine(
@@ -33,10 +33,10 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
         }
 
         items.forEach {
-            productEmitter.emit(ProductEvent.ProductSetLoading(it.product, false))
+            setEffect(CartEffect.ProductSetLoading(it.product, false))
         }
 
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        productEmitter.emit(ProductEvent.CartDidLoad(products))
+        setEffect(CartEffect.DidLoad(products))
     }.launchIn(scope)
 }
