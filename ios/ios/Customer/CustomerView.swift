@@ -6,6 +6,7 @@ struct CustomerView: View {
     @Store var store: CustomerUIStore
     @Binding var router: Routing?
     @SwiftUI.State var isPresentingLogoutAlert: Bool = false
+    @SwiftUI.State private var showAccount = false
     
     var body: some View {
         NavigationView {
@@ -13,7 +14,9 @@ struct CustomerView: View {
                 if store.currentState.isLoggedIn {
                     ZStack {
                         List {
-                            Text("Account")
+                            NavigationLink(destination: AccountView($showAccount), isActive: $showAccount) {
+                                Text("Account")
+                            }
                         }
                         if store.currentState.isLoading {
                             VStack {
@@ -38,6 +41,7 @@ struct CustomerView: View {
                     }
                 }
             }
+            .tint(.blue)
             .alert(isPresented: $isPresentingLogoutAlert, content: {
                 Alert(
                     title: Text("Logout"),

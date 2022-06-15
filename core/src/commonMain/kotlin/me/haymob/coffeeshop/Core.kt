@@ -1,6 +1,7 @@
 package me.haymob.coffeeshop
 
 import me.haymob.coffeeshop.di.coreModule
+import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.mediators.ProductEffectMediator
 import me.haymob.coffeeshop.domain.services.AppStorage
 import me.haymob.coffeeshopsdk.*

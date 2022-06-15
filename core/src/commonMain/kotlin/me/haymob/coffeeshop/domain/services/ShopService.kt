@@ -11,6 +11,8 @@ import me.haymob.coffeeshopsdk.cart.deleteCart as sdkDeleteCart
 import me.haymob.coffeeshopsdk.customer.login as sdkLogin
 import me.haymob.coffeeshopsdk.customer.logout as sdkLogout
 import me.haymob.coffeeshopsdk.customer.signup as sdkSignup
+import me.haymob.coffeeshopsdk.customer.user as sdkUser
+import me.haymob.coffeeshopsdk.customer.updateUser as sdkUpdateUser
 import me.haymob.coffeeshopsdk.setSessionToken as sdkSetSessionToken
 import me.haymob.coffeeshopsdk.removeSessionToken as sdkRemoveSessionToken
 
@@ -33,4 +35,6 @@ class ShopService {
         email: String,
         password: String
     ) = sdkSignup(firstName, secondName, email, password)
+    fun user() = sdkUser()
+    fun updateUser(id: String, firstName: String, lastName: String, email: String, password: String?) = sdkUpdateUser(id, firstName, lastName, email, password)
 }
