@@ -11,7 +11,7 @@ data class Address(
     val lastName: String,
     val city: String,
     val street: String,
-    val postcode: Int
+    val postcode: String
 ): GQLObject
 
 internal val addressField = field {

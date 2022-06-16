@@ -1,25 +1,25 @@
 import SwiftUI
 import core
 
-struct AccountScreen: View {
-    let showAccount: Binding<Bool>
+struct CreateAddressScreen: View {
+    let showCreateAddress: Binding<Bool>
     var body: some View {
-        AccountView(showAccount: showAccount)
+        CreateAddressView(showCreateAddress: showCreateAddress)
     }
 }
 
-struct AccountView: View {
-    @Store var store: AccountUIStore
+struct CreateAddressView: View {
     @ObservedObject var error = ErrorState()
-    @Binding var showAccount: Bool
+    @Store var store: CreateAddressUIStore
+    @Binding var showCreateAddress: Bool
     
     func setEffect() {
         store.onEffect { effect in
             switch effect {
-            case let error as AccountUIEffect.Error:
+            case let error as CreateAddressUIEffect.Error:
                 self.error.message = error.message
-            case is AccountUIEffect.Successes:
-                showAccount = false
+            case is CreateAddressUIEffect.Successes:
+                showCreateAddress = false
             default:
                 break
             }
@@ -34,21 +34,19 @@ struct AccountView: View {
                         store.updateField(type: field.type, value: value)
                     }
                 }
-                Button("Update") {
-                    store.updateCustomer()
-                }
+                Button("Create") {
+                    store.createAddress()
+                }.tint(.blue)
             }
             .errorAlert(errorState: error)
-            .navigationTitle("Account".uppercased())
+            .navigationTitle("New Address".uppercased())
             if store.currentState.isLoading {
                 VStack {
                     ProgressView()
                         .tint(.black)
                 }
             }
-        }
-        .tint(.blue)
-        .onAppear {
+        }.onAppear {
             setEffect()
         }
     }

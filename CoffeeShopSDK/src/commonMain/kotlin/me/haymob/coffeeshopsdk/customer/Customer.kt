@@ -75,12 +75,11 @@ fun signup(
     }
 }).decode<SignupMutation>().tryMap { it.signUp?.viewer }
 
+@Serializable
+data class UserQuery(val user: User): GQLObject
 
 @Serializable
-private data class SessionsQuery(val sessions: NodeContainer<Session>?) {
-    @Serializable
-    data class Session(val user: User): GQLObject
-}
+private data class SessionsQuery(val sessions: NodeContainer<UserQuery>?)
 
 fun user(token: String = config.sessionToken ?: "") = http(query {
     field(
@@ -91,19 +90,16 @@ fun user(token: String = config.sessionToken ?: "") = http(query {
             )
         )
     ) {
-        field(NodeContainer<SessionsQuery.Session>::edges) {
-            field(NodeContainer.Node<SessionsQuery.Session>::node) {
-                field(SessionsQuery.Session::user, userField)
+        field(NodeContainer<UserQuery>::edges) {
+            field(NodeContainer.Node<UserQuery>::node) {
+                field(UserQuery::user, userField)
             }
         }
     }
 }).decode<SessionsQuery>().tryMap { it.sessions?.edges?.firstOrNull()?.node?.user }
 
 @Serializable
-private data class UpdateUserMutation(val updateUser: UpdateUser?) {
-    @Serializable
-    data class UpdateUser(val user: User): GQLObject
-}
+private data class UpdateUserMutation(val updateUser: UserQuery?)
 
 fun updateUser(
     id: String,
@@ -128,7 +124,7 @@ fun updateUser(
             "fields" of argsOf(args)
         )
     ) {
-        field(UpdateUserMutation.UpdateUser::user, userField)
+        field(UserQuery::user, userField)
     }
 }).decode<UpdateUserMutation>().tryMap { it.updateUser?.user }.flatMapMerge { user ->
     if (password != null && password.isNotEmpty()) {
@@ -137,3 +133,82 @@ fun updateUser(
         flowOf(UserViewer("", user))
     }
 }
+
+@Serializable
+private data class AddressQuery(val address: UserQuery): GQLObject
+
+@Serializable
+private data class CreateAddressMutation(val createAddress: AddressQuery)
+
+fun createAddress(
+    userId: String,
+    firstName: String,
+    lastName: String,
+    city: String,
+    street: String,
+    postcode: String
+) = http(mutation {
+    field(
+        CreateAddressMutation::createAddress,
+        "input" of argsOf(
+            "fields" of argsOf(
+                "firstName" of firstName,
+                "lastName" of lastName,
+                "city" of city,
+                "street" of street,
+                "postcode" of postcode,
+                "user" of argsOf("link" of userId)
+            )
+        )
+    ) {
+        field(AddressQuery::address) {
+            field(UserQuery::user, userField)
+        }
+    }
+}).decode<CreateAddressMutation>().tryMap { it.createAddress.address.user }
+
+@Serializable
+private data class UpdateAddressMutation(val updateAddress: AddressQuery)
+
+fun updateAddress(
+    addressId: String,
+    firstName: String,
+    lastName: String,
+    city: String,
+    street: String,
+    postcode: String
+) = http(mutation {
+    field(
+        UpdateAddressMutation::updateAddress,
+        "input" of argsOf(
+            "id" of addressId,
+            "fields" of argsOf(
+                "firstName" of firstName,
+                "lastName" of lastName,
+                "city" of city,
+                "street" of street,
+                "postcode" of postcode
+            )
+        )
+    ) {
+        field(AddressQuery::address) {
+            field(UserQuery::user, userField)
+        }
+    }
+}).decode<UpdateAddressMutation>().tryMap { it.updateAddress.address.user }
+
+fun removeAddress(addressId: String) = http(mutation {
+    field(
+        UpdateAddressMutation::updateAddress,
+        "input" of argsOf(
+            "id" of addressId,
+            "fields" of argsOf(
+                "isRemove" of true
+            )
+        )
+    ) {
+        field(AddressQuery::address) {
+            field(UserQuery::user, userField)
+        }
+    }
+}).decode<UpdateAddressMutation>().tryMap { it.updateAddress.address.user }

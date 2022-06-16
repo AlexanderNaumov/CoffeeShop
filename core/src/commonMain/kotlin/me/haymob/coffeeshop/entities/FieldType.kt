@@ -5,5 +5,8 @@ enum class FieldType {
     Password,
     NewPassword,
     FirstName,
-    LastName
+    LastName,
+    City,
+    Street,
+    Postcode
 }

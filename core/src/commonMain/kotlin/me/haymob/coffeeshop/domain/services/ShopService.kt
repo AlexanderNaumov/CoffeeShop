@@ -13,8 +13,12 @@ import me.haymob.coffeeshopsdk.customer.logout as sdkLogout
 import me.haymob.coffeeshopsdk.customer.signup as sdkSignup
 import me.haymob.coffeeshopsdk.customer.user as sdkUser
 import me.haymob.coffeeshopsdk.customer.updateUser as sdkUpdateUser
+import me.haymob.coffeeshopsdk.customer.createAddress as sdkCreateAddress
+import me.haymob.coffeeshopsdk.customer.updateAddress as sdkUpdateAddress
+import me.haymob.coffeeshopsdk.customer.removeAddress as sdkRemoveAddress
 import me.haymob.coffeeshopsdk.setSessionToken as sdkSetSessionToken
 import me.haymob.coffeeshopsdk.removeSessionToken as sdkRemoveSessionToken
+
 
 class ShopService {
     fun categories() = sdkCategories()
@@ -36,5 +40,30 @@ class ShopService {
         password: String
     ) = sdkSignup(firstName, secondName, email, password)
     fun user() = sdkUser()
-    fun updateUser(id: String, firstName: String, lastName: String, email: String, password: String?) = sdkUpdateUser(id, firstName, lastName, email, password)
+    fun updateUser(
+        id: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String?
+    ) = sdkUpdateUser(id, firstName, lastName, email, password)
+    fun createAddress(
+        userId: String,
+        firstName: String,
+        lastName: String,
+        city: String,
+        street: String,
+        postcode: String
+    ) = sdkCreateAddress(userId, firstName, lastName, city, street, postcode)
+
+    fun updateAddress(
+        addressId: String,
+        firstName: String,
+        lastName: String,
+        city: String,
+        street: String,
+        postcode: String
+    ) = sdkUpdateAddress(addressId, firstName, lastName, city, street, postcode)
+
+    fun removeAddress(addressId: String) = sdkRemoveAddress(addressId)
 }

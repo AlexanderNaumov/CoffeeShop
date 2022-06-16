@@ -1,17 +1,19 @@
-package me.haymob.coffeeshop.ui.customer.account
+package me.haymob.coffeeshop.ui.customer.address.edit
 
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.services.FieldsService
+import me.haymob.coffeeshop.entities.Address
 import me.haymob.coffeeshop.mappers.FieldMapper
 import me.haymob.coffeeshop.store.Store
 
-class AccountUIStore(
+class EditAddressUIStore(
     internal val customerStore: CustomerStore,
-    internal val fieldsService: FieldsService
-): Store<AccountUIState, AccountUIEffect>(AccountUIState()) {
+    internal val fieldsService: FieldsService,
+    internal val address: Address
+): Store<EditAddressUIState, EditAddressUIEffect>(EditAddressUIState()) {
     init {
         customerStore.state.onEach {
             setState {
@@ -19,7 +21,7 @@ class AccountUIStore(
                     copy(isLoading = it.isLoading)
                 } else {
                     copy(
-                        fields = it.customer?.let(FieldMapper::accountFieldsFromCustomer) ?: emptyList(),
+                        fields = FieldMapper.addressFieldFromAddress(address),
                         isLoading = it.isLoading
                     )
                 }
@@ -27,8 +29,8 @@ class AccountUIStore(
         }.launchIn(scope)
         customerStore.effect.onEach {
             when (it) {
-                is CustomerEffect.Error -> setEffect(AccountUIEffect.Error(it.message))
-                is CustomerEffect.Successes -> setEffect(AccountUIEffect.Successes)
+                is CustomerEffect.Error -> setEffect(EditAddressUIEffect.Error(it.message))
+                is CustomerEffect.Successes -> setEffect(EditAddressUIEffect.Successes)
             }
         }.launchIn(scope)
     }

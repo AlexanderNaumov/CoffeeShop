@@ -21,11 +21,14 @@
 		11D68549284D38F500FA82F3 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D68548284D38F500FA82F3 /* AsyncImage.swift */; };
 		11D9953E284E58B80061F13D /* ProductImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9953D284E58B80061F13D /* ProductImage.swift */; };
 		11D99540284E5FC70061F13D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9953F284E5FC70061F13D /* ActionButton.swift */; };
+		11DDBE90285BA6F6008D94DE /* AddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDBE8F285BA6F6008D94DE /* AddressListView.swift */; };
+		11DDBE92285BB14E008D94DE /* CreateAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDBE91285BB14E008D94DE /* CreateAddressView.swift */; };
+		11DDBE94285BB4F7008D94DE /* EditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDBE93285BB4F7008D94DE /* EditAddressView.swift */; };
 		11DDDA24281429B90098389D /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDDA23281429B90098389D /* Identifiable.swift */; };
 		11DDDA2628142E050098389D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDDA2528142E050098389D /* Color.swift */; };
 		11DDDA28281440030098389D /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DDDA27281440030098389D /* Price.swift */; };
 		11F82062284A95F8001B8595 /* PullToRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F82061284A95F8001B8595 /* PullToRefresh.swift */; };
-		11F82064284BF3FF001B8595 /* ProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F82063284BF3FF001B8595 /* ProductDetail.swift */; };
+		11F82064284BF3FF001B8595 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F82063284BF3FF001B8595 /* ProductDetailView.swift */; };
 		11F95256285367EA001172A1 /* TextFieldOnAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F95255285367EA001172A1 /* TextFieldOnAction.swift */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* CatalogView.swift */; };
@@ -58,11 +61,14 @@
 		11D68548284D38F500FA82F3 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		11D9953D284E58B80061F13D /* ProductImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImage.swift; sourceTree = "<group>"; };
 		11D9953F284E5FC70061F13D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		11DDBE8F285BA6F6008D94DE /* AddressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListView.swift; sourceTree = "<group>"; };
+		11DDBE91285BB14E008D94DE /* CreateAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressView.swift; sourceTree = "<group>"; };
+		11DDBE93285BB4F7008D94DE /* EditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressView.swift; sourceTree = "<group>"; };
 		11DDDA23281429B90098389D /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		11DDDA2528142E050098389D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		11DDDA27281440030098389D /* Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
 		11F82061284A95F8001B8595 /* PullToRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefresh.swift; sourceTree = "<group>"; };
-		11F82063284BF3FF001B8595 /* ProductDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetail.swift; sourceTree = "<group>"; };
+		11F82063284BF3FF001B8595 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		11F95255285367EA001172A1 /* TextFieldOnAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldOnAction.swift; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +104,9 @@
 				11B55872285908B3000C2959 /* SignupView.swift */,
 				11B558762859153D000C2959 /* AccountTextField.swift */,
 				11C01D42285A496100BBA025 /* AccountView.swift */,
+				11DDBE8F285BA6F6008D94DE /* AddressListView.swift */,
+				11DDBE91285BB14E008D94DE /* CreateAddressView.swift */,
+				11DDBE93285BB4F7008D94DE /* EditAddressView.swift */,
 			);
 			path = Customer;
 			sourceTree = "<group>";
@@ -154,7 +163,7 @@
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* CatalogView.swift */,
 				113122BA2837CBBE00D33CE9 /* CartView.swift */,
-				11F82063284BF3FF001B8595 /* ProductDetail.swift */,
+				11F82063284BF3FF001B8595 /* ProductDetailView.swift */,
 				11D9953D284E58B80061F13D /* ProductImage.swift */,
 				11D9953F284E5FC70061F13D /* ActionButton.swift */,
 				113CB3612852740A0058227B /* Customer */,
@@ -278,13 +287,16 @@
 				11346E3528131AB400EB57D9 /* Store.swift in Sources */,
 				11B55875285913F8000C2959 /* ErrorAlert.swift in Sources */,
 				113122BB2837CBBE00D33CE9 /* CartView.swift in Sources */,
+				11DDBE90285BA6F6008D94DE /* AddressListView.swift in Sources */,
 				11F95256285367EA001172A1 /* TextFieldOnAction.swift in Sources */,
-				11F82064284BF3FF001B8595 /* ProductDetail.swift in Sources */,
+				11DDBE94285BB4F7008D94DE /* EditAddressView.swift in Sources */,
+				11F82064284BF3FF001B8595 /* ProductDetailView.swift in Sources */,
 				11DDDA24281429B90098389D /* Identifiable.swift in Sources */,
 				113CB3632852741C0058227B /* CustomerView.swift in Sources */,
 				11F82062284A95F8001B8595 /* PullToRefresh.swift in Sources */,
 				113CB36528527B480058227B /* LoginView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				11DDBE92285BB14E008D94DE /* CreateAddressView.swift in Sources */,
 				11DDDA2628142E050098389D /* Color.swift in Sources */,
 				11C01D43285A496100BBA025 /* AccountView.swift in Sources */,
 				11B55873285908B3000C2959 /* SignupView.swift in Sources */,

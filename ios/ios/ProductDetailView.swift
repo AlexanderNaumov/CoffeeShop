@@ -5,11 +5,11 @@ struct ProductDetailScreen: View {
     let product: Product
     
     var body: some View {
-        ProductDetail(store: Store(wrappedValue: ios.inject(params: [product])))
+        ProductDetailView(store: Store(wrappedValue: ios.inject(params: [product])))
     }
 }
 
-struct ProductDetail: View {
+struct ProductDetailView: View {
     
     @Store var store: ProductDetailUIStore
     

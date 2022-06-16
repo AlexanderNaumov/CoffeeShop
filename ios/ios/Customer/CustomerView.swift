@@ -14,8 +14,11 @@ struct CustomerView: View {
                 if store.currentState.isLoggedIn {
                     ZStack {
                         List {
-                            NavigationLink(destination: AccountView($showAccount), isActive: $showAccount) {
+                            NavigationLink(destination: AccountScreen(showAccount: $showAccount), isActive: $showAccount) {
                                 Text("Account")
+                            }
+                            NavigationLink(destination: AddressListScreen()) {
+                                Text("Addresses")
                             }
                         }
                         if store.currentState.isLoading {

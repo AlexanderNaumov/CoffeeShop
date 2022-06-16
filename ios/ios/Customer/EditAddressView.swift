@@ -1,25 +1,26 @@
 import SwiftUI
 import core
 
-struct AccountScreen: View {
-    let showAccount: Binding<Bool>
+struct EditAddresScreen: View {
+    let address: Address
+    @Binding var showEditAddress: Bool
     var body: some View {
-        AccountView(showAccount: showAccount)
+        EditAddresView(store: Store(wrappedValue: ios.inject(params: [address])), showEditAddress: $showEditAddress)
     }
 }
 
-struct AccountView: View {
-    @Store var store: AccountUIStore
+struct EditAddresView: View {
     @ObservedObject var error = ErrorState()
-    @Binding var showAccount: Bool
+    @Store var store: EditAddressUIStore
+    @Binding var showEditAddress: Bool
     
     func setEffect() {
         store.onEffect { effect in
             switch effect {
-            case let error as AccountUIEffect.Error:
+            case let error as EditAddressUIEffect.Error:
                 self.error.message = error.message
-            case is AccountUIEffect.Successes:
-                showAccount = false
+            case is EditAddressUIEffect.Successes:
+                showEditAddress = false
             default:
                 break
             }
@@ -34,21 +35,22 @@ struct AccountView: View {
                         store.updateField(type: field.type, value: value)
                     }
                 }
-                Button("Update") {
-                    store.updateCustomer()
-                }
+                Button("Updare") {
+                    store.updateAddress()
+                }.tint(.blue)
+                Button("Remove") {
+                    store.removeAddress()
+                }.tint(.red)
             }
             .errorAlert(errorState: error)
-            .navigationTitle("Account".uppercased())
+            .navigationTitle("New Address".uppercased())
             if store.currentState.isLoading {
                 VStack {
                     ProgressView()
                         .tint(.black)
                 }
             }
-        }
-        .tint(.blue)
-        .onAppear {
+        }.onAppear {
             setEffect()
         }
     }

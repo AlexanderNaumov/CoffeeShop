@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.launchIn
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.flow.onResult
 
-fun CustomerStore.login(email: String, password: String) {
+fun CustomerStore.removeAddress(addressId: String) {
     setState { copy(isLoading = true) }
-    shopService.login(email, password).onResult(::didLoadUser).launchIn(scope)
+    shopService.removeAddress(addressId).onResult(::didLoadUser).launchIn(scope)
 }
