@@ -15,6 +15,7 @@ import me.haymob.coffeeshop.ui.customer.account.AccountUIStore
 import me.haymob.coffeeshop.ui.customer.address.list.AddressListUIStore
 import me.haymob.coffeeshop.ui.customer.address.create.CreateAddressUIStore
 import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIStore
+import me.haymob.coffeeshop.ui.customer.wishlist.WishlistUIStore
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.*
@@ -37,4 +38,5 @@ val coreModule = module {
     factoryOf(::AddressListUIStore)
     factoryOf(::CreateAddressUIStore)
     factoryOf(::EditAddressUIStore)
+    factoryOf(::WishlistUIStore)
 }

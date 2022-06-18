@@ -16,6 +16,7 @@ internal object ProductMapper {
         PriceMapper.priceFromDto(product.price),
         product.categories.edges.map { it.node.objectId },
         0,
+        false,
         false
     )
 }

@@ -17,4 +17,8 @@ final class Router: ObservableObject {
         (vc as? AnyRouterViewController)?.anyRoute.presentationStyle.presenter.dismiss(vc: vc)
 //        isPresented = false
     }
+    
+    func showAlert(_ alert: Alert) {
+        
+    }
 }

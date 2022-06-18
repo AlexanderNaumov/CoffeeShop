@@ -16,6 +16,8 @@ import me.haymob.coffeeshopsdk.customer.updateUser as sdkUpdateUser
 import me.haymob.coffeeshopsdk.customer.createAddress as sdkCreateAddress
 import me.haymob.coffeeshopsdk.customer.updateAddress as sdkUpdateAddress
 import me.haymob.coffeeshopsdk.customer.removeAddress as sdkRemoveAddress
+import me.haymob.coffeeshopsdk.customer.addProductToWishlist as sdkAddProductToWishlist
+import me.haymob.coffeeshopsdk.customer.removeProductFromWishlist as sdkRemoveProductFromWishlist
 import me.haymob.coffeeshopsdk.setSessionToken as sdkSetSessionToken
 import me.haymob.coffeeshopsdk.removeSessionToken as sdkRemoveSessionToken
 
@@ -55,7 +57,6 @@ class ShopService {
         street: String,
         postcode: String
     ) = sdkCreateAddress(userId, firstName, lastName, city, street, postcode)
-
     fun updateAddress(
         addressId: String,
         firstName: String,
@@ -64,6 +65,7 @@ class ShopService {
         street: String,
         postcode: String
     ) = sdkUpdateAddress(addressId, firstName, lastName, city, street, postcode)
-
     fun removeAddress(addressId: String) = sdkRemoveAddress(addressId)
+    fun addProductToWishlist(userId: String, productId: String) = sdkAddProductToWishlist(userId, productId)
+    fun removeProductFromWishlist(userId: String, productId: String) = sdkRemoveProductFromWishlist(userId, productId)
 }

@@ -51,7 +51,19 @@ struct ProductDetailView: View {
                 }.padding(15)
                 Spacer()
             }
-        }.navigationBarTitle(product.name.uppercased(), displayMode: .inline)
+        }
+        .navigationBarTitle(product.name.uppercased(), displayMode: .inline)
+        .navigationBarItems(
+            trailing: store.currentState.isShowWishlist ? AnyView(Button {
+                if product.isOnWishlist {
+                    store.removeProductFromWishlist(product: product)
+                } else {
+                    store.addProductToWishlist(product: product)
+                }
+            } label: {
+                Image(product.isOnWishlist ? "favoriteFill" : "favorite")
+            }) : AnyView(EmptyView())
+        )
     }
     
     private func infoBlock(title: String, content: String) -> some View {

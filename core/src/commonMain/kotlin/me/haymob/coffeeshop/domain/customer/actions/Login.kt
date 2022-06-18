@@ -6,5 +6,5 @@ import me.haymob.coffeeshop.flow.onResult
 
 fun CustomerStore.login(email: String, password: String) {
     setState { copy(isLoading = true) }
-    shopService.login(email, password).onResult(::didLoadUser).launchIn(scope)
+    shopService.login(email, password).onResult(::didLoadUserViewer).launchIn(scope)
 }

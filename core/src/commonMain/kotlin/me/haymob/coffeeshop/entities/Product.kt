@@ -12,5 +12,6 @@ data class Product(
     val price: Price,
     val categories: List<String>,
     val qty: Int,
-    val isLoading: Boolean
+    val isLoading: Boolean,
+    val isOnWishlist: Boolean
 )

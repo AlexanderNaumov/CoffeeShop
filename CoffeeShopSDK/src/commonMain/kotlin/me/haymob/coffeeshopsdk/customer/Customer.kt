@@ -212,3 +212,35 @@ fun removeAddress(addressId: String) = http(mutation {
         }
     }
 }).decode<UpdateAddressMutation>().tryMap { it.updateAddress.address.user }
+
+fun addProductToWishlist(userId: String, productId: String) = http(mutation {
+    field(
+        UpdateUserMutation::updateUser,
+        "input" of argsOf(
+            "id" of userId,
+            "fields" of argsOf(
+                "wishlist" of argsOf(
+                    "add" of listOf(productId)
+                )
+            )
+        )
+    ) {
+        field(UserQuery::user, userField)
+    }
+}).decode<UpdateUserMutation>().tryMap { it.updateUser?.user }
+
+fun removeProductFromWishlist(userId: String, productId: String) = http(mutation {
+    field(
+        UpdateUserMutation::updateUser,
+        "input" of argsOf(
+            "id" of userId,
+            "fields" of argsOf(
+                "wishlist" of argsOf(
+                    "remove" of listOf(productId)
+                )
+            )
+        )
+    ) {
+        field(UserQuery::user, userField)
+    }
+}).decode<UpdateUserMutation>().tryMap { it.updateUser?.user }

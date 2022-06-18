@@ -4,12 +4,14 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
+import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.entities.Product
 import me.haymob.coffeeshop.store.Store
 
 class ProductDetailUIStore(
     internal val catalogStore: CatalogStore,
     internal val cartStore: CartStore,
+    internal val customerStore: CustomerStore,
     product: Product
 ): Store<ProductDetailUIState, Unit>(ProductDetailUIState(product)) {
     init {
@@ -18,6 +20,11 @@ class ProductDetailUIStore(
                 copy(
                     product = catalogState.categories.flatMap { it.products }.find { it.id == product.id } ?: product
                 )
+            }
+        }.launchIn(scope)
+        customerStore.state.onEach {
+            setState {
+                copy(isShowWishlist = it.isLoggedIn)
             }
         }.launchIn(scope)
     }
