@@ -1,16 +1,15 @@
 import SwiftUI
 import core
 
+struct SignupRoute: Route {
+    var body: some View { SignupView() }
+    var presentationStyle: PresentationStyle { .sheet }
+}
+
 struct SignupView: View {
-    
     @Store var store: SignupUIStore
     @ObservedObject var error = ErrorState()
-    @Binding var router: Routing?
-    
-    init(router: Binding<Routing?>) {
-        _router = router
-        setEffect()
-    }
+    @EnvironmentObject var router: Router
     
     func setEffect() {
         store.onEffect { effect in
@@ -18,7 +17,7 @@ struct SignupView: View {
             case let error as SignupUIEffect.Error:
                 self.error.message = error.message
             case is SignupUIEffect.Successes:
-                router = nil
+                router.close()
             default:
                 break
             }
@@ -41,7 +40,7 @@ struct SignupView: View {
                 .errorAlert(errorState: error)
                 .navigationTitle("Register".uppercased())
                 .navigationBarItems(leading: Button("X") {
-                    router = nil
+                    router.close()
                 })
                 if store.currentState.isLoading {
                     VStack {
@@ -49,6 +48,8 @@ struct SignupView: View {
                             .tint(.black)
                     }
                 }
+            }.onAppear {
+                setEffect()
             }
         }
     }

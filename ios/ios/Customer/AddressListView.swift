@@ -1,28 +1,30 @@
 import SwiftUI
 import core
 
-struct AddressListScreen: View {
+struct AddressListRoute: Route {
     var body: some View {
         AddressListView()
     }
 }
 
 struct AddressListView: View {
-    
     @Store var store: AddressListUIStore
-    @SwiftUI.State private var showCreateAddress = false
-    @SwiftUI.State private var showEditAddress = false
+    @EnvironmentObject var router: Router
     
     var body: some View {
         List {
             Section(header: HStack {
-                NavigationLink(destination: CreateAddressScreen(showCreateAddress: $showCreateAddress), isActive: $showCreateAddress) {
-                    Text("New Address").tint(.blue)
-                }
+                Button("New Address") {
+                    router.open(CreateAddressRoute())
+                }.tint(.blue)
             }, content: {
                 ForEach(store.currentState.addresses) { address in
-                    NavigationLink(destination: EditAddresScreen(address: address, showEditAddress: $showEditAddress), isActive: $showEditAddress) {
-                        Text("\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)")
+                    HStack {
+                        Button("\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)") {
+                            router.open(EditAddresRoute(address: address))
+                        }
+                        Spacer()
+                        Text(">")
                     }
                 }
             })

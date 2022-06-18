@@ -1,17 +1,16 @@
 import SwiftUI
 import core
 
-struct CreateAddressScreen: View {
-    let showCreateAddress: Binding<Bool>
+struct CreateAddressRoute: Route {
     var body: some View {
-        CreateAddressView(showCreateAddress: showCreateAddress)
+        CreateAddressView()
     }
 }
 
 struct CreateAddressView: View {
     @ObservedObject var error = ErrorState()
     @Store var store: CreateAddressUIStore
-    @Binding var showCreateAddress: Bool
+    @EnvironmentObject var router: Router
     
     func setEffect() {
         store.onEffect { effect in
@@ -19,7 +18,7 @@ struct CreateAddressView: View {
             case let error as CreateAddressUIEffect.Error:
                 self.error.message = error.message
             case is CreateAddressUIEffect.Successes:
-                showCreateAddress = false
+                router.close()
             default:
                 break
             }

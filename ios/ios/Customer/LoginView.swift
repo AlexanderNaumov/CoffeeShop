@@ -1,15 +1,15 @@
 import SwiftUI
 import core
 
+struct LoginRoute: Route {
+    var body: some View { LoginView() }
+    var presentationStyle: PresentationStyle { .sheet }
+}
+
 struct LoginView: View {
     @Store var store: LoginUIStore
     @ObservedObject var error = ErrorState()
-    @Binding var router: Routing?
-
-    init(router: Binding<Routing?>) {
-        _router = router
-        setEffect()
-    }
+    @EnvironmentObject var router: Router
     
     func setEffect() {
         store.onEffect { effect in
@@ -17,7 +17,7 @@ struct LoginView: View {
             case let error as LoginUIEffect.Error:
                 self.error.message = error.message
             case is LoginUIEffect.Successes:
-                router = nil
+                router.close()
             default:
                 break
             }
@@ -40,7 +40,7 @@ struct LoginView: View {
                 .errorAlert(errorState: error)
                 .navigationTitle("Login".uppercased())
                 .navigationBarItems(leading: Button("X") {
-                    router = nil
+                    router.close()
                 })
                 if store.currentState.isLoading {
                     VStack {
@@ -48,6 +48,8 @@ struct LoginView: View {
                             .tint(.black)
                     }
                 }
+            }.onAppear {
+                setEffect()
             }
         }
     }

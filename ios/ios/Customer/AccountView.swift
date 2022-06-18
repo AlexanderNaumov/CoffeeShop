@@ -1,17 +1,16 @@
 import SwiftUI
 import core
 
-struct AccountScreen: View {
-    let showAccount: Binding<Bool>
+struct AccountRoute: Route {
     var body: some View {
-        AccountView(showAccount: showAccount)
+        AccountView()
     }
 }
 
 struct AccountView: View {
     @Store var store: AccountUIStore
     @ObservedObject var error = ErrorState()
-    @Binding var showAccount: Bool
+    @EnvironmentObject var router: Router
     
     func setEffect() {
         store.onEffect { effect in
@@ -19,7 +18,7 @@ struct AccountView: View {
             case let error as AccountUIEffect.Error:
                 self.error.message = error.message
             case is AccountUIEffect.Successes:
-                showAccount = false
+                router.close()
             default:
                 break
             }

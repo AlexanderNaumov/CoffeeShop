@@ -1,18 +1,17 @@
 import SwiftUI
 import core
 
-struct EditAddresScreen: View {
+struct EditAddresRoute: Route {
     let address: Address
-    @Binding var showEditAddress: Bool
     var body: some View {
-        EditAddresView(store: Store(wrappedValue: ios.inject(params: [address])), showEditAddress: $showEditAddress)
+        EditAddresView(store: Store(wrappedValue: ios.inject(params: [address])))
     }
 }
 
 struct EditAddresView: View {
     @ObservedObject var error = ErrorState()
     @Store var store: EditAddressUIStore
-    @Binding var showEditAddress: Bool
+    @EnvironmentObject var router: Router
     
     func setEffect() {
         store.onEffect { effect in
@@ -20,7 +19,7 @@ struct EditAddresView: View {
             case let error as EditAddressUIEffect.Error:
                 self.error.message = error.message
             case is EditAddressUIEffect.Successes:
-                showEditAddress = false
+                router.close()
             default:
                 break
             }
@@ -43,7 +42,7 @@ struct EditAddresView: View {
                 }.tint(.red)
             }
             .errorAlert(errorState: error)
-            .navigationTitle("New Address".uppercased())
+            .navigationTitle("Edit Address".uppercased())
             if store.currentState.isLoading {
                 VStack {
                     ProgressView()
