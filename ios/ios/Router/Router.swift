@@ -2,7 +2,7 @@ import UIKit
 import SwiftUI
 
 final class Router: ObservableObject {
-    private weak var vc: UIViewController!
+    private var vc: UIViewController!
     private let route: AnyRoute
 //    private var childs: [Router] = []
 //    private weak var parent: Router?

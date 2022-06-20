@@ -1,8 +1,11 @@
 package me.haymob.coffeeshopsdk.cart
 
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.haymob.coffeeshopsdk.config
 import me.haymob.coffeeshopsdk.core.*
+import me.haymob.coffeeshopsdk.customer.UserQuery
 import me.haymob.coffeeshopsdk.entities.*
 
 @Serializable
@@ -93,3 +96,55 @@ fun removeItem(itemId: String) = http(mutation {
         }
     }
 }).decode<UpdateCartItemMutation>().tryMap { it.updateCartItem.cartItem.cart }
+
+@Serializable
+private data class CartUserQuery(val user: CartUser): GQLObject {
+    @Serializable
+    data class CartUser(val cart: Cart? = null): GQLObject
+}
+
+@Serializable
+private data class SessionsQuery(val sessions: NodeContainer<CartUserQuery>?)
+
+
+fun loadCustomerCart(token: String = config.sessionToken ?: "") = http(query {
+    field(
+        SessionsQuery::sessions,
+        "where" of argsOf(
+            "sessionToken" of argsOf(
+                "equalTo" of token
+            )
+        )
+    ) {
+        field(NodeContainer<CartUserQuery>::edges) {
+            field(NodeContainer.Node<CartUserQuery>::node) {
+                field(CartUserQuery::user) {
+                    field(CartUserQuery.CartUser::cart, cartField)
+                }
+            }
+        }
+    }
+}).decode<SessionsQuery>().tryMap { it.sessions?.edges?.firstOrNull()?.node?.user }.map { it.cart }
+
+@Serializable
+private data class UpdateUserMutation(
+    val updateUser: CartUserQuery
+)
+
+fun setCustomerCart(userId: String, cartId: String) = http(mutation {
+    field(
+        UpdateUserMutation::updateUser,
+        "input" of argsOf(
+            "id" of userId,
+            "fields" of argsOf(
+                "cart" of argsOf(
+                    "link" of cartId
+                )
+            )
+        )
+    ) {
+        field(CartUserQuery::user) {
+            field(CartUserQuery.CartUser::cart, cartField)
+        }
+    }
+}).decode<UpdateUserMutation>().tryMap { it.updateUser.user.cart }

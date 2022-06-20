@@ -5,6 +5,9 @@ import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.CartEffect
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.cart.actions.loadCart
+import me.haymob.coffeeshop.domain.cart.actions.loadCustomerCart
+import me.haymob.coffeeshop.domain.cart.actions.setCustomerCart
+import me.haymob.coffeeshop.domain.cart.actions.removeCart
 import me.haymob.coffeeshop.domain.catalog.CatalogEffect
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.catalog.actions.productSetLoading
@@ -34,10 +37,16 @@ class ProductEffectMediator(
                     customerStore.productsQtyUpdate(it.products)
                 }
                 is CatalogEffect.DidLoad -> {
-                    cartStore.loadCart()
-                    customerStore.loadCustomer()
+                    if (customerStore.currentState.isLoggedIn) {
+                        cartStore.loadCustomerCart()
+                        customerStore.loadCustomer()
+                    } else {
+                        cartStore.loadCart()
+                    }
                 }
                 is CustomerEffect.WishlistDidLoad -> catalogStore.productSetWishlist(it.products)
+                is CustomerEffect.WasAuthorized -> cartStore.setCustomerCart(it.customerId)
+                is CustomerEffect.LeftTheGame -> cartStore.removeCart()
             }
         }.launchIn(scope)
     }

@@ -18,5 +18,6 @@ fun CustomerStore.logout() {
         storage.removeCustomerToken()
         shopService.removeSessionToken()
         setEffect(CustomerEffect.WishlistDidLoad(emptyList()))
+        setEffect(CustomerEffect.LeftTheGame)
     }.launchIn(scope)
 }
