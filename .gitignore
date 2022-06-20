@@ -9,3 +9,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+ios/ios.xcodeproj/project.xcworkspace/xcuserdata
