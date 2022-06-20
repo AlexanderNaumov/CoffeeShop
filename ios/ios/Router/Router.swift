@@ -2,23 +2,39 @@ import UIKit
 import SwiftUI
 
 final class Router: ObservableObject {
-    private let vc: UIViewController
-//    @Published var isPresented = false
-    init(_ vc: UIViewController) { self.vc = vc }
-    
-    func open<R: Route>(_ route: R) {
-        let vc = RouterViewController(route: route)
-        vc.rootView = AnyView(route.body.environmentObject(Router(vc)))
-        route.presentationStyle.presenter.present(from: self.vc, to: vc)
-//        isPresented = true
+    private weak var vc: UIViewController!
+    private let route: AnyRoute
+//    private var childs: [Router] = []
+//    private weak var parent: Router?
+    init(_ vc: UIViewController, route: AnyRoute) {
+        self.vc = vc
+        self.route = route
     }
     
-    func close() {
-        (vc as? AnyRouterViewController)?.anyRoute.presentationStyle.presenter.dismiss(vc: vc)
-//        isPresented = false
-    }
-    
-    func showAlert(_ alert: Alert) {
+    @discardableResult
+    func open<R: Route>(_ route: R, animated: Bool = true) -> Router {
+        let vc = RouterViewController()
+        let router = Router(vc, route: route)
+//        childs.append(router)
+//        router.parent = self
+        vc.rootView = AnyView(route.body.environmentObject(router))
         
+        route.presentationStyle.presenter.present(from: self.vc, to: vc, animated: animated) {
+            print("open")
+        }
+        return router
+    }
+    
+    func close(animated: Bool = true) {
+//        if let index = parent?.childs.firstIndex(where: { $0 === self }) {
+//            parent!.childs.remove(at: index)
+//        }
+        route.presentationStyle.presenter.dismiss(vc: vc, animated: animated) {
+            print("close")
+        }
+    }
+    
+    deinit {
+        print("----- \(self)")
     }
 }

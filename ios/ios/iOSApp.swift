@@ -11,11 +11,9 @@ struct iOSApp: App {
 	var body: some Scene {
 		WindowGroup {
             TabView {
-                Group {
-                    CatalogView()
-                    CartView()
-                    CustomerView()
-                }
+                CatalogView()
+                CartView()
+                CustomerView()
             }.accentColor(.black)
 		}
 	}

@@ -3,12 +3,12 @@ import SwiftUI
 struct RouterView<Content: View>: UIViewControllerRepresentable {
     @ViewBuilder var content: (Router) -> Content
     
-    func makeUIViewController(context: Context) -> RouterViewController<RootRoute> {
-        RouterViewController(route: RootRoute())
+    func makeUIViewController(context: Context) -> RouterViewController {
+        RouterViewController()
     }
     
-    func updateUIViewController(_ controller: RouterViewController<RootRoute>, context: Context) {
-        let router = Router(controller)
+    func updateUIViewController(_ controller: RouterViewController, context: Context) {
+        let router = Router(controller, route: RootRoute())
         controller.rootView = AnyView(content(router).environmentObject(router))
     }
 }
