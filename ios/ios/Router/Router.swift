@@ -41,6 +41,7 @@ final class Router: ObservableObject {
     }
     
     func close(animated: Bool = true) async {
+        guard let vc = vc else { return }
         await route.presentationStyle.presenter.dismiss(vc: vc, animated: animated)
     }
     

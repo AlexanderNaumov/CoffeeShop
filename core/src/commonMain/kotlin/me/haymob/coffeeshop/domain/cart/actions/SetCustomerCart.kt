@@ -7,10 +7,12 @@ import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
 
 fun CartStore.setCustomerCart(customerId: String) {
-    val cartId = currentState.cart?.id ?: return
+    val cartId = currentState.cart?.id
 
     setState { copy(isLoading = true) }
-    shopService.loadCustomerCart().onResult { result ->
+    (cartId?.let {
+        shopService.setCustomerCart(customerId, cartId)
+    } ?: shopService.loadCustomerCart()).onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(

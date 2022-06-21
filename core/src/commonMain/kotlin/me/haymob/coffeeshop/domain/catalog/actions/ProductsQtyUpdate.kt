@@ -9,9 +9,14 @@ internal fun CatalogStore.productsQtyUpdate(products: List<Product>) {
             categories = categories.map { category ->
                 category.copy(
                     products = category.products.map { product ->
-                        products.find { it.id == product.id } ?: product.copy(qty = 0)
+                        val qty = products.find { it.id == product.id }?.qty ?: 0
+                        product.copy(qty = qty)
                     }
                 )
+            },
+            wishlist = wishlist.map { product ->
+                val qty = products.find { it.id == product.id }?.qty ?: 0
+                product.copy(qty = qty)
             }
         )
     }

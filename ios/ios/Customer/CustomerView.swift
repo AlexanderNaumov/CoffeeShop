@@ -24,13 +24,6 @@ struct CustomerView: View {
                                 Spacer()
                                 Text(">")
                             }
-                            HStack {
-                                Button("Wishlist") {
-                                    router.open(WishlistRoute())
-                                }
-                                Spacer()
-                                Text(">")
-                            }
                         }
                         if store.currentState.isLoading {
                             VStack {

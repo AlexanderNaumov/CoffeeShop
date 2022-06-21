@@ -16,8 +16,6 @@ import me.haymob.coffeeshop.domain.catalog.actions.productsQtyUpdate
 import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.customer.actions.loadCustomer
-import me.haymob.coffeeshop.domain.customer.actions.productSetLoading
-import me.haymob.coffeeshop.domain.customer.actions.productsQtyUpdate
 import me.haymob.coffeeshop.store.EffectMediator
 
 class ProductEffectMediator(
@@ -28,14 +26,8 @@ class ProductEffectMediator(
     init {
         effect.onEach {
             when (it) {
-                is CartEffect.ProductSetLoading -> {
-                    catalogStore.productSetLoading(it.product, it.loading)
-                    customerStore.productSetLoading(it.product, it.loading)
-                }
-                is CartEffect.DidLoad -> {
-                    catalogStore.productsQtyUpdate(it.products)
-                    customerStore.productsQtyUpdate(it.products)
-                }
+                is CartEffect.ProductSetLoading -> catalogStore.productSetLoading(it.product, it.loading)
+                is CartEffect.DidLoad -> catalogStore.productsQtyUpdate(it.products)
                 is CatalogEffect.DidLoad -> {
                     if (customerStore.currentState.isLoggedIn) {
                         cartStore.loadCustomerCart()

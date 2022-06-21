@@ -16,7 +16,15 @@ fun CatalogStore.productSetLoading(product: Product, loading: Boolean) {
                         }
                     }
                 )
+            },
+            wishlist = wishlist.map {
+                if (product.id == it.id) {
+                    it.copy(isLoading = loading)
+                } else {
+                    it
+                }
             }
+
         )
     }
 }

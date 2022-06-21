@@ -12,6 +12,7 @@ struct iOSApp: App {
 		WindowGroup {
             TabView {
                 CatalogView()
+                WishlistView()
                 CartView()
                 CustomerView()
             }.accentColor(.black)

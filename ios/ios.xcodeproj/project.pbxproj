@@ -143,6 +143,14 @@
 			path = Catalog;
 			sourceTree = "<group>";
 		};
+		1119674B28625DCE00812879 /* Wishlist */ = {
+			isa = PBXGroup;
+			children = (
+				115CA718285E5EE5008AF68B /* WishlistView.swift */,
+			);
+			path = Wishlist;
+			sourceTree = "<group>";
+		};
 		113CB3612852740A0058227B /* Customer */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +162,6 @@
 				11DDBE8F285BA6F6008D94DE /* AddressListView.swift */,
 				11DDBE91285BB14E008D94DE /* CreateAddressView.swift */,
 				11DDBE93285BB4F7008D94DE /* EditAddressView.swift */,
-				115CA718285E5EE5008AF68B /* WishlistView.swift */,
 			);
 			path = Customer;
 			sourceTree = "<group>";
@@ -213,6 +220,7 @@
 				1119674728623F2700812879 /* Cart */,
 				11D9953D284E58B80061F13D /* ProductImage.swift */,
 				11D9953F284E5FC70061F13D /* ActionButton.swift */,
+				1119674B28625DCE00812879 /* Wishlist */,
 				113CB3612852740A0058227B /* Customer */,
 				110A4A07285DF4FF000C14D0 /* Router */,
 				11D68547284D38E500FA82F3 /* View */,

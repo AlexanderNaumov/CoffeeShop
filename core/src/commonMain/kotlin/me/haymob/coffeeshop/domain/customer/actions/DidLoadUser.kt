@@ -3,11 +3,13 @@ package me.haymob.coffeeshop.domain.customer.actions
 import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.mappers.CustomerMapper
+import me.haymob.coffeeshop.mappers.ProductMapper
 import me.haymob.coffeeshopsdk.entities.User
 import me.haymob.coffeeshopsdk.entities.UserViewer
 
 internal fun CustomerStore.didLoadUser(result: Result<User>) {
-    val customer = result.getOrNull()?.let { CustomerMapper.customerFromDto(it) }
+    val user = result.getOrNull()
+    val customer = user?.let { CustomerMapper.customerFromDto(it) }
     setState {
         copy(
             customer = customer,
@@ -17,7 +19,9 @@ internal fun CustomerStore.didLoadUser(result: Result<User>) {
     }
     if (result.isSuccess) {
         setEffect(CustomerEffect.Successes)
-        setEffect(CustomerEffect.WishlistDidLoad(customer?.wishlist ?: emptyList()))
+
+        val wishlist = user?.wishlist?.edges?.map { ProductMapper.productFromDto(it.node) } ?: emptyList()
+        setEffect(CustomerEffect.WishlistDidLoad(wishlist))
     }
     if (result.isFailure) {
         setEffect(CustomerEffect.Error(result.exceptionOrNull()?.message ?: "unknown error"))
@@ -37,7 +41,10 @@ internal fun CustomerStore.didLoadUserViewer(result: Result<UserViewer>) {
     }
     if (result.isSuccess) {
         setEffect(CustomerEffect.Successes)
-        setEffect(CustomerEffect.WishlistDidLoad(customer?.wishlist ?: emptyList()))
+
+        val wishlist = viewer?.user?.wishlist?.edges?.map { ProductMapper.productFromDto(it.node) } ?: emptyList()
+
+        setEffect(CustomerEffect.WishlistDidLoad(wishlist))
         val token = viewer!!.sessionToken
         if (token.isNotEmpty()) {
             storage.setCustomerToken(token)

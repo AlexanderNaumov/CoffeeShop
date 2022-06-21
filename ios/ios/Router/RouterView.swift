@@ -21,11 +21,16 @@ struct NavView<Content: View>: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ controller: UINavigationController, context: Context) {
-        let vc = UIHostingController(rootView: AnyView(EmptyView()))
-        let router = Router(vc, route: RootRoute())
-//        controller.navigationBar.prefersLargeTitles = true
-        vc.rootView = AnyView(content(router).environmentObject(router))
-        controller.viewControllers = [vc]
+        if controller.viewControllers.isEmpty {
+            let vc = UIHostingController(rootView: AnyView(EmptyView()))
+            let router = Router(vc, route: RootRoute())
+            vc.rootView = AnyView(content(router).environmentObject(router))
+            controller.viewControllers = [vc]
+        } else {
+            let vc = controller.viewControllers[0] as! UIHostingController<AnyView>
+            let router = vc.router ?? Router(vc, route: RootRoute())
+            vc.rootView = AnyView(content(router).environmentObject(router))
+        }
     }
 }
 
