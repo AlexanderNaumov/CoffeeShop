@@ -9,16 +9,15 @@ struct AccountRoute: SwiftUIRoute {
 
 struct AccountView: View {
     @Store var store: AccountUIStore
-    @ObservedObject var error = ErrorState()
     @EnvironmentObject var router: Router
     
     func setEffect() {
-        store.onEffect { effect in
+        store.onEffect { [weak router] effect in
             switch effect {
             case let error as AccountUIEffect.Error:
-                self.error.message = error.message
+                router?.open(AlertRoute(alert: Alert(title: "Error", message: error.message)))
             case is AccountUIEffect.Successes:
-                router.close()
+                router?.close()
             default:
                 break
             }
@@ -37,7 +36,6 @@ struct AccountView: View {
                     store.updateCustomer()
                 }
             }
-            .errorAlert(errorState: error)
             .navigationTitle("Account".uppercased())
             if store.currentState.isLoading {
                 VStack {

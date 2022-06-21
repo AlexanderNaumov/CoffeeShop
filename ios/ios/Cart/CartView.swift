@@ -6,7 +6,7 @@ struct CartView: View {
     @Store var store: CartUIStore
     
     var body: some View {
-        NavigationView {
+        NavView { router in
             if let cart = store.currentState.cart, !cart.items.isEmpty {
                 VStack {
                     List {
@@ -26,7 +26,9 @@ struct CartView: View {
                             content: {
                                 ForEach(cart.items) { item in
                                     ZStack {
-                                        NavigationLink(destination: ProductDetailScreen(product: item.product)) {
+                                        Button {
+                                            router.open(ProductDetailRoute(product: item.product))
+                                        } label: {
                                             HStack {
                                                 Button {
                                                     store.selectCartItem(item: item)
@@ -46,7 +48,7 @@ struct CartView: View {
                                                 } dec: {
                                                     store.decrementProduct(product: item.product)
                                                 }
-
+                                                Text(">")
                                             }.buttonStyle(PlainButtonStyle())
                                         }
                                         if item.product.isLoading {
@@ -79,7 +81,9 @@ struct CartView: View {
                     Text("Empty Cart")
                 }
             }
-        }.tabItem {
+        }
+        .ignoresSafeArea()
+        .tabItem {
             Text("Cart")
         }
     }

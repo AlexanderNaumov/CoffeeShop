@@ -8,17 +8,16 @@ struct CreateAddressRoute: SwiftUIRoute {
 }
 
 struct CreateAddressView: View {
-    @ObservedObject var error = ErrorState()
     @Store var store: CreateAddressUIStore
     @EnvironmentObject var router: Router
     
     func setEffect() {
-        store.onEffect { effect in
+        store.onEffect { [weak router] effect in
             switch effect {
             case let error as CreateAddressUIEffect.Error:
-                self.error.message = error.message
+                router?.open(AlertRoute(alert: Alert(title: "Error", message: error.message)))
             case is CreateAddressUIEffect.Successes:
-                router.close()
+                router?.close()
             default:
                 break
             }
@@ -37,7 +36,6 @@ struct CreateAddressView: View {
                     store.createAddress()
                 }.tint(.blue)
             }
-            .errorAlert(errorState: error)
             .navigationTitle("New Address".uppercased())
             if store.currentState.isLoading {
                 VStack {

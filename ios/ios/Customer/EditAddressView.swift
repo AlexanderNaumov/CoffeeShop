@@ -9,17 +9,16 @@ struct EditAddresRoute: SwiftUIRoute {
 }
 
 struct EditAddresView: View {
-    @ObservedObject var error = ErrorState()
     @Store var store: EditAddressUIStore
     @EnvironmentObject var router: Router
     
     func setEffect() {
-        store.onEffect { effect in
+        store.onEffect { [weak router] effect in
             switch effect {
             case let error as EditAddressUIEffect.Error:
-                self.error.message = error.message
+                router?.open(AlertRoute(alert: Alert(title: "Error", message: error.message)))
             case is EditAddressUIEffect.Successes:
-                router.close()
+                router?.close()
             default:
                 break
             }
@@ -27,7 +26,7 @@ struct EditAddresView: View {
     }
     
     var body: some View {
-        ZStack { [unowned store] in
+        ZStack {
             VStack(spacing: 18) {
                 ForEach(store.currentState.fields) { field in
                     AccountTextField(field: field) { value in
@@ -41,7 +40,6 @@ struct EditAddresView: View {
                     store.removeAddress()
                 }.tint(.red)
             }
-            .errorAlert(errorState: error)
             .navigationTitle("Edit Address".uppercased())
             if store.currentState.isLoading {
                 VStack {

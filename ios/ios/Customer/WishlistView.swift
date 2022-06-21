@@ -8,15 +8,18 @@ struct WishlistRoute: SwiftUIRoute {
 }
 
 struct WishlistView: View {
+    @EnvironmentObject var router: Router
     @Store var store: WishlistUIStore
     
     var body: some View {
-        Group { [unowned store] in
+        Group {
             if !store.currentState.wishlist.isEmpty {
                 List {
                     ForEach(store.currentState.wishlist) { product in
                         ZStack {
-                            NavigationLink(destination: ProductDetailScreen(product: product)) {
+                            Button {
+                                router.open(ProductDetailRoute(product: product))
+                            } label: {
                                 HStack {
                                     ProductImage(image: product.thumbnail)
                                         .frame(width: 50, height: 50)
@@ -30,7 +33,7 @@ struct WishlistView: View {
                                     } dec: {
                                         store.decrementProduct(product: product)
                                     }
-
+                                    Text(">")
                                 }.buttonStyle(PlainButtonStyle())
                             }
                             if product.isLoading {

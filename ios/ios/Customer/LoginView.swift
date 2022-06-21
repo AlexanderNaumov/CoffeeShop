@@ -8,16 +8,15 @@ struct LoginRoute: SwiftUIRoute {
 
 struct LoginView: View {
     @Store var store: LoginUIStore
-    @ObservedObject var error = ErrorState()
     @EnvironmentObject var router: Router
     
     func setEffect() {
-        store.onEffect { effect in
+        store.onEffect { [weak router] effect in
             switch effect {
             case let error as LoginUIEffect.Error:
-                self.error.message = error.message
+                router?.open(AlertRoute(alert: Alert(title: "Error", message: error.message)))
             case is LoginUIEffect.Successes:
-                router.close()
+                router?.close()
             default:
                 break
             }
@@ -37,7 +36,6 @@ struct LoginView: View {
                         store.login()
                     }
                 }
-                .errorAlert(errorState: error)
                 .navigationTitle("Login".uppercased())
                 .navigationBarItems(leading: Button("X") {
                     router.close()

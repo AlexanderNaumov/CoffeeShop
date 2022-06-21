@@ -1,9 +1,9 @@
 import SwiftUI
 import core
 
-struct ProductDetailScreen: View {
+struct ProductDetailRoute: SwiftUIRoute {
     let product: Product
-    
+
     var body: some View {
         ProductDetailView(store: Store(wrappedValue: ios.inject(params: [product])))
     }
