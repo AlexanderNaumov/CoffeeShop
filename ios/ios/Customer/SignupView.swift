@@ -1,7 +1,7 @@
 import SwiftUI
 import core
 
-struct SignupRoute: Route {
+struct SignupRoute: SwiftUIRoute {
     var body: some View { SignupView() }
     var presentationStyle: PresentationStyle { .sheet }
 }

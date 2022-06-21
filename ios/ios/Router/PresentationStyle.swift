@@ -1,3 +1,4 @@
+@MainActor
 enum PresentationStyle {
     case push
     case sheet

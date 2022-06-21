@@ -1,40 +1,56 @@
 import UIKit
 import SwiftUI
 
+@MainActor
 final class Router: ObservableObject {
-    private var vc: UIViewController!
-    private let route: AnyRoute
-//    private var childs: [Router] = []
-//    private weak var parent: Router?
-    init(_ vc: UIViewController, route: AnyRoute) {
+    private weak var vc: UIViewController!
+    private let route: Route
+    private var childs = NSHashTable<Router>.weakObjects()
+    private weak var parent: Router?
+    init(_ vc: UIViewController, route: Route) {
         self.vc = vc
         self.route = route
+        
     }
     
     @discardableResult
-    func open<R: Route>(_ route: R, animated: Bool = true) -> Router {
-        let vc = RouterViewController()
-        let router = Router(vc, route: route)
-//        childs.append(router)
-//        router.parent = self
-        vc.rootView = AnyView(route.body.environmentObject(router))
-        
-        route.presentationStyle.presenter.present(from: self.vc, to: vc, animated: animated) {
-            print("open")
+    func open<R: Route>(_ route: R, animated: Bool = true) async -> Router {
+        let vc: UIViewController
+        let router: Router
+        switch route {
+        case let route as AnySwiftUIRoute:
+            let _vc = UIHostingController(rootView: AnyView(EmptyView()))
+            router = Router(_vc, route: route)
+            _vc.rootView = route.anyView(with: router)
+            vc = _vc
+        default:
+            vc = route.controller()
+            router = Router(vc, route: route)
         }
+        vc.router = router
+        childs.add(router)
+        router.parent = self
+        await route.presentationStyle.presenter.present(from: self.vc, to: vc, animated: animated)
         return router
     }
     
+    func open<R: Route>(_ route: R, animated: Bool = true) {
+        Task {
+            await open(route, animated: animated)
+        }
+    }
+    
+    func close(animated: Bool = true) async {
+        await route.presentationStyle.presenter.dismiss(vc: vc, animated: animated)
+    }
+    
     func close(animated: Bool = true) {
-//        if let index = parent?.childs.firstIndex(where: { $0 === self }) {
-//            parent!.childs.remove(at: index)
-//        }
-        route.presentationStyle.presenter.dismiss(vc: vc, animated: animated) {
-            print("close")
+        Task {
+            await close(animated: animated)
         }
     }
     
     deinit {
-        print("----- \(self)")
+        print("----- deinit \(route)")
     }
 }

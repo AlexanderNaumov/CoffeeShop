@@ -1,7 +1,7 @@
 import SwiftUI
 import core
 
-struct EditAddresRoute: Route {
+struct EditAddresRoute: SwiftUIRoute {
     let address: Address
     var body: some View {
         EditAddresView(store: Store(wrappedValue: ios.inject(params: [address])))
@@ -27,7 +27,7 @@ struct EditAddresView: View {
     }
     
     var body: some View {
-        ZStack {
+        ZStack { [unowned store] in
             VStack(spacing: 18) {
                 ForEach(store.currentState.fields) { field in
                     AccountTextField(field: field) { value in

@@ -1,7 +1,7 @@
 import SwiftUI
 import core
 
-struct AddressListRoute: Route {
+struct AddressListRoute: SwiftUIRoute {
     var body: some View {
         AddressListView()
     }

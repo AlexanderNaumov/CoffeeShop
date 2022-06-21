@@ -1,7 +1,7 @@
 import SwiftUI
 import core
 
-struct WishlistRoute: Route {
+struct WishlistRoute: SwiftUIRoute {
     var body: some View {
         WishlistView()
     }
@@ -11,7 +11,7 @@ struct WishlistView: View {
     @Store var store: WishlistUIStore
     
     var body: some View {
-        Group {
+        Group { [unowned store] in
             if !store.currentState.wishlist.isEmpty {
                 List {
                     ForEach(store.currentState.wishlist) { product in

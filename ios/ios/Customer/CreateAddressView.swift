@@ -1,7 +1,7 @@
 import SwiftUI
 import core
 
-struct CreateAddressRoute: Route {
+struct CreateAddressRoute: SwiftUIRoute {
     var body: some View {
         CreateAddressView()
     }

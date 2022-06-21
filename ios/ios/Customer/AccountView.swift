@@ -1,7 +1,7 @@
 import SwiftUI
 import core
 
-struct AccountRoute: Route {
+struct AccountRoute: SwiftUIRoute {
     var body: some View {
         AccountView()
     }
