@@ -7,7 +7,10 @@ import me.haymob.coffeeshopsdk.core.*
 data class Cart(
     val objectId: String,
     val totalPrice: Price?,
-    val items: NodeContainer<Item>
+    val items: NodeContainer<Item>,
+    val address: Address?,
+    val shippingMethods: NodeContainer<ShippingMethod>,
+    val paymentMethods: NodeContainer<PaymentMethod>
 ): GQLObject {
     @Serializable
     data class Item(
@@ -27,6 +30,16 @@ internal val cartField = field {
                 field(Cart.Item::qty)
                 field(Cart.Item::product, productField)
             }
+        }
+    }
+    field(Cart::shippingMethods) {
+        field(NodeContainer<ShippingMethod>::edges) {
+            field(NodeContainer.Node<ShippingMethod>::node, shippingField)
+        }
+    }
+    field(Cart::paymentMethods) {
+        field(NodeContainer<PaymentMethod>::edges) {
+            field(NodeContainer.Node<PaymentMethod>::node, paymentField)
         }
     }
 }

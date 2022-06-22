@@ -2,64 +2,59 @@ import SwiftUI
 import core
 
 struct CustomerView: View {
+    @EnvironmentObject var router: Router
     @Store var store: CustomerUIStore
     
     var body: some View {
-        NavView { router in
-            Group {
-                if store.currentState.isLoggedIn {
-                    ZStack {
-                        List {
-                            HStack {
-                                Button("Account") {
-                                    router.open(AccountRoute())
-                                }
-                                Spacer()
-                                Text(">")
+        Group {
+            if store.currentState.isLoggedIn {
+                ZStack {
+                    List {
+                        HStack {
+                            Button("Account") {
+                                router.open(AccountRoute())
                             }
-                            HStack {
-                                Button("Addresses") {
-                                    router.open(AddressListRoute())
-                                }
-                                Spacer()
-                                Text(">")
-                            }
+                            Spacer()
+                            Text(">")
                         }
-                        if store.currentState.isLoading {
-                            VStack {
-                                ProgressView()
-                                    .tint(.black)
+                        HStack {
+                            Button("Addresses") {
+                                router.open(AddressListRoute())
                             }
+                            Spacer()
+                            Text(">")
                         }
                     }
-                } else {
-                    VStack(spacing: 20) {
-                        Button("Login") {
-                            router.open(LoginRoute())
+                    if store.currentState.isLoading {
+                        VStack {
+                            ProgressView()
+                                .tint(.black)
                         }
-                        .tint(.blue)
-                        
-                        Button("Register") {
-                            router.open(SignupRoute())
-                        }
-                        .tint(.blue)
                     }
                 }
+            } else {
+                VStack(spacing: 20) {
+                    Button("Login") {
+                        router.open(LoginRoute())
+                    }
+                    .tint(.blue)
+                    
+                    Button("Register") {
+                        router.open(SignupRoute())
+                    }
+                    .tint(.blue)
+                }
             }
-            .tint(.blue)
-            .navigationTitle("Customer".uppercased())
-            .navigationBarItems(
-                leading: store.currentState.isLoggedIn ? AnyView(Button("Logout") {
-                    router.open(AlertRoute(alert: logoutAlert {
-                        store.logout()
-                    }))
-                }) : AnyView(EmptyView())
-            )
         }
-        .ignoresSafeArea()
-        .tabItem {
-            Text("Customer")
-        }
+        .tint(.blue)
+        .navigationTitle("Customer".uppercased())
+        .navigationBarItems(
+            leading: store.currentState.isLoggedIn ? AnyView(Button("Logout") {
+                router.open(AlertRoute(alert: logoutAlert {
+                    store.logout()
+                }))
+            }) : AnyView(EmptyView())
+        )
     }
 }
 

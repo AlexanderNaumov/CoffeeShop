@@ -2,11 +2,11 @@ import SwiftUI
 import core
 
 struct CartView: View {
-    
+    @EnvironmentObject var router: Router
     @Store var store: CartUIStore
     
     var body: some View {
-        NavView { router in
+        Group {
             if let cart = store.currentState.cart, !cart.items.isEmpty {
                 VStack {
                     List {
@@ -81,10 +81,6 @@ struct CartView: View {
                     Text("Empty Cart")
                 }
             }
-        }
-        .ignoresSafeArea()
-        .tabItem {
-            Text("Cart")
         }
     }
 }

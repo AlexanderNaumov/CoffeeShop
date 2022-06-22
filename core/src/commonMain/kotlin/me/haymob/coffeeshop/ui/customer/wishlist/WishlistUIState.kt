@@ -5,5 +5,6 @@ import me.haymob.coffeeshop.entities.Product
 
 data class WishlistUIState(
     val wishlist: List<Product> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false
 ): State

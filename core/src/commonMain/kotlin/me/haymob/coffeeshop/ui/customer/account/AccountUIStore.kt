@@ -20,7 +20,9 @@ class AccountUIStore(
                 } else {
                     copy(
                         fields = it.customer?.let(FieldMapper::accountFieldsFromCustomer) ?: emptyList(),
-                        isLoading = it.isLoading
+                        isLoading = it.isLoading,
+                        isRefreshing = if (isRefreshing && !it.isLoading) false else isRefreshing
+
                     )
                 }
             }

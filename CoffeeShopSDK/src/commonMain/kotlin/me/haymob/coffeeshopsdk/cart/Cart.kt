@@ -1,11 +1,9 @@
 package me.haymob.coffeeshopsdk.cart
 
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.haymob.coffeeshopsdk.config
 import me.haymob.coffeeshopsdk.core.*
-import me.haymob.coffeeshopsdk.customer.UserQuery
 import me.haymob.coffeeshopsdk.entities.*
 
 @Serializable
@@ -148,3 +146,24 @@ fun setCustomerCart(userId: String, cartId: String) = http(mutation {
         }
     }
 }).decode<UpdateUserMutation>().tryMap { it.updateUser.user.cart }
+
+@Serializable
+private data class UpdateCartMutation(
+    val updateCart: CartQuery
+)
+
+fun setAddressOnCart(cartId: String, addressId: String) = http(mutation {
+    field(
+        UpdateCartMutation::updateCart,
+        "input" of argsOf(
+            "id" of cartId,
+            "fields" of argsOf(
+                "address" of argsOf(
+                    "link" of addressId
+                )
+            )
+        )
+    ) {
+        field(CartQuery::cart, cartField)
+    }
+}).decode<UpdateCartMutation>().tryMap { it.updateCart.cart }

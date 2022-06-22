@@ -5,5 +5,6 @@ import me.haymob.coffeeshop.store.State
 
 data class AccountUIState(
     val fields: List<Field> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false
 ): State

@@ -10,6 +10,7 @@ internal object CustomerMapper {
         customer.firstName,
         customer.lastName,
         customer.email,
-        customer.addresses.edges.map { AddressMapper.addressFromDto(it.node) }
+        customer.addresses.edges.map { AddressMapper.addressFromDto(it.node) },
+        customer.wishlist.edges.map { ProductMapper.productFromDto(it.node) }
     )
 }

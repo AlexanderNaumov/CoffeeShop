@@ -13,16 +13,13 @@ class WishlistUIStore(
     internal val cartStore: CartStore
 ): Store<WishlistUIState, Unit>(WishlistUIState()) {
     init {
-        catalogStore.state.onEach {
-            setState {
-                copy(
-                    wishlist = it.wishlist
-                )
-            }
-        }.launchIn(scope)
         customerStore.state.onEach {
             setState {
-                copy(isLoading = it.isLoading)
+                copy(
+                    wishlist = it.customer?.wishlist ?: emptyList(),
+                    isLoading = it.isLoading,
+                    isRefreshing = if (isRefreshing && !it.isLoading) false else isRefreshing
+                )
             }
         }.launchIn(scope)
     }

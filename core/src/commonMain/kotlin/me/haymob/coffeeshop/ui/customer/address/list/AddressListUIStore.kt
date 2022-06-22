@@ -13,7 +13,8 @@ class AddressListUIStore(
             setState {
                 copy(
                     addresses = it.customer?.addresses ?: emptyList(),
-                    isLoading = it.isLoading
+                    isLoading = it.isLoading,
+                    isRefreshing = if (isRefreshing && !it.isLoading) false else isRefreshing
                 )
             }
         }.launchIn(scope)

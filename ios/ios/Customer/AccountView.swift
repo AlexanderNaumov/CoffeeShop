@@ -25,28 +25,33 @@ struct AccountView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack(spacing: 18) {
-                ForEach(store.currentState.fields) { field in
-                    AccountTextField(field: field) { value in
-                        store.updateField(type: field.type, value: value)
+        ScrollView {
+            Spacer(minLength: 100)
+            ZStack {
+                VStack(spacing: 18) {
+                    ForEach(store.currentState.fields) { field in
+                        AccountTextField(field: field) { value in
+                            store.updateField(type: field.type, value: value)
+                        }
+                    }
+                    Button("Update") {
+                        store.updateCustomer()
                     }
                 }
-                Button("Update") {
-                    store.updateCustomer()
+                .navigationTitle("Account".uppercased())
+                if store.currentState.isLoading && !store.currentState.isRefreshing {
+                    VStack {
+                        ProgressView()
+                            .tint(.black)
+                    }
                 }
             }
-            .navigationTitle("Account".uppercased())
-            if store.currentState.isLoading {
-                VStack {
-                    ProgressView()
-                        .tint(.black)
-                }
+            .tint(.blue)
+            .onAppear {
+                setEffect()
             }
-        }
-        .tint(.blue)
-        .onAppear {
-            setEffect()
+        }.pullToRefresh(isShowing: store.currentState.isRefreshing) {
+            store.refreshCustomer()
         }
     }
 }

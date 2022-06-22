@@ -1,14 +1,14 @@
-package me.haymob.coffeeshop.domain.catalog.actions
+package me.haymob.coffeeshop.domain.customer.actions
 
-import me.haymob.coffeeshop.domain.catalog.CatalogStore
+import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.entities.Product
 
-fun CatalogStore.productSetLoading(product: Product, loading: Boolean) {
+fun CustomerStore.productSetLoading(product: Product, loading: Boolean) {
     setState {
         copy(
-            categories = categories.map { category ->
-                category.copy(
-                    products = category.products.map {
+            customer = customer?.run {
+                copy(
+                    wishlist = wishlist.map {
                         if (product.id == it.id) {
                             it.copy(isLoading = loading)
                         } else {

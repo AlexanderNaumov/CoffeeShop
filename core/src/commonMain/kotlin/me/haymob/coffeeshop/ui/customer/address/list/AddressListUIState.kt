@@ -5,5 +5,6 @@ import me.haymob.coffeeshop.entities.Address
 
 data class AddressListUIState(
     val addresses: List<Address> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false
 ): State

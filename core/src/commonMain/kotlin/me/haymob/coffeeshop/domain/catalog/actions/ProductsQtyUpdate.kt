@@ -13,10 +13,6 @@ internal fun CatalogStore.productsQtyUpdate(products: List<Product>) {
                         product.copy(qty = qty)
                     }
                 )
-            },
-            wishlist = wishlist.map { product ->
-                val qty = products.find { it.id == product.id }?.qty ?: 0
-                product.copy(qty = qty)
             }
         )
     }

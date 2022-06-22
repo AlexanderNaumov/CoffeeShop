@@ -29,6 +29,9 @@ struct AddressListView: View {
                 }
             })
         }
+        .pullToRefresh(isShowing: store.currentState.isRefreshing) {
+            store.refreshAddresses()
+        }
         .listStyle(.insetGrouped)
         .navigationTitle("Address List".uppercased())
     }
