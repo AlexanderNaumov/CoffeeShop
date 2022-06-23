@@ -32,6 +32,7 @@ internal val cartField = field {
             }
         }
     }
+    field(Cart::address, addressField)
     field(Cart::shippingMethods) {
         field(NodeContainer<ShippingMethod>::edges) {
             field(NodeContainer.Node<ShippingMethod>::node, shippingField)

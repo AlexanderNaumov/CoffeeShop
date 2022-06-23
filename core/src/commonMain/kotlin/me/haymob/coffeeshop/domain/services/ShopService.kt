@@ -10,6 +10,7 @@ import me.haymob.coffeeshopsdk.cart.cart as sdkCart
 import me.haymob.coffeeshopsdk.cart.deleteCart as sdkDeleteCart
 import me.haymob.coffeeshopsdk.cart.loadCustomerCart as sdkLoadCustomerCart
 import me.haymob.coffeeshopsdk.cart.setCustomerCart as sdkSetCustomerCart
+import me.haymob.coffeeshopsdk.cart.setAddressOnCart as sdkSetAddressOnCart
 import me.haymob.coffeeshopsdk.customer.login as sdkLogin
 import me.haymob.coffeeshopsdk.customer.logout as sdkLogout
 import me.haymob.coffeeshopsdk.customer.signup as sdkSignup
@@ -72,4 +73,5 @@ class ShopService {
     fun removeProductFromWishlist(userId: String, productId: String) = sdkRemoveProductFromWishlist(userId, productId)
     fun loadCustomerCart() = sdkLoadCustomerCart()
     fun setCustomerCart(userId: String, cartId: String) = sdkSetCustomerCart(userId, cartId)
+    fun setAddressOnCart(cartId: String, addressId: String) = sdkSetAddressOnCart(cartId, addressId)
 }

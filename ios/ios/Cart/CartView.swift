@@ -8,7 +8,7 @@ struct CartView: View {
     var body: some View {
         Group {
             if let cart = store.currentState.cart, !cart.items.isEmpty {
-                VStack {
+                VStack(spacing: 0) {
                     List {
                         Section(
                             header: HStack {
@@ -72,7 +72,21 @@ struct CartView: View {
                             Text("Total")
                             Spacer()
                             Text("\(total)")
-                        }.padding(EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15))
+                        }
+                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
+                        .background(Color(0xF0F2F5))
+                    }
+                    if store.currentState.isShowCheckoutButton {
+                        Button("Checkout") {
+                            router.open(CheckoutRoute())
+                        }
+                        .foregroundColor(.white)
+                        .frame(height: 40)
+                        .frame(maxWidth: .infinity)
+                        .background(store.currentState.isActiveCheckoutButton ? .green : .black)
+                        .cornerRadius(12)
+                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
+                        .background(Color(0xF0F2F5))
                     }
                 }
                 

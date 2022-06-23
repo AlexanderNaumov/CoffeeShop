@@ -7,6 +7,7 @@ import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.mediators.ProductEffectMediator
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.cart.CartUIStore
+import me.haymob.coffeeshop.ui.cart.checkout.CheckoutUIStore
 import me.haymob.coffeeshop.ui.productDetail.ProductDetailUIStore
 import me.haymob.coffeeshop.ui.customer.CustomerUIStore
 import me.haymob.coffeeshop.ui.customer.login.LoginUIStore
@@ -39,4 +40,5 @@ val coreModule = module {
     factoryOf(::CreateAddressUIStore)
     factoryOf(::EditAddressUIStore)
     factoryOf(::WishlistUIStore)
+    factoryOf(::CheckoutUIStore)
 }

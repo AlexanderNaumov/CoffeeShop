@@ -22,7 +22,7 @@ fun coreInit() {
         "lrfQ9bQKJDpFFVffvfZN",
         "2MQDMG5ett10fdzOvDWUp46hHRhd5w",
         storage.customerToken(),
-        false
+        true
     ))
 
     app.koin.get<ProductEffectMediator>()
