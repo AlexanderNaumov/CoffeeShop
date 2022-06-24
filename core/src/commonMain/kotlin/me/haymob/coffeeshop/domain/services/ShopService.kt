@@ -72,6 +72,6 @@ class ShopService {
     fun addProductToWishlist(userId: String, productId: String) = sdkAddProductToWishlist(userId, productId)
     fun removeProductFromWishlist(userId: String, productId: String) = sdkRemoveProductFromWishlist(userId, productId)
     fun loadCustomerCart() = sdkLoadCustomerCart()
-    fun setCustomerCart(userId: String, cartId: String) = sdkSetCustomerCart(userId, cartId)
+    fun setCustomerCart(cartId: String) = sdkSetCustomerCart(cartId)
     fun setAddressOnCart(cartId: String, addressId: String) = sdkSetAddressOnCart(cartId, addressId)
 }

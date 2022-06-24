@@ -5,7 +5,8 @@ data class Cart(
     val totalPrice: Price?,
     val items: List<Item>,
     val paymentMethods: List<PaymentMethod>,
-    val shippingMethods: List<ShippingMethod>
+    val shippingMethods: List<ShippingMethod>,
+    val address: Address?
 ) {
     data class Item(
         val id: String,

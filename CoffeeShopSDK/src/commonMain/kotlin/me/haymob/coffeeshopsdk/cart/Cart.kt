@@ -1,5 +1,6 @@
 package me.haymob.coffeeshopsdk.cart
 
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
 import me.haymob.coffeeshopsdk.config
@@ -125,11 +126,39 @@ fun loadCustomerCart(token: String = config.sessionToken ?: "") = http(query {
 }).decode<SessionsQuery>().tryMap { it.sessions?.edges?.firstOrNull()?.node?.user }.map { it.cart }
 
 @Serializable
+private data class UserIdQuery(val user: UserId): GQLObject {
+    @Serializable
+    data class UserId(val objectId: String): GQLObject
+}
+
+@Serializable
+private data class SessionsQuery2(val sessions: NodeContainer<UserIdQuery>?)
+
+private fun getUserId(token: String = config.sessionToken ?: "") = http(query {
+    field(
+        SessionsQuery2::sessions,
+        "where" of argsOf(
+            "sessionToken" of argsOf(
+                "equalTo" of token
+            )
+        )
+    ) {
+        field(NodeContainer<UserIdQuery>::edges) {
+            field(NodeContainer.Node<UserIdQuery>::node) {
+                field(UserIdQuery::user) {
+                    field(UserIdQuery.UserId::objectId)
+                }
+            }
+        }
+    }
+}).decode<SessionsQuery2>().tryMap { it.sessions?.edges?.firstOrNull()?.node?.user?.objectId }
+
+@Serializable
 private data class UpdateUserMutation(
     val updateUser: CartUserQuery
 )
 
-fun setCustomerCart(userId: String, cartId: String) = http(mutation {
+private fun setUserCart(userId: String, cartId: String) = http(mutation {
     field(
         UpdateUserMutation::updateUser,
         "input" of argsOf(
@@ -146,6 +175,11 @@ fun setCustomerCart(userId: String, cartId: String) = http(mutation {
         }
     }
 }).decode<UpdateUserMutation>().tryMap { it.updateUser.user.cart }
+
+
+fun setCustomerCart(cartId: String) = getUserId().flatMapMerge {
+    setUserCart(it, cartId)
+}
 
 @Serializable
 private data class UpdateCartMutation(

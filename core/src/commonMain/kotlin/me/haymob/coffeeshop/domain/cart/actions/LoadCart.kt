@@ -7,7 +7,7 @@ import me.haymob.coffeeshop.domain.cart.CartEffect
 import me.haymob.coffeeshop.flow.onResult
 
 internal fun CartStore.loadCart() {
-    val cartId = storage.cartId() ?: return
+    val cartId = currentState.cart?.id ?: storage.cartId() ?: return
 
     setState { copy(isLoading = true) }
     shopService.loadCart(cartId).onResult { result ->

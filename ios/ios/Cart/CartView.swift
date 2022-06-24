@@ -73,11 +73,12 @@ struct CartView: View {
                             Spacer()
                             Text("\(total)")
                         }
-                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
+                        .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
                         .background(Color(0xF0F2F5))
                     }
                     if store.currentState.isShowCheckoutButton {
                         Button("Checkout") {
+                            guard store.currentState.isActiveCheckoutButton else { return }
                             router.open(CheckoutRoute())
                         }
                         .foregroundColor(.white)

@@ -9,9 +9,8 @@ fun CustomerStore.login(email: String, password: String) {
     setState { copy(isLoading = true) }
     shopService.login(email, password).onResult { result ->
         didLoadUserViewer(result)
-        val id = result.getOrNull()?.user?.objectId
-        if (id != null) {
-            setEffect(CustomerEffect.WasAuthorized(id))
+        if (result.isSuccess) {
+            setEffect(CustomerEffect.WasAuthorized)
         }
     }.launchIn(scope)
 }

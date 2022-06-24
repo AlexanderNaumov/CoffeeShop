@@ -9,9 +9,8 @@ fun CustomerStore.signup(firstName: String, lastName: String, email: String, pas
     setState { copy(isLoading = true) }
     shopService.signup(firstName, lastName, email, password).onResult { result ->
         didLoadUserViewer(result)
-        val id = result.getOrNull()?.user?.objectId
-        if (id != null) {
-            setEffect(CustomerEffect.WasAuthorized(id))
+        if (result.isSuccess) {
+            setEffect(CustomerEffect.WasAuthorized)
         }
     }.launchIn(scope)
 }

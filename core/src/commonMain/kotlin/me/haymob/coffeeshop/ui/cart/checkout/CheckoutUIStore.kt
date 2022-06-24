@@ -28,6 +28,14 @@ class CheckoutUIStore(
             }
         }.launchIn(scope)
 
+        state.onEach {
+            setState {
+                copy(
+                    isActiveOrderButton = paymentMethodId != null && shippingMethodId != null
+                )
+            }
+        }.launchIn(scope)
+
         val addressId = customerStore.currentState.customer?.addresses?.firstOrNull()?.id
 
         if (addressId != null) {

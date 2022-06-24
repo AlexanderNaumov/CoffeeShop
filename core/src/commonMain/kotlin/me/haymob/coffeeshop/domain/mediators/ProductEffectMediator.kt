@@ -46,7 +46,7 @@ class ProductEffectMediator(
                     catalogStore.productSetWishlist(it.products)
                     cartStore.reloadEffect()
                 }
-                is CustomerEffect.WasAuthorized -> cartStore.setCustomerCart(it.customerId)
+                is CustomerEffect.WasAuthorized -> cartStore.setCustomerCart()
                 is CustomerEffect.LeftTheGame -> cartStore.removeCart()
             }
         }.launchIn(scope)

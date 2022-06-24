@@ -14,7 +14,8 @@ internal object CartMapper {
         cart.totalPrice?.let(PriceMapper::priceFromDto),
         cart.items.edges.map { cartItemFromDto(it.node) },
         cart.paymentMethods.edges.map { paymentMethodFromDto(it.node) },
-        cart.shippingMethods.edges.map { shippingMethodFromDto(it.node) }
+        cart.shippingMethods.edges.map { shippingMethodFromDto(it.node) },
+        cart.address?.let(AddressMapper::addressFromDto)
     )
 
     fun cartItemFromDto(item: CartItemDto) = Cart.Item(

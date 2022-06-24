@@ -11,6 +11,8 @@ internal fun CartStore.updateProduct(product: Product) {
     setState { copy(isLoading = true) }
     setEffect(CartEffect.ProductSetLoading(product, true))
 
+    val isLoggedIn = storage.customerToken() != null
+
     (currentState.cart?.let { cart ->
         val item = cart.items.find { it.product.id == product.id }
         when {
@@ -19,8 +21,14 @@ internal fun CartStore.updateProduct(product: Product) {
             item == null && product.qty > 0 -> shopService.addProduct(cart.id, product.id, product.qty)
             else -> throw Exception("unknown operation")
         }
-    } ?: shopService.createCart().onEach {
-        storage.setCartId(it.objectId)
+    } ?: shopService.createCart().flatMapMerge {
+        if (isLoggedIn) {
+            shopService.setCustomerCart(it.objectId)
+        } else {
+            flowOf(it)
+        }
+    }.onEach {
+        if (!isLoggedIn) storage.setCartId(it.objectId)
     }.flatMapMerge {
         shopService.addProduct(it.objectId, product.id, product.qty)
     }).onResult { result ->

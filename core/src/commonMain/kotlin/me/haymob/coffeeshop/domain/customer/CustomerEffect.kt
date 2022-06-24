@@ -6,6 +6,6 @@ sealed class CustomerEffect {
     object Successes: CustomerEffect()
     class Error(val message: String): CustomerEffect()
     class WishlistDidLoad(val products: List<Product>): CustomerEffect()
-    class WasAuthorized(val customerId: String): CustomerEffect()
+    object WasAuthorized: CustomerEffect()
     object LeftTheGame: CustomerEffect()
 }
