@@ -1,5 +1,6 @@
 package me.haymob.coffeeshop.domain.cart.actions
 
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.launchIn
 import me.haymob.coffeeshop.domain.cart.CartEffect
 import me.haymob.coffeeshop.domain.cart.CartStore
@@ -9,7 +10,9 @@ import me.haymob.coffeeshop.mappers.CartMapper
 
 fun CartStore.reorder(order: Order) {
     setState { copy(isLoading = true) }
-    shopService.setCustomerCart(order.cartId).onResult { result ->
+    shopService.reorder(order.id).flatMapMerge {
+        shopService.loadCustomerCart()
+    }.onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(

@@ -203,15 +203,15 @@ fun setAddressOnCart(cartId: String, addressId: String) = http(mutation {
 }).decode<UpdateCartMutation>().tryMap { it.updateCart.cart }
 
 @Serializable
-data class CreateOrderMutation(
-    val createOrder: CreateOrder
-) {
+private data class OrderQuery(val order: Order): GQLObject {
     @Serializable
-    data class CreateOrder(val order: Order): GQLObject {
-        @Serializable
-        data class Order(val objectId: String): GQLObject
-    }
+    data class Order(val objectId: String): GQLObject
 }
+
+@Serializable
+private data class CreateOrderMutation(
+    val createOrder: OrderQuery
+)
 
 fun createOrder(cartId: String, paymentId: String, shippingId: String) = http(mutation {
     field(
@@ -230,8 +230,29 @@ fun createOrder(cartId: String, paymentId: String, shippingId: String) = http(mu
             )
         )
     ) {
-        field(CreateOrderMutation.CreateOrder::order) {
-            field(CreateOrderMutation.CreateOrder.Order::objectId)
+        field(OrderQuery::order) {
+            field(OrderQuery.Order::objectId)
         }
     }
 }).decode<CreateOrderMutation>().tryMap { it.createOrder.order.objectId }
+
+@Serializable
+private data class UpdateOrderMutation(
+    val updateOrder: OrderQuery
+)
+
+fun reorder(orderId: String) = http(mutation {
+    field(
+        UpdateOrderMutation::updateOrder,
+        "input" of argsOf(
+            "id" of orderId,
+            "fields" of argsOf(
+                "isReorder" of true
+            )
+        )
+    ) {
+        field(OrderQuery::order) {
+            field(OrderQuery.Order::objectId)
+        }
+    }
+}).decode<UpdateOrderMutation>().tryMap { it.updateOrder.order.objectId }.map {}

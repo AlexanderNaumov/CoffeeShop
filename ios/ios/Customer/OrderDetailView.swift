@@ -70,7 +70,7 @@ struct OrderDetailView: View {
                     )
                 }
                 Button("Reorder") {
-//                    store.reorder()
+                    store.reorder()
                 }
                 .foregroundColor(.white)
                 .frame(height: 40)
