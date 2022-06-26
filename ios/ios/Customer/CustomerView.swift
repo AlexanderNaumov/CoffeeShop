@@ -24,6 +24,13 @@ struct CustomerView: View {
                             Spacer()
                             Text(">")
                         }
+                        HStack {
+                            Button("Orders") {
+                                router.open(OrderListRoute())
+                            }
+                            Spacer()
+                            Text(">")
+                        }
                     }
                     if store.currentState.isLoading {
                         VStack {

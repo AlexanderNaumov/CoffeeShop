@@ -6,5 +6,6 @@ data class Customer(
     val lastName: String,
     val email: String,
     val addresses: List<Address>,
-    val wishlist: List<Product>
+    val wishlist: List<Product>,
+    val orders: List<Order>
 )

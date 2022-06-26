@@ -34,6 +34,10 @@ class ProductEffectMediator(
                     catalogStore.productsQtyUpdate(it.products)
                     customerStore.productsQtyUpdate(it.products)
                 }
+                is CartEffect.OrderSuccess -> {
+                    cartStore.loadCustomerCart()
+                    customerStore.loadCustomer()
+                }
                 is CatalogEffect.DidLoad -> {
                     if (customerStore.currentState.isLoggedIn) {
                         cartStore.loadCustomerCart()

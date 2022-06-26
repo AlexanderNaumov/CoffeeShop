@@ -11,7 +11,8 @@ data class User(
     val lastName: String,
     val email: String,
     val addresses: NodeContainer<Address>,
-    var wishlist: NodeContainer<Product>
+    var wishlist: NodeContainer<Product>,
+    val orders: NodeContainer<Order>
 ): GQLObject
 
 internal val userField = field {
@@ -27,6 +28,11 @@ internal val userField = field {
     field(User::wishlist) {
         field(NodeContainer<Product>::edges) {
             field(NodeContainer.Node<Product>::node, productField)
+        }
+    }
+    field(User::orders) {
+        field(NodeContainer<Order>::edges) {
+            field(NodeContainer.Node<Order>::node, orderField)
         }
     }
 }

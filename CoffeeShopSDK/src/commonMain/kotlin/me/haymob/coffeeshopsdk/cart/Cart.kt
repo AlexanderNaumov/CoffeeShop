@@ -201,3 +201,37 @@ fun setAddressOnCart(cartId: String, addressId: String) = http(mutation {
         field(CartQuery::cart, cartField)
     }
 }).decode<UpdateCartMutation>().tryMap { it.updateCart.cart }
+
+@Serializable
+data class CreateOrderMutation(
+    val createOrder: CreateOrder
+) {
+    @Serializable
+    data class CreateOrder(val order: Order): GQLObject {
+        @Serializable
+        data class Order(val objectId: String): GQLObject
+    }
+}
+
+fun createOrder(cartId: String, paymentId: String, shippingId: String) = http(mutation {
+    field(
+        CreateOrderMutation::createOrder,
+        "input" of argsOf(
+            "fields" of argsOf(
+                "cart" of argsOf(
+                    "link" of cartId
+                ),
+                "paymentMethod" of argsOf(
+                    "link" of paymentId
+                ),
+                "shippingMethod" of argsOf(
+                    "link" of shippingId
+                )
+            )
+        )
+    ) {
+        field(CreateOrderMutation.CreateOrder::order) {
+            field(CreateOrderMutation.CreateOrder.Order::objectId)
+        }
+    }
+}).decode<CreateOrderMutation>().tryMap { it.createOrder.order.objectId }
