@@ -5,6 +5,9 @@ struct CheckoutRoute: SwiftUIRoute {
     var body: some View {
         CheckoutView()
     }
+    var title: String? {
+        "Checkout".uppercased()
+    }
 }
 
 struct CheckoutView: View {
@@ -101,6 +104,8 @@ struct CheckoutView: View {
                                                 Text(item.product.name)
                                                 Text("\(item.product.price)")
                                             }
+                                            Spacer()
+                                            Text("\(item.product.qty)x")
                                         }
                                     }
                                     if let total = cart.totalPrice {
@@ -125,12 +130,8 @@ struct CheckoutView: View {
                         .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
                         .background(Color(0xF0F2F5))
                     }
-                    .navigationTitle("Checkout".uppercased())
                     if store.currentState.isLoading {
-                        VStack {
-                            ProgressView()
-                                .tint(.black)
-                        }
+                        FullScreenLoader()
                     }
                 }
             } else {

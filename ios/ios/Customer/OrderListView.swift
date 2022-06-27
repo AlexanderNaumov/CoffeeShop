@@ -5,6 +5,9 @@ struct OrderListRoute: SwiftUIRoute {
     var body: some View {
         OrderListView()
     }
+    var title: String? {
+        "Orders".uppercased()
+    }
 }
 
 struct OrderListView: View {
@@ -18,13 +21,15 @@ struct OrderListView: View {
                     router.open(OrderDetailRoute(order: order))
                 }
                 Spacer()
-                Text(">")
+                if let date = order.date {
+                    Text(date, style: .relative)
+                }
+                Image("next")
             }
         }
         .pullToRefresh(isShowing: store.currentState.isRefreshing) {
             store.refreshOrders()
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Orders".uppercased())
     }
 }

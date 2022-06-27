@@ -9,7 +9,8 @@ data class Order(
     val objectId: String,
     val paymentMethod: PaymentMethod,
     val shippingMethod: ShippingMethod,
-    val cart: Cart
+    val cart: Cart,
+    val createdAt: String
 ): GQLObject
 
 internal val orderField = field {
@@ -17,4 +18,5 @@ internal val orderField = field {
     field(Order::paymentMethod, paymentField)
     field(Order::shippingMethod, shippingField)
     field(Order::cart, cartField)
+    field(Order::createdAt)
 }

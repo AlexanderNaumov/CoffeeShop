@@ -6,6 +6,9 @@ struct OrderDetailRoute: SwiftUIRoute {
     var body: some View {
         OrderDetailView(store: Store(wrappedValue: ios.inject(params: [order])))
     }
+    var title: String? {
+        "# \(order.id)"
+    }
 }
 
 struct OrderDetailView: View {
@@ -57,6 +60,8 @@ struct OrderDetailView: View {
                                         Text(product.name)
                                         Text("\(product.price)")
                                     }
+                                    Spacer()
+                                    Text("\(product.qty)x")
                                 }
                             }
                             if let total = order.totalPrice {
@@ -80,12 +85,8 @@ struct OrderDetailView: View {
                 .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
                 .background(Color(0xF0F2F5))
             }
-            .navigationTitle("# \(order.id)")
             if store.currentState.isLoading {
-                VStack {
-                    ProgressView()
-                        .tint(.black)
-                }
+                FullScreenLoader()
             }
         }
     }

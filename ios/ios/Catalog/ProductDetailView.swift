@@ -7,6 +7,10 @@ struct ProductDetailRoute: SwiftUIRoute {
     var body: some View {
         ProductDetailView(store: Store(wrappedValue: ios.inject(params: [product])))
     }
+    
+    var title: String? {
+        product.name.uppercased()
+    }
 }
 
 struct ProductDetailView: View {
@@ -20,12 +24,8 @@ struct ProductDetailView: View {
                 ZStack {
                     ProductImage(image: product.thumbnail)
                         .aspectRatio(320 / 240, contentMode: .fill)
-                        .opacity(product.isLoading ? 0.8 : 1)
                     if product.isLoading {
-                        VStack {
-                            ProgressView()
-                                .tint(.black)
-                        }
+                        ProductLoader()
                     }
                 }
                 HStack {
@@ -52,7 +52,6 @@ struct ProductDetailView: View {
                 Spacer()
             }
         }
-        .navigationBarTitle(product.name.uppercased(), displayMode: .inline)
         .navigationBarItems(
             trailing: store.currentState.isShowWishlist ? AnyView(Button {
                 if product.isOnWishlist {

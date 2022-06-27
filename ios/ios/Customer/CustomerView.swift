@@ -10,33 +10,18 @@ struct CustomerView: View {
             if store.currentState.isLoggedIn {
                 ZStack {
                     List {
-                        HStack {
-                            Button("Account") {
-                                router.open(AccountRoute())
-                            }
-                            Spacer()
-                            Text(">")
+                        CustomerListCell("Account") {
+                            router.open(AccountRoute())
                         }
-                        HStack {
-                            Button("Addresses") {
-                                router.open(AddressListRoute())
-                            }
-                            Spacer()
-                            Text(">")
+                        CustomerListCell("Addresses") {
+                            router.open(AddressListRoute())
                         }
-                        HStack {
-                            Button("Orders") {
-                                router.open(OrderListRoute())
-                            }
-                            Spacer()
-                            Text(">")
+                        CustomerListCell("Orders") {
+                            router.open(OrderListRoute())
                         }
                     }
                     if store.currentState.isLoading {
-                        VStack {
-                            ProgressView()
-                                .tint(.black)
-                        }
+                        FullScreenLoader()
                     }
                 }
             } else {
@@ -62,6 +47,18 @@ struct CustomerView: View {
                 }))
             }) : AnyView(EmptyView())
         )
+    }
+}
+
+private func CustomerListCell(_ title: String, tap: @escaping () -> Void) -> some View {
+    HStack {
+        Button {
+            tap()
+        } label: {
+            Text(title)
+        }.tint(.black)
+        Spacer()
+        Image("next")
     }
 }
 

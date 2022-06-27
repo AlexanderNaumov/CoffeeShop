@@ -5,6 +5,9 @@ struct AddressListRoute: SwiftUIRoute {
     var body: some View {
         AddressListView()
     }
+    var title: String? {
+        "Address List".uppercased()
+    }
 }
 
 struct AddressListView: View {
@@ -24,7 +27,7 @@ struct AddressListView: View {
                             router.open(EditAddresRoute(address: address))
                         }
                         Spacer()
-                        Text(">")
+                        Image("next")
                     }
                 }
             })
@@ -33,6 +36,5 @@ struct AddressListView: View {
             store.refreshAddresses()
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Address List".uppercased())
     }
 }

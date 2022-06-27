@@ -5,6 +5,9 @@ struct AccountRoute: SwiftUIRoute {
     var body: some View {
         AccountView()
     }
+    var title: String? {
+        "Account".uppercased()
+    }
 }
 
 struct AccountView: View {
@@ -25,9 +28,9 @@ struct AccountView: View {
     }
     
     var body: some View {
-        ScrollView {
-            Spacer(minLength: 100)
-            ZStack {
+        ZStack {
+            ScrollView {
+                Spacer(minLength: 100)
                 VStack(spacing: 18) {
                     ForEach(store.currentState.fields) { field in
                         AccountTextField(field: field) { value in
@@ -38,20 +41,17 @@ struct AccountView: View {
                         store.updateCustomer()
                     }
                 }
-                .navigationTitle("Account".uppercased())
-                if store.currentState.isLoading && !store.currentState.isRefreshing {
-                    VStack {
-                        ProgressView()
-                            .tint(.black)
-                    }
-                }
+            }
+            .pullToRefresh(isShowing: store.currentState.isRefreshing) {
+                store.refreshCustomer()
             }
             .tint(.blue)
             .onAppear {
                 setEffect()
             }
-        }.pullToRefresh(isShowing: store.currentState.isRefreshing) {
-            store.refreshCustomer()
+            if store.currentState.isLoading && !store.currentState.isRefreshing {
+                FullScreenLoader()
+            }
         }
     }
 }

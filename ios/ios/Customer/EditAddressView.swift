@@ -6,6 +6,9 @@ struct EditAddresRoute: SwiftUIRoute {
     var body: some View {
         EditAddresView(store: Store(wrappedValue: ios.inject(params: [address])))
     }
+    var title: String? {
+        "Edit Address".uppercased()
+    }
 }
 
 struct EditAddresView: View {
@@ -40,12 +43,8 @@ struct EditAddresView: View {
                     store.removeAddress()
                 }.tint(.red)
             }
-            .navigationTitle("Edit Address".uppercased())
             if store.currentState.isLoading {
-                VStack {
-                    ProgressView()
-                        .tint(.black)
-                }
+                FullScreenLoader()
             }
         }.onAppear {
             setEffect()

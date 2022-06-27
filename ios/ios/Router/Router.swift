@@ -22,6 +22,7 @@ final class Router: ObservableObject {
             let _vc = UIHostingController(rootView: AnyView(EmptyView()))
             router = Router(_vc, route: route)
             _vc.rootView = route.anyView(with: router)
+            _vc.title = route.title
             vc = _vc
         default:
             vc = route.controller()

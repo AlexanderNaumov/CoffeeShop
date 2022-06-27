@@ -27,12 +27,8 @@ struct ProductItem: View {
             .padding(8)
             .background(.white)
             .cornerRadius(20)
-            .opacity(product.isLoading ? 0.8 : 1)
             if product.isLoading {
-                VStack {
-                    ProgressView()
-                        .tint(.black)
-                }
+                ProductLoader()
             }
         }
     }

@@ -7,5 +7,6 @@ data class Order(
     val cartId: String,
     val address: Address,
     val products: List<Product>,
-    val totalPrice: Price
+    val totalPrice: Price,
+    val createdAt: String
 )

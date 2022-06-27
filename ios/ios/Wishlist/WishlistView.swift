@@ -33,14 +33,11 @@ struct WishlistView: View {
                                     } dec: {
                                         store.decrementProduct(product: product)
                                     }
-                                    Text(">")
+                                    Image("next")
                                 }.buttonStyle(PlainButtonStyle())
                             }
                             if product.isLoading {
-                                VStack {
-                                    ProgressView()
-                                        .tint(.black)
-                                }
+                                ProductLoader()
                             }
                         }
                     }.onDelete { index in

@@ -5,6 +5,9 @@ struct CreateAddressRoute: SwiftUIRoute {
     var body: some View {
         CreateAddressView()
     }
+    var title: String? {
+        "New Address".uppercased()
+    }
 }
 
 struct CreateAddressView: View {
@@ -36,12 +39,8 @@ struct CreateAddressView: View {
                     store.createAddress()
                 }.tint(.blue)
             }
-            .navigationTitle("New Address".uppercased())
             if store.currentState.isLoading {
-                VStack {
-                    ProgressView()
-                        .tint(.black)
-                }
+                FullScreenLoader()
             }
         }.onAppear {
             setEffect()

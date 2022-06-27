@@ -12,6 +12,7 @@ object OrderMapper {
         order.cart.objectId,
         AddressMapper.addressFromDto(order.cart.address!!),
         order.cart.items.edges.map { ProductMapper.productFromDto(it.node.product).copy(qty = it.node.qty) },
-        PriceMapper.priceFromDto(order.cart.totalPrice!!)
+        PriceMapper.priceFromDto(order.cart.totalPrice!!),
+        order.createdAt
     )
 }

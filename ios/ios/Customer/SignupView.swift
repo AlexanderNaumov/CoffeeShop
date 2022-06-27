@@ -41,10 +41,7 @@ struct SignupView: View {
                     router.close()
                 })
                 if store.currentState.isLoading {
-                    VStack {
-                        ProgressView()
-                            .tint(.black)
-                    }
+                    FullScreenLoader()
                 }
             }.onAppear {
                 setEffect()

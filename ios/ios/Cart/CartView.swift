@@ -48,14 +48,11 @@ struct CartView: View {
                                                 } dec: {
                                                     store.decrementProduct(product: item.product)
                                                 }
-                                                Text(">")
+                                                Image("next")
                                             }.buttonStyle(PlainButtonStyle())
                                         }
                                         if item.product.isLoading {
-                                            VStack {
-                                                ProgressView()
-                                                    .tint(.black)
-                                            }
+                                            ProductLoader()
                                         }
                                     }
                                 }

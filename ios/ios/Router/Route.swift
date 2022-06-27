@@ -12,6 +12,7 @@ extension Route {
 
 protocol AnySwiftUIRoute: Route {
     func anyView(with router: Router) -> AnyView
+    var title: String? { get }
 }
 
 protocol SwiftUIRoute: AnySwiftUIRoute {
@@ -21,10 +22,12 @@ protocol SwiftUIRoute: AnySwiftUIRoute {
 
 extension SwiftUIRoute {
     func anyView(with router: Router) -> AnyView {
-        AnyView(body.environmentObject(router))
+        AnyView(body.environmentObject(router).navigationTitle(title ?? ""))
     }
     
     func controller() -> UIViewController {
         fatalError()
     }
+    
+    var title: String? { nil }
 }
