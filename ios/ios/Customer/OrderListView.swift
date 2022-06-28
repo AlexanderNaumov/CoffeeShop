@@ -15,7 +15,11 @@ private struct OrderListView: View {
     @EnvironmentObject private var router: Router
     
     var body: some View {
-        List(store.currentState.orders) { order in
+        let orders = store.currentState.orders.sorted {
+            guard let date1 = $0.date, let date2 = $1.date else { return false }
+            return date1 > date2
+        }
+        return List(orders) { order in
             HStack {
                 Button {
                     router.open(OrderDetailRoute(order: order))

@@ -6,7 +6,7 @@ struct CartView: View {
     @Store private var store: CartUIStore
     
     var body: some View {
-        Group {
+        return Group {
             if let cart = store.currentState.cart, !cart.items.isEmpty {
                 VStack(spacing: 0) {
                     List {
