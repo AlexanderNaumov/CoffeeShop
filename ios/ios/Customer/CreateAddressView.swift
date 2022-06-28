@@ -10,11 +10,11 @@ struct CreateAddressRoute: SwiftUIRoute {
     }
 }
 
-struct CreateAddressView: View {
-    @Store var store: CreateAddressUIStore
-    @EnvironmentObject var router: Router
+private struct CreateAddressView: View {
+    @Store private var store: CreateAddressUIStore
+    @EnvironmentObject private var router: Router
     
-    func setEffect() {
+    private func setEffect() {
         store.onEffect { [weak router] effect in
             switch effect {
             case let error as CreateAddressUIEffect.Error:
@@ -29,16 +29,20 @@ struct CreateAddressView: View {
     
     var body: some View {
         ZStack {
-            VStack(spacing: 18) {
-                ForEach(store.currentState.fields) { field in
-                    AccountTextField(field: field) { value in
-                        store.updateField(type: field.type, value: value)
+            ScrollView {
+                Spacer(minLength: 100)
+                VStack(spacing: 18) {
+                    ForEach(store.currentState.fields) { field in
+                        InputTextField(field: field) { value in
+                            store.updateField(type: field.type, value: value)
+                        }
                     }
+                    Button("Create") {
+                        store.createAddress()
+                    }.tint(.blue)
                 }
-                Button("Create") {
-                    store.createAddress()
-                }.tint(.blue)
             }
+            .background(Color.porcelain)
             if store.currentState.isLoading {
                 FullScreenLoader()
             }

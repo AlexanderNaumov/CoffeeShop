@@ -13,14 +13,14 @@ struct ProductDetailRoute: SwiftUIRoute {
     }
 }
 
-struct ProductDetailView: View {
+private struct ProductDetailView: View {
     
     @Store var store: ProductDetailUIStore
     
     var body: some View {
         let product = store.currentState.product
         return ScrollView {
-            VStack {
+            VStack(spacing: 0) {
                 ZStack {
                     ProductImage(image: product.thumbnail)
                         .aspectRatio(320 / 240, contentMode: .fill)
@@ -42,16 +42,23 @@ struct ProductDetailView: View {
                             store.decrementProduct()
                         })
                     }
-                }.padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                }
+                .frame(height: 50)
+                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                .background(.white)
+                Divider()
                 VStack {
-                    infoBlock(title: "Body", content: "\(product.body)")
-                    infoBlock(title: "Roast", content: "\(product.roast)")
-                    infoBlock(title: "Acidity", content: "\(product.acidity)")
+                    InfoBlock(title: "Body", content: "\(product.body)")
+                    InfoBlock(title: "Roast", content: "\(product.roast)")
+                    InfoBlock(title: "Acidity", content: "\(product.acidity)")
                     Text(product.description_)
-                }.padding(15)
+                }
+                .padding(15)
+                .background(.white)
                 Spacer()
             }
         }
+        .background(Color.porcelain)
         .navigationBarItems(
             trailing: store.currentState.isShowWishlist ? AnyView(Button {
                 if product.isOnWishlist {
@@ -64,15 +71,16 @@ struct ProductDetailView: View {
             }) : AnyView(EmptyView())
         )
     }
-    
-    private func infoBlock(title: String, content: String) -> some View {
-        Group {
-            HStack {
-                Text(title)
-                Spacer()
-                Text(content)
-            }
-            Divider()
+}
+
+
+private func InfoBlock(title: String, content: String) -> some View {
+    Group {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(content)
         }
+        Divider()
     }
 }

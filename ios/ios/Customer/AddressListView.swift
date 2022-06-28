@@ -10,9 +10,9 @@ struct AddressListRoute: SwiftUIRoute {
     }
 }
 
-struct AddressListView: View {
-    @Store var store: AddressListUIStore
-    @EnvironmentObject var router: Router
+private struct AddressListView: View {
+    @Store private var store: AddressListUIStore
+    @EnvironmentObject private var router: Router
     
     var body: some View {
         List {

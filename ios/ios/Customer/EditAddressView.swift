@@ -11,11 +11,11 @@ struct EditAddresRoute: SwiftUIRoute {
     }
 }
 
-struct EditAddresView: View {
+private struct EditAddresView: View {
     @Store var store: EditAddressUIStore
-    @EnvironmentObject var router: Router
+    @EnvironmentObject private var router: Router
     
-    func setEffect() {
+    private func setEffect() {
         store.onEffect { [weak router] effect in
             switch effect {
             case let error as EditAddressUIEffect.Error:
@@ -30,23 +30,28 @@ struct EditAddresView: View {
     
     var body: some View {
         ZStack {
-            VStack(spacing: 18) {
-                ForEach(store.currentState.fields) { field in
-                    AccountTextField(field: field) { value in
-                        store.updateField(type: field.type, value: value)
+            ScrollView {
+                Spacer(minLength: 100)
+                VStack(spacing: 18) {
+                    ForEach(store.currentState.fields) { field in
+                        InputTextField(field: field) { value in
+                            store.updateField(type: field.type, value: value)
+                        }
                     }
+                    Button("Updare") {
+                        store.updateAddress()
+                    }.tint(.blue)
+                    Button("Remove") {
+                        store.removeAddress()
+                    }.tint(.red)
                 }
-                Button("Updare") {
-                    store.updateAddress()
-                }.tint(.blue)
-                Button("Remove") {
-                    store.removeAddress()
-                }.tint(.red)
             }
+            .background(Color.porcelain)
             if store.currentState.isLoading {
                 FullScreenLoader()
             }
-        }.onAppear {
+        }
+        .onAppear {
             setEffect()
         }
     }

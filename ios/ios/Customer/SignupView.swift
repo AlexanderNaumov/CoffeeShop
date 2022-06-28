@@ -6,11 +6,11 @@ struct SignupRoute: SwiftUIRoute {
     var presentationStyle: PresentationStyle { .sheet }
 }
 
-struct SignupView: View {
-    @Store var store: SignupUIStore
-    @EnvironmentObject var router: Router
+private struct SignupView: View {
+    @Store private var store: SignupUIStore
+    @EnvironmentObject private var router: Router
     
-    func setEffect() {
+    private func setEffect() {
         store.onEffect { [weak router] effect in
             switch effect {
             case let error as SignupUIEffect.Error:
@@ -28,7 +28,7 @@ struct SignupView: View {
             ZStack {
                 VStack(spacing: 18) {
                     ForEach(store.currentState.fields) { field in
-                        AccountTextField(field: field) { value in
+                        InputTextField(field: field) { value in
                             store.updateField(type: field.type, value: value)
                         }
                     }
@@ -36,6 +36,8 @@ struct SignupView: View {
                         store.signup()
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.porcelain)
                 .navigationTitle("Register".uppercased())
                 .navigationBarItems(leading: Button("X") {
                     router.close()

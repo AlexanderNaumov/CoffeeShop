@@ -2,14 +2,14 @@ import SwiftUI
 import core
 
 struct CatalogView: View {
-    @EnvironmentObject var router: Router
-    @Store var store: CatalogUIStore
-
+    @EnvironmentObject private var router: Router
+    @Store  var store: CatalogUIStore
+    
+    private let columns = Array(repeating: GridItem(.flexible()), count: 2)
+    
     init() {
         store.loadCatalog()
     }
-    
-    let columns = Array(repeating: GridItem(.flexible()), count: 2)
     
     var body: some View {
         ScrollView {
@@ -34,6 +34,37 @@ struct CatalogView: View {
             store.refreshCatalog()
         }
         .navigationTitle("Coffe".uppercased())
-        .background(Color(0xF0F2F5))
+        .background(Color.porcelain)
     }
 }
+
+private func ProductItem(product: Product, inc: @escaping () -> Void, dec:  @escaping () -> Void) -> some View {
+    ZStack {
+        VStack {
+            VStack {
+                ProductImage(image: product.thumbnail)
+            }
+            .padding()
+            .frame(maxWidth: .greatestFiniteMagnitude, maxHeight: .greatestFiniteMagnitude)
+            .aspectRatio(1, contentMode: .fill)
+            .background(Color.gallery)
+            .cornerRadius(20)
+            Text(product.name)
+                .font(.system(size: 15, weight: .semibold))
+            Text("\(product.price)")
+                .font(.system(size: 15, weight: .semibold))
+            if product.qty == 0 {
+                ActionButton(text: "+", width: 60, action: inc)
+            } else {
+                ActionButtons(qty: product.qty, inc: inc, dec: dec)
+            }
+        }
+        .padding(6)
+        .background(.white)
+        .cornerRadius(20)
+        if product.isLoading {
+            ProductLoader()
+        }
+    }
+}
+

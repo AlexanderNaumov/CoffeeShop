@@ -2,8 +2,8 @@ import SwiftUI
 import core
 
 struct CartView: View {
-    @EnvironmentObject var router: Router
-    @Store var store: CartUIStore
+    @EnvironmentObject private var router: Router
+    @Store private var store: CartUIStore
     
     var body: some View {
         Group {
@@ -15,13 +15,13 @@ struct CartView: View {
                                 Button {
                                     store.selectAllItems()
                                 } label: {
-                                    Image(systemName: store.currentState.isSelectedAllItems ? "checkmark.square.fill" : "square")
+                                    CheckmarkImage(store.currentState.isSelectedAllItems)
                                     Text("Select all")
                                 }
                                 Spacer()
                                 Button("Remove selected") {
                                     store.removeSelectedItems()
-                                }
+                                }.tint(.red)
                             },
                             content: {
                                 ForEach(cart.items) { item in
@@ -33,7 +33,7 @@ struct CartView: View {
                                                 Button {
                                                     store.selectCartItem(item: item)
                                                 } label: {
-                                                    Image(systemName: store.currentState.itemSelected(item: item) ? "checkmark.square.fill" : "square")
+                                                    CheckmarkImage(store.currentState.itemSelected(item: item))
                                                 }
                                                 
                                                 ProductImage(image: item.product.thumbnail)
@@ -61,9 +61,8 @@ struct CartView: View {
                     .pullToRefresh(isShowing: store.currentState.isRefreshing) {
                         store.refresh()
                     }
-                    .listStyle(.insetGrouped)
                     .navigationTitle("Cart".uppercased())
-                    .background(Color(0xF0F2F5))
+                    .background(Color.porcelain)
                     if let total = cart.totalPrice {
                         HStack {
                             Text("Total")
@@ -71,27 +70,21 @@ struct CartView: View {
                             Text("\(total)")
                         }
                         .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
-                        .background(Color(0xF0F2F5))
+                        .background(Color.porcelain)
                     }
                     if store.currentState.isShowCheckoutButton {
-                        Button("Checkout") {
+                        WidewButton(
+                            title: "Checkout",
+                            color: store.currentState.isActiveCheckoutButton ? .green : .black
+                        ) {
                             guard store.currentState.isActiveCheckoutButton else { return }
                             router.open(CheckoutRoute())
                         }
-                        .foregroundColor(.white)
-                        .frame(height: 40)
-                        .frame(maxWidth: .infinity)
-                        .background(store.currentState.isActiveCheckoutButton ? .green : .black)
-                        .cornerRadius(12)
-                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
-                        .background(Color(0xF0F2F5))
                     }
                 }
                 
             } else {
-                VStack {
-                    Text("Empty Cart")
-                }
+                EmptyView(text: "Empty Cart")
             }
         }
     }

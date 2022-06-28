@@ -1,15 +1,9 @@
 import SwiftUI
 import core
 
-struct WishlistRoute: SwiftUIRoute {
-    var body: some View {
-        WishlistView()
-    }
-}
-
 struct WishlistView: View {
-    @EnvironmentObject var router: Router
-    @Store var store: WishlistUIStore
+    @EnvironmentObject private var router: Router
+    @Store private var store: WishlistUIStore
     
     var body: some View {
         Group {
@@ -51,9 +45,7 @@ struct WishlistView: View {
                     store.refreshWishlist()
                 }
             } else {
-                VStack {
-                    Text("Empty Wishlist")
-                }
+                EmptyView(text: "Empty Wishlist")
             }
         }.navigationTitle("Wishlist".uppercased())
     }

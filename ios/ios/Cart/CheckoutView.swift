@@ -10,9 +10,9 @@ struct CheckoutRoute: SwiftUIRoute {
     }
 }
 
-struct CheckoutView: View {
-    @EnvironmentObject var router: Router
-    @Store var store: CheckoutUIStore
+private struct CheckoutView: View {
+    @EnvironmentObject private var router: Router
+    @Store private var store: CheckoutUIStore
     
     private func setEffect() {
         store.onEffect { [weak router] effect in
@@ -41,60 +41,40 @@ struct CheckoutView: View {
                     VStack(spacing: 0) {
                         List {
                             Section(
-                                header: HStack {
-                                    Text("Payment Methods")
-                                },
+                                header: Text("Payment Methods"),
                                 content: {
                                     ForEach(cart.paymentMethods) { method in
-                                        Button {
+                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.paymentMethodSelected(method: method)) {
                                             store.selectPayment(method: method)
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: store.currentState.paymentMethodSelected(method: method) ? "checkmark.square.fill" : "square")
-                                                Text(method.title)
-                                            }
-                                        }.buttonStyle(PlainButtonStyle())
+                                        }
                                     }
                                 }
                             )
                             Section(
-                                header: HStack {
-                                    Text("Shipping Methods")
-                                },
+                                header:  Text("Shipping Methods"),
                                 content: {
                                     ForEach(cart.shippingMethods) { method in
-                                        Button {
+                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.shippingMethodId(method: method)) {
                                             store.selectShipping(method: method)
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: store.currentState.shippingMethodId(method: method) ? "checkmark.square.fill" : "square")
-                                                Text(method.title)
-                                            }
-                                        }.buttonStyle(PlainButtonStyle())
+                                        }
                                     }
                                 }
                             )
                             Section(
-                                header: HStack {
-                                    Text("Address")
-                                },
+                                header: Text("Address"),
                                 content: {
                                     ForEach(addresses) { address in
-                                        Button {
+                                        CheckoutCell(
+                                            title: "\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)",
+                                            chckmarkFilled: store.currentState.addressSelected(address: address)
+                                        ) {
                                             store.setAddress(address: address)
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: store.currentState.addressSelected(address: address) ? "checkmark.square.fill" : "square")
-                                                Text("\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)")
-                                            }
-                                        }.buttonStyle(PlainButtonStyle())
+                                        }
                                     }
                                 }
                             )
                             Section(
-                                header: HStack {
-                                    Text("Items")
-                                },
+                                header: Text("Items"),
                                 content: {
                                     ForEach(cart.items) { item in
                                         HStack {
@@ -118,17 +98,13 @@ struct CheckoutView: View {
                                 }
                             )
                         }
-                        Button("Create Oreder") {
+                        WidewButton(
+                            title: "Create Oreder",
+                            color: store.currentState.isActiveOrderButton ? .green : .black
+                        ) {
                             guard store.currentState.isActiveOrderButton else { return }
                             store.createOrder()
                         }
-                        .foregroundColor(.white)
-                        .frame(height: 40)
-                        .frame(maxWidth: .infinity)
-                        .background(store.currentState.isActiveOrderButton ? .green : .black)
-                        .cornerRadius(12)
-                        .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
-                        .background(Color(0xF0F2F5))
                     }
                     if store.currentState.isLoading {
                         FullScreenLoader()
@@ -141,4 +117,13 @@ struct CheckoutView: View {
             setEffect()
         }
     }
+}
+
+private func CheckoutCell(title: String, chckmarkFilled: Bool, action: @escaping () -> Void) -> some View {
+    Button(action: action) {
+        HStack {
+            CheckmarkImage(chckmarkFilled)
+            Text(title)
+        }
+    }.buttonStyle(PlainButtonStyle())
 }

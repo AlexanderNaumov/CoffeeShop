@@ -21,6 +21,6 @@ func ActionButton(text: String, width: CGFloat, action: @escaping () -> Void) ->
             .font(.system(size: 20, weight: .semibold))
     }
     .frame(width: width, height: 20)
-    .background(Color(0xF0F0F0))
+    .background(Color.gallery)
     .cornerRadius(6)
 }

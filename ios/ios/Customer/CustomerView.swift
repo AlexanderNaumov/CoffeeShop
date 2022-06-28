@@ -2,8 +2,8 @@ import SwiftUI
 import core
 
 struct CustomerView: View {
-    @EnvironmentObject var router: Router
-    @Store var store: CustomerUIStore
+    @EnvironmentObject private var router: Router
+    @Store private var store: CustomerUIStore
     
     var body: some View {
         Group {
@@ -36,6 +36,8 @@ struct CustomerView: View {
                     }
                     .tint(.blue)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.porcelain)
             }
         }
         .tint(.blue)

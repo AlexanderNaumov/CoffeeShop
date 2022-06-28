@@ -6,11 +6,11 @@ struct LoginRoute: SwiftUIRoute {
     var presentationStyle: PresentationStyle { .sheet }
 }
 
-struct LoginView: View {
-    @Store var store: LoginUIStore
-    @EnvironmentObject var router: Router
+private struct LoginView: View {
+    @Store private var store: LoginUIStore
+    @EnvironmentObject private var router: Router
     
-    func setEffect() {
+    private func setEffect() {
         store.onEffect { [weak router] effect in
             switch effect {
             case let error as LoginUIEffect.Error:
@@ -28,7 +28,7 @@ struct LoginView: View {
             ZStack {
                 VStack(spacing: 18) {
                     ForEach(store.currentState.fields) { field in
-                        AccountTextField(field: field) { value in
+                        InputTextField(field: field) { value in
                             store.updateField(type: field.type, value: value)
                         }
                     }
@@ -36,6 +36,8 @@ struct LoginView: View {
                         store.login()
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.porcelain)
                 .navigationTitle("Login".uppercased())
                 .navigationBarItems(leading: Button("X") {
                     router.close()

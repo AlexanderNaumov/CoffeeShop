@@ -11,3 +11,8 @@ extension Color {
     )
   }
 }
+
+extension Color {
+    static let porcelain = Color(0xF0F2F5)
+    static let gallery = Color(0xF0F0F0)
+}

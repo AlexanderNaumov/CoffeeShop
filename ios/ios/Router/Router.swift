@@ -52,7 +52,7 @@ final class Router: ObservableObject {
         }
     }
     
-    deinit {
-        print("----- deinit \(route)")
-    }
+//    deinit {
+//        print("----- deinit \(route)")
+//    }
 }

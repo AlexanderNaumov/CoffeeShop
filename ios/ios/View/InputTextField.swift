@@ -1,7 +1,7 @@
 import SwiftUI
 import core
 
-func AccountTextField(field: Field, onChange: @escaping (String) -> Void) -> some View {
+func InputTextField(field: Field, onChange: @escaping (String) -> Void) -> some View {
     let isPassword = field.type == FieldType.password || field.type == FieldType.newpassword
     let isEmail = field.type == FieldType.email
     return VStack {

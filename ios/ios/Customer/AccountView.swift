@@ -10,11 +10,11 @@ struct AccountRoute: SwiftUIRoute {
     }
 }
 
-struct AccountView: View {
-    @Store var store: AccountUIStore
-    @EnvironmentObject var router: Router
+private struct AccountView: View {
+    @Store private var store: AccountUIStore
+    @EnvironmentObject private var router: Router
     
-    func setEffect() {
+    private func setEffect() {
         store.onEffect { [weak router] effect in
             switch effect {
             case let error as AccountUIEffect.Error:
@@ -33,7 +33,7 @@ struct AccountView: View {
                 Spacer(minLength: 100)
                 VStack(spacing: 18) {
                     ForEach(store.currentState.fields) { field in
-                        AccountTextField(field: field) { value in
+                        InputTextField(field: field) { value in
                             store.updateField(type: field.type, value: value)
                         }
                     }
@@ -45,6 +45,7 @@ struct AccountView: View {
             .pullToRefresh(isShowing: store.currentState.isRefreshing) {
                 store.refreshCustomer()
             }
+            .background(Color.porcelain)
             .tint(.blue)
             .onAppear {
                 setEffect()

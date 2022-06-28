@@ -10,9 +10,9 @@ struct OrderListRoute: SwiftUIRoute {
     }
 }
 
-struct OrderListView: View {
-    @Store var store: OrderListUIStore
-    @EnvironmentObject var router: Router
+private struct OrderListView: View {
+    @Store private var store: OrderListUIStore
+    @EnvironmentObject private var router: Router
     
     var body: some View {
         List(store.currentState.orders) { order in
