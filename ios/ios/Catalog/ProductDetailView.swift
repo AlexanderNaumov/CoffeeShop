@@ -29,10 +29,15 @@ private struct ProductDetailView: View {
                     }
                 }
                 HStack {
-                    Text(product.name)
+                    VStack(alignment: .leading) {
+                        Text(product.name)
+                            .font(.appRegular)
+                        Text("\(product.price)")
+                            .font(.appSemibold)
+                    }
                     Spacer()
                     if product.qty == 0 {
-                        ActionButton(text: "+", width: 60, action: {
+                        ActionButton(image: "plus", width: 60, action: {
                             store.incrementProduct()
                         })
                     } else {
@@ -52,6 +57,7 @@ private struct ProductDetailView: View {
                     InfoBlock(title: "Roast", content: "\(product.roast)")
                     InfoBlock(title: "Acidity", content: "\(product.acidity)")
                     Text(product.description_)
+                        .font(.appRegular)
                 }
                 .padding(15)
                 .background(.white)
@@ -78,8 +84,10 @@ private func InfoBlock(title: String, content: String) -> some View {
     Group {
         HStack {
             Text(title)
+                .font(.appRegular)
             Spacer()
             Text(content)
+                .font(.appSemibold)
         }
         Divider()
     }

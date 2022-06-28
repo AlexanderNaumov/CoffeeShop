@@ -19,10 +19,7 @@ struct AsyncImage<Placeholder: View>: View {
             if loader.isLoading {
                 placeholder()
             }
-        }.onAppear {
-            loader.load()
-            print("---- load")
-        }
+        }.onAppear(perform: loader.load)
     }
 }
 
@@ -48,7 +45,6 @@ private final class ImageLoader: ObservableObject {
         
         if let response = ImageLoader.cache.cachedResponse(for: request) {
             image = UIImage(data: response.data)
-            print("----- \(image)")
         } else {
             isLoading = true
             cancellable = URLSession.shared.dataTaskPublisher(for: request)

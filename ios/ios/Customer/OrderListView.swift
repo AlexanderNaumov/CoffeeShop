@@ -17,12 +17,21 @@ private struct OrderListView: View {
     var body: some View {
         List(store.currentState.orders) { order in
             HStack {
-                Button("# \(order.id)") {
+                Button {
                     router.open(OrderDetailRoute(order: order))
+                } label: {
+                    HStack {
+                        Text("#")
+                            .font(.appSemibold)
+                        Text(order.id)
+                            .font(.appRegular)
+                        
+                    }
                 }
                 Spacer()
                 if let date = order.date {
                     Text(date, style: .relative)
+                        .font(.appRegular)
                 }
                 Image("next")
             }

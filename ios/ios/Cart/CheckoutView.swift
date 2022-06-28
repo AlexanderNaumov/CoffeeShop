@@ -82,7 +82,9 @@ private struct CheckoutView: View {
                                                 .frame(width: 50, height: 50)
                                             VStack(alignment: .leading) {
                                                 Text(item.product.name)
+                                                    .font(.appRegular)
                                                 Text("\(item.product.price)")
+                                                    .font(.appSemibold)
                                             }
                                             Spacer()
                                             Text("\(item.product.qty)x")
@@ -124,6 +126,7 @@ private func CheckoutCell(title: String, chckmarkFilled: Bool, action: @escaping
         HStack {
             CheckmarkImage(chckmarkFilled)
             Text(title)
+                .font(.appRegular)
         }
     }.buttonStyle(PlainButtonStyle())
 }

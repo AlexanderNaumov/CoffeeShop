@@ -16,7 +16,7 @@ struct iOSApp: App {
                 }
                 .ignoresSafeArea()
                 .tabItem {
-                    //                Image(systemName: "phone.fill")
+                    Image("shop").renderingMode(.template)
                     Text("Shop")
                 }
                 NavView { _ in
@@ -24,6 +24,7 @@ struct iOSApp: App {
                 }
                 .ignoresSafeArea()
                 .tabItem {
+                    Image("wishlist").renderingMode(.template)
                     Text("Wishlist")
                 }
                 NavView { _ in
@@ -31,6 +32,7 @@ struct iOSApp: App {
                 }
                 .ignoresSafeArea()
                 .tabItem {
+                    Image("basket").renderingMode(.template)
                     Text("Cart")
                 }
                 NavView { _ in
@@ -38,6 +40,7 @@ struct iOSApp: App {
                 }
                 .ignoresSafeArea()
                 .tabItem {
+                    Image("customer").renderingMode(.template)
                     Text("Customer")
                 }
             }.accentColor(.black)

@@ -35,7 +35,9 @@ private struct OrderDetailView: View {
                                         .frame(width: 50, height: 50)
                                     VStack(alignment: .leading) {
                                         Text(product.name)
+                                            .font(.appRegular)
                                         Text("\(product.price)")
+                                            .font(.appSemibold)
                                     }
                                     Spacer()
                                     Text("\(product.qty)x")
@@ -70,6 +72,7 @@ private func OrderDetailSection(title: String, content: String) -> some View {
         header: Text(title),
         content: {
             Text(content)
+                .font(.appRegular)
         }
     )
 }

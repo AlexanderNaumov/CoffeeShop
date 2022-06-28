@@ -23,8 +23,11 @@ private struct AddressListView: View {
             }, content: {
                 ForEach(store.currentState.addresses) { address in
                     HStack {
-                        Button("\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)") {
+                        Button {
                             router.open(EditAddresRoute(address: address))
+                        } label: {
+                            Text("\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)")
+                                .font(.appRegular)
                         }
                         Spacer()
                         Image("next")

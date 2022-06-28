@@ -40,7 +40,9 @@ struct CartView: View {
                                                     .frame(width: 50, height: 50)
                                                 VStack(alignment: .leading) {
                                                     Text(item.product.name)
+                                                        .font(.appRegular)
                                                     Text("\(item.product.price)")
+                                                        .font(.appSemibold)
                                                 }
                                                 Spacer()
                                                 ActionButtons(qty: item.product.qty, width: 20) {
@@ -69,6 +71,7 @@ struct CartView: View {
                             Spacer()
                             Text("\(total)")
                         }
+                        .font(.system(size: 21, weight: .semibold))
                         .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
                         .background(Color.porcelain)
                     }

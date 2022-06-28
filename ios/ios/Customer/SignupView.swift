@@ -39,8 +39,10 @@ private struct SignupView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.porcelain)
                 .navigationTitle("Register".uppercased())
-                .navigationBarItems(leading: Button("X") {
+                .navigationBarItems(leading: Button {
                     router.close()
+                } label: {
+                    Image("close")
                 })
                 if store.currentState.isLoading {
                     FullScreenLoader()

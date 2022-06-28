@@ -19,7 +19,9 @@ struct WishlistView: View {
                                         .frame(width: 50, height: 50)
                                     VStack(alignment: .leading) {
                                         Text(product.name)
+                                            .font(.appRegular)
                                         Text("\(product.price)")
+                                            .font(.appSemibold)
                                     }
                                     Spacer()
                                     ActionButtons(qty: product.qty, width: 20) {

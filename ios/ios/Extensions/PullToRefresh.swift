@@ -40,7 +40,6 @@ extension List {
     }
 }
 
-
 fileprivate final class RefreshControl: UIRefreshControl {
     
     var onRefresh: (() -> Void)?

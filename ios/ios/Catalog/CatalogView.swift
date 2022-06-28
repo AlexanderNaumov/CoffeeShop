@@ -50,11 +50,11 @@ private func ProductItem(product: Product, inc: @escaping () -> Void, dec:  @esc
             .background(Color.gallery)
             .cornerRadius(20)
             Text(product.name)
-                .font(.system(size: 15, weight: .semibold))
+                .font(.appRegular)
             Text("\(product.price)")
-                .font(.system(size: 15, weight: .semibold))
+                .font(.appSemibold)
             if product.qty == 0 {
-                ActionButton(text: "+", width: 60, action: inc)
+                ActionButton(image: "plus", width: 60, action: inc)
             } else {
                 ActionButtons(qty: product.qty, inc: inc, dec: dec)
             }
@@ -67,4 +67,3 @@ private func ProductItem(product: Product, inc: @escaping () -> Void, dec:  @esc
         }
     }
 }
-
