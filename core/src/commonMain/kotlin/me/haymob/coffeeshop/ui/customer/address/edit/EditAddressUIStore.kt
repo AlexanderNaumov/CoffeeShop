@@ -31,7 +31,6 @@ class EditAddressUIStore(
             when (it) {
                 is CustomerEffect.Error -> setEffect(EditAddressUIEffect.Error(it.message))
                 is CustomerEffect.Successes -> setEffect(EditAddressUIEffect.Successes)
-                else -> {}
             }
         }.launchIn(scope)
     }

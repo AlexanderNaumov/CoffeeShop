@@ -19,7 +19,6 @@ class LoginUIStore(
             when (it) {
                 is CustomerEffect.Error -> setEffect(LoginUIEffect.Error(it.message))
                 is CustomerEffect.Successes -> setEffect(LoginUIEffect.Successes)
-                else -> {}
             }
         }.launchIn(scope)
     }

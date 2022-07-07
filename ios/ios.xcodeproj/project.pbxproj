@@ -519,7 +519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 793VXRB9B8;
+				DEVELOPMENT_TEAM = T4MMUHPJLB;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../core/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = ios/Resources/Info.plist;
@@ -533,7 +533,7 @@
 					"-framework",
 					core,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.haymob.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mygento.coffeeshop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -545,7 +545,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 793VXRB9B8;
+				DEVELOPMENT_TEAM = T4MMUHPJLB;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../core/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = ios/Resources/Info.plist;
@@ -559,7 +559,7 @@
 					"-framework",
 					core,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.haymob.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mygento.coffeeshop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

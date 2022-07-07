@@ -26,7 +26,6 @@ class CheckoutUIStore(
             when (effect) {
                 is CartEffect.Error -> setEffect(CheckoutUIEffect.Error(effect.message))
                 is CartEffect.OrderSuccess -> setEffect(CheckoutUIEffect.OrderSuccess(effect.id))
-                else -> {}
             }
         }.launchIn(scope)
 

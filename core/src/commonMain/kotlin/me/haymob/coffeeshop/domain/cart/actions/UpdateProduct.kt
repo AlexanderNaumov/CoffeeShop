@@ -9,7 +9,7 @@ import me.haymob.coffeeshop.mappers.CartMapper
 
 internal fun CartStore.updateProduct(product: Product) {
     setState { copy(isLoading = true) }
-    setEffect(CartEffect.ProductSetLoading(product, true))
+    mediator.cartProductSetLoading(product,  true)
 
     val isLoggedIn = storage.customerToken() != null
 
@@ -39,8 +39,8 @@ internal fun CartStore.updateProduct(product: Product) {
                 isLoading = false
             )
         }
-        setEffect(CartEffect.ProductSetLoading(product, false))
+        mediator.cartProductSetLoading(product, false)
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        mediator.cartDidLoad(products)
     }.launchIn(scope)
 }

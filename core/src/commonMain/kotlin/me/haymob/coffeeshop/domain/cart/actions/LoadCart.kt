@@ -19,7 +19,7 @@ internal fun CartStore.loadCart() {
             )
         }
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        mediator.cartDidLoad(products)
         if (result.isFailure) {
             storage.removeCartId()
         }

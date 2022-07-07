@@ -6,5 +6,5 @@ import me.haymob.coffeeshop.domain.cart.CartStore
 fun CartStore.reloadEffect() {
     val items = currentState.cart?.items ?: return
     if (items.isEmpty()) return
-    setEffect(CartEffect.DidLoad(items.map { it.product }))
+    mediator.cartDidLoad(items.map { it.product })
 }
