@@ -76,7 +76,7 @@ fun signup(
 }).decode<SignupMutation>().tryMap { it.signUp?.viewer }
 
 @Serializable
-data class UserQuery(val user: User): GQLObject
+private data class UserQuery(val user: User): GQLObject
 
 @Serializable
 private data class SessionsQuery(val sessions: NodeContainer<UserQuery>?)

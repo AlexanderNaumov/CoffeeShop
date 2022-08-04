@@ -5,7 +5,11 @@ plugins {
 
 kotlin {
     android()
-    
+
+    js(IR) {
+        browser()
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -29,6 +33,9 @@ kotlin {
             }
         }
         val androidTest by getting
+
+        val jsMain by getting
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

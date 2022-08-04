@@ -25,10 +25,6 @@ fun coreInit() {
         false
     ))
 
-    app.koin.get<StoreMediator>().apply {
-        cartStore = app.koin.get()
-        catalogStore = app.koin.get()
-        customerStore = app.koin.get()
-    }
+    app.koin.get<StoreMediator>()
 }
 

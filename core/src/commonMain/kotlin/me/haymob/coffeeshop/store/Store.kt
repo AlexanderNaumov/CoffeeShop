@@ -1,7 +1,6 @@
 package me.haymob.coffeeshop.store
 
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.*
 
 abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {

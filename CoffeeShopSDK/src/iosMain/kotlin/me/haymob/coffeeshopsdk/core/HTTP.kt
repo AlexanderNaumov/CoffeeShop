@@ -91,9 +91,12 @@ private fun _http(
                 }
                 responseCode() != 200 -> {
                     val json = data?.let { NSJSONSerialization.JSONObjectWithData(it, 0, null) as? NSDictionary }
-                    val errors = json?.valueForKey("errors") as? NSArray
-//                    val message = json?.valueForKey("message") as? String ?: ""
-                    close(InternalServerException(responseCode(), errors.toString()))
+                    val errors = ((json?.valueForKey("errors") as? NSArray)?.let { arr ->
+                        (0UL until arr.count).map(arr::objectAtIndex)
+                    }?.mapNotNull {
+                        (it as? NSDictionary)?.valueForKey("message") as? String
+                    } ?: emptyList()).joinToString(separator = "\n\n")
+                    close(InternalServerException(responseCode(), errors))
                 }
                 data == null || data.length.toInt() == 0 ->
                     close(Exception("incorrect_response"))

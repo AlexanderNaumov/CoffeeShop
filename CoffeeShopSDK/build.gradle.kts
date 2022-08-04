@@ -3,12 +3,16 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version "1.6.21"
+    kotlin("plugin.serialization") version "1.7.10"
 }
 
 kotlin {
 
     android()
+
+    js(IR) {
+        browser()
+    }
 
 //    val xcf = XCFramework()
     listOf(
@@ -26,8 +30,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0-RC")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
             }
         }
@@ -53,6 +57,9 @@ kotlin {
                 implementation("org.robolectric:robolectric:4.5.1")
             }
         }
+
+        val jsMain by getting
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

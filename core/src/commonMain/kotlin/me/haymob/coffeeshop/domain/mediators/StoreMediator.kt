@@ -12,11 +12,13 @@ import me.haymob.coffeeshop.domain.customer.actions.loadCustomer
 import me.haymob.coffeeshop.domain.customer.actions.productSetLoading
 import me.haymob.coffeeshop.domain.customer.actions.productsQtyUpdate
 import me.haymob.coffeeshop.entities.Product
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class StoreMediator {
-    lateinit var cartStore: CartStore
-    lateinit var catalogStore: CatalogStore
-    lateinit var customerStore: CustomerStore
+class StoreMediator: KoinComponent {
+    private val cartStore: CartStore by inject()
+    private val catalogStore: CatalogStore by inject()
+    private val customerStore: CustomerStore by inject()
 
     fun cartProductSetLoading(product: Product, loading: Boolean) {
         cartStore.productSetLoading(product, loading)
