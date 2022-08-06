@@ -27,6 +27,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 implementation(project(":CoffeeShopSDK"))
                 implementation(project(":Preferences"))
+                implementation(project(":MultiplatformAnnotations"))
             }
         }
         val commonTest by getting {

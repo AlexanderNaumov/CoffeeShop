@@ -1,33 +1,86 @@
 package me.haymob.coffeeshopsdk.core
 
+import me.haymob.coffeeshopsdk._JvmName
 import kotlin.reflect.KProperty1
 
 internal enum class KeyEncodingStrategy {
     None, FromCamelCase
 }
 
-internal expect class Field<T>() {
-    var stringBuilder: StringBuilder?
-    var builder: (() -> Unit)?
-    var spacer: Int
-    var keyEncodingStrategy: KeyEncodingStrategy
+internal class Field<T> {
+    var stringBuilder: StringBuilder? = null
+    var builder: (() -> Unit)? = null
+    var spacer: Int = 0
+    var keyEncodingStrategy: KeyEncodingStrategy = KeyEncodingStrategy.None
 
-    fun field(p: KProperty1<T, String?>)
-    fun field(p: KProperty1<T, Int?>)
-    fun field(p: KProperty1<T, Boolean?>, vararg args: Arg)
-    fun field(p: KProperty1<T, Double?>)
-    fun <V> field(p: KProperty1<T, V?>) where V: GQLObject
-    fun <V> field(p: KProperty1<T, V?>, vararg args: Arg, builder: Field<V>.() -> Unit) where V: GQLObject
-    fun <V> field(p: KProperty1<T, V?>, field: Field<V>, vararg args: Arg) where V: GQLObject
+    @_JvmName("field1")
+    fun field(p: KProperty1<T, String?>) {
+        field<String>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
 
-    fun <V> on(name: String, vararg args: Arg, builder: Field<V>.() -> Unit) where V: GQLObject
+    @_JvmName("field2")
+    fun field(p: KProperty1<T, Int?>) {
+        field<Int>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
 
-    fun <V> field(p: KProperty1<T, V?>) where V: List<String?>
-    fun <V> field(p: KProperty1<T, V?>) where V: List<Int?>
-    fun <V> field(p: KProperty1<T, V?>) where V: List<Boolean?>
-    fun <V> field(p: KProperty1<T, V?>) where V: List<Double?>
-    fun <V, E> field(p: KProperty1<T, V?>, vararg args: Arg, builder: Field<E>.() -> Unit) where E: GQLObject, V: List<E?>
-    fun <V, E> field(p: KProperty1<T, V?>, field: Field<E>, vararg args: Arg) where E: GQLObject, V: List<E?>
+    @_JvmName("field3")
+    fun field(p: KProperty1<T, Boolean?>, vararg args: Arg) {
+        field<Boolean>(stringBuilder!!, p.name, spacer, keyEncodingStrategy, args = args)
+    }
+
+    @_JvmName("field4")
+    fun field(p: KProperty1<T, Double?>) {
+        field<Double>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
+
+    @_JvmName("field5")
+    fun <V> field(p: KProperty1<T, V?>) where V: GQLObject {
+        field<V>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
+
+    @_JvmName("field6")
+    fun <V> field(p: KProperty1<T, V?>, vararg args: Arg, builder: Field<V>.() -> Unit) where V: GQLObject {
+        field(stringBuilder!!, p.name, spacer, keyEncodingStrategy, args = args, builder = builder)
+    }
+
+    @_JvmName("field7")
+    fun <V> field(p: KProperty1<T, V?>, field: Field<V>, vararg args: Arg) where V: GQLObject {
+        field(stringBuilder!!, p.name, spacer, keyEncodingStrategy, args = args, field = field)
+    }
+
+    fun <V> on(name: String, vararg args: Arg, builder: Field<V>.() -> Unit) where V: GQLObject {
+        field(stringBuilder!!, "... on $name", spacer, KeyEncodingStrategy.None, args, builder = builder)
+    }
+
+    @_JvmName("field8")
+    fun <V> field(p: KProperty1<T, V?>) where V: List<String?> {
+        field<String>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
+
+    @_JvmName("field9")
+    fun <V> field(p: KProperty1<T, V?>) where V: List<Int?> {
+        field<Int>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
+
+    @_JvmName("field10")
+    fun <V> field(p: KProperty1<T, V?>) where V: List<Boolean?> {
+        field<Boolean>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
+
+    @_JvmName("field11")
+    fun <V> field(p: KProperty1<T, V?>) where V: List<Double?> {
+        field<Double>(stringBuilder!!, p.name, spacer, keyEncodingStrategy)
+    }
+
+    @_JvmName("field12")
+    fun <V, E> field(p: KProperty1<T, V?>, vararg args: Arg, builder: Field<E>.() -> Unit) where E: GQLObject, V: List<E?> {
+        field(stringBuilder!!, p.name, spacer, keyEncodingStrategy, args = args, builder = builder)
+    }
+
+    @_JvmName("field13")
+    fun <V, E> field(p: KProperty1<T, V?>, field: Field<E>, vararg args: Arg) where E: GQLObject, V: List<E?> {
+        field(stringBuilder!!, p.name, spacer, keyEncodingStrategy, args = args, field = field)
+    }
 }
 
 internal fun <T> field(
