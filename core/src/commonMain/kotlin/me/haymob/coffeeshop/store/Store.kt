@@ -2,7 +2,9 @@ package me.haymob.coffeeshop.store
 
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
 
     internal val scope = CoroutineScope(Dispatchers.Unconfined + Job())

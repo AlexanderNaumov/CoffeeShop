@@ -1,6 +1,7 @@
 package me.haymob.coffeeshopsdk.core
 
-import me.haymob.coffeeshopsdk._JvmName
+
+import me.haymob.multiplatformannotations._JvmName
 import kotlin.reflect.KProperty1
 
 internal enum class KeyEncodingStrategy {

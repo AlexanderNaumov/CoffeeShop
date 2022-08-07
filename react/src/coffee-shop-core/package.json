@@ -1,0 +1,6 @@
+{
+  "main": "CoffeeShop-core.js",
+  "types": "CoffeeShop-core.d.ts",
+  "version": "unspecified",
+  "name": "core"
+}

@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("dev.petuska.npm.publish") version "3.0.1"
 }
 
 kotlin {
@@ -8,6 +9,7 @@ kotlin {
 
     js(IR) {
         browser()
+        binaries.library()
     }
     
     listOf(
@@ -67,5 +69,13 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 32
+    }
+}
+
+tasks {
+    register<Copy>("buildNpm") {
+        dependsOn("assembleJsPackage")
+        from(layout.buildDirectory.file("packages/js"))
+        into(layout.buildDirectory.file("../../react/src/coffee-shop-core"))
     }
 }

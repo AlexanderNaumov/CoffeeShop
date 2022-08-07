@@ -5,8 +5,10 @@ import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.store.Store
+import me.haymob.multiplatformannotations._JsExport
 
-class CatalogUIStore(
+@_JsExport
+class CatalogUIStore internal constructor(
     internal val catalogStore: CatalogStore,
     internal val cartStore: CartStore
 ): Store<CatalogUIState, Unit>(CatalogUIState()) {
