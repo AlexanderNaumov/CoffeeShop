@@ -11,19 +11,15 @@
 local.properties
 
 # dependencies
-web/node_modules
-web/.pnp
+react/node_modules
+react/.pnp
 .pnp.js
 
 # testing
-web/coverage
-
-# next.js
-web/.next/
-web/out/
+react/coverage
 
 # production
-web/build
+react/build
 
 # misc
 *.pem
@@ -39,6 +35,10 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+react/.parcel-cache
+react/dist
+react/src/coffee-shop-core
 
 # typescript
 *.tsbuildinfo

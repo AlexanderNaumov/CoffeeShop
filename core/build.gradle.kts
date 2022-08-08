@@ -73,9 +73,23 @@ android {
 }
 
 tasks {
-    register<Copy>("buildNpm") {
-        dependsOn("assembleJsPackage")
+    register<Copy>("copyNpm") {
         from(layout.buildDirectory.file("packages/js"))
         into(layout.buildDirectory.file("../../react/src/coffee-shop-core"))
     }
+    named<dev.petuska.npm.publish.task.NpmAssembleTask>("assembleJsPackage").configure {
+        dependsOn("copyNpm")
+    }
+//    named<org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile>("assembleJsPackage").configure {
+//        kotlinOptions {
+//            sourceMaps = false
+//            sourceMapEmbedSources = null
+//        }
+//    }
+    named<org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile>("compileKotlinJs").configure {
+        kotlinOptions.sourceMap = false
+        kotlinOptions.sourceMapEmbedSources = null
+        kotlinOptions.metaInfo = false
+    }
 }
+
