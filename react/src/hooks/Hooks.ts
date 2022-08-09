@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import core from "../coffee-shop-core/CoffeeShop-core"
-const coffeeshop = core.me.haymob.coffeeshop
-const actions = coffeeshop.ui.catalog.actions
+import coffeeshop = core.me.haymob.coffeeshop
+import actions = coffeeshop.ui.catalog.actions
+import Product = coffeeshop.entities.Product
 
 export function useCatalogUIStore() {
     let store = coffeeshop.catalogUIStore()
@@ -22,7 +23,9 @@ export function useCatalogUIStore() {
     }, [])
 
     return {
-        loadCatalog: () => { actions.loadCatalog(store) },
+        loadCatalog: () => actions.loadCatalog(store),
+        incrementProduct: (product: Product) => actions.incrementProduct(store, product),
+        decrementProduct: (product: Product) => actions.decrementProduct(store, product),
         state: state
     }
 }
