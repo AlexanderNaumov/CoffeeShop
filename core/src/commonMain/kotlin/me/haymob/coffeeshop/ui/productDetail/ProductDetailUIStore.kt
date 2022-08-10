@@ -7,18 +7,20 @@ import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.entities.Product
 import me.haymob.coffeeshop.store.Store
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 class ProductDetailUIStore(
     internal val catalogStore: CatalogStore,
     internal val cartStore: CartStore,
     internal val customerStore: CustomerStore,
-    product: Product
-): Store<ProductDetailUIState, Unit>(ProductDetailUIState(product)) {
+    productId: String
+): Store<ProductDetailUIState, Unit>(ProductDetailUIState()) {
     init {
         catalogStore.state.onEach { catalogState ->
             setState {
                 copy(
-                    product = catalogState.categories.flatMap { it.products }.find { it.id == product.id } ?: product
+                    product = catalogState.categories.flatMap { it.products }.find { it.id == productId }
                 )
             }
         }.launchIn(scope)

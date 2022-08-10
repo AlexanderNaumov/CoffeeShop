@@ -27,7 +27,7 @@ struct CartView: View {
                                 ForEach(cart.items) { item in
                                     ZStack {
                                         Button {
-                                            router.open(ProductDetailRoute(product: item.product))
+                                            router.open(ProductDetailRoute(productId: item.product.id))
                                         } label: {
                                             HStack {
                                                 Button {

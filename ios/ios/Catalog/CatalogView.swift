@@ -18,7 +18,7 @@ struct CatalogView: View {
                     ForEach(store.currentState.categories) { category in
                         ForEach(category.products) { product in
                             Button {
-                                router.open(ProductDetailRoute(product: product))
+                                router.open(ProductDetailRoute(productId: product.id))
                             } label: {
                                 ProductItem(product: product) {
                                     store.incrementProduct(product: product)

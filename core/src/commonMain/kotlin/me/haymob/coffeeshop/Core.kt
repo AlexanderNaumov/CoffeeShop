@@ -1,18 +1,18 @@
 package me.haymob.coffeeshop
 
-import me.haymob.coffeeshop.di.coreModule
 import me.haymob.coffeeshop.domain.mediators.StoreMediator
 import me.haymob.coffeeshop.domain.services.AppStorage
 import me.haymob.coffeeshopsdk.*
-import me.haymob.multiplatformannotations._JsExport
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 
-val app = startKoin {
-    modules(coreModule)
-}
+lateinit var app: KoinApplication
 
 fun coreInit() {
+    app = startKoin {
+        modules(me.haymob.coffeeshop.di.coreModule)
+    }
+
     val storage = app.koin.get<AppStorage>()
 
     config(Config(

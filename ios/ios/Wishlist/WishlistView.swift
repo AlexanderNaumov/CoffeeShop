@@ -12,7 +12,7 @@ struct WishlistView: View {
                     ForEach(store.currentState.wishlist) { product in
                         ZStack {
                             Button {
-                                router.open(ProductDetailRoute(product: product))
+                                router.open(ProductDetailRoute(productId: product.id))
                             } label: {
                                 HStack {
                                     ProductImage(image: product.thumbnail)

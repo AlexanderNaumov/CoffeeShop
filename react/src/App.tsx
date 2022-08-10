@@ -1,12 +1,23 @@
 import "rsuite/styles/index.less"
 import { Container, Header, Content, Footer, Navbar, Nav } from "rsuite"
+import { useEffect } from "react"
 import Catalog from "./catalog/Catalog"
 import Login from "./customer/Login"
 import Signup from "./customer/Signup"
 import { Route, Routes, useNavigate } from "react-router-dom"
+import ProductDetail from "./catalog/ProductDetail"
+import core from "./coffee-shop-core/CoffeeShop-core"
+import coffeeshop = core.me.haymob.coffeeshop
 
 export default function App() {
     let navigate = useNavigate()
+
+    let catalogStore = coffeeshop.catalogStore()
+
+    useEffect(() => {
+        catalogStore.loadCatalog()
+    }, [])
+
     return <Container>
         <Header style={{ position: "sticky", top: 0 }}>
             <Navbar>
@@ -25,8 +36,9 @@ export default function App() {
         <Content>
             <Routes>
                 <Route path="/" element={<Catalog />} />
-                <Route path="login" element={<Login />} />
-                <Route path="signup" element={<Signup />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
             </Routes>
         </Content>
     </Container>

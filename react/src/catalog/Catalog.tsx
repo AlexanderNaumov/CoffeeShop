@@ -4,7 +4,8 @@ import MinusIcon from '@rsuite/icons/Minus'
 import { useStateFromStore } from "../hooks/Hooks"
 import "../core.extensions"
 import Colors from "../Colors"
-import { Component, useEffect } from "react"
+import { Component } from "react"
+import { useNavigate } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
@@ -12,6 +13,12 @@ import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
 
 export default class Catalog extends Component {
     private store = coffeeshop.catalogUIStore()
+
+    constructor(props: Object) {
+        super(props)
+        console.log("catalog 2x init !!!!!!")
+    }
+
     render() {
         return <CatalogContent store={this.store} />
     }
@@ -20,10 +27,7 @@ export default class Catalog extends Component {
 function CatalogContent(props: { store: CatalogUIStore }) {
     let { store } = props
     let state = useStateFromStore(store)
-
-    useEffect(() => {
-        store.loadCatalog()
-    }, [])
+    let navigate = useNavigate()
 
     return <FlexboxGrid justify="center" style={{ background: Colors.porcelain }}>
         <FlexboxGrid.Item style={{ width: 700 }}>
@@ -31,7 +35,7 @@ function CatalogContent(props: { store: CatalogUIStore }) {
                 {
                     state.getCategories().flatMap(category =>
                         category.getProducts().map(product =>
-                            <FlexboxGrid.Item colspan={12}>
+                            <FlexboxGrid.Item colspan={12} onClick={ () => navigate(`product/${product.id}`)}>
                                 <div style={{ margin: 20, padding: 8, background: "white", borderRadius: 30 }}>
                                     <div style={{ background: Colors.gallery, borderRadius: 30, aspectRatio: "1", display: "flex", justifyContent: "center" }}>
                                         <img style={{ width: "80%" }} src={product.thumbnail} />

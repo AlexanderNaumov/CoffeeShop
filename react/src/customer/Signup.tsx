@@ -1,4 +1,4 @@
-import { FlexboxGrid, Panel, Form, Button, Modal } from "rsuite"
+import { FlexboxGrid, Panel, Form, Button } from "rsuite"
 import "../core.extensions"
 import { useStateFromStore } from "../hooks/Hooks"
 import core from "../coffee-shop-core/CoffeeShop-core"
@@ -7,6 +7,7 @@ import SignupUIStore = coffeeshop.ui.customer.signup.SignupUIStore
 import SignupUIEffect = coffeeshop.ui.customer.signup.SignupUIEffect
 import InputForm from "../InputForm"
 import FullScreenLoader from "../FullScreenLoader"
+import ErrorModal from "../ErrorModal"
 import Colors from "../Colors"
 import { Component, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -30,12 +31,7 @@ function SignupContent(props: { store: SignupUIStore }) {
     })
 
     return <div style={{ width: "100%", top: 56, bottom: 0, position: "absolute", background: Colors.porcelain, zIndex: "-1" }}>
-        <Modal open={error != undefined} onClose={() => setError(undefined)}>
-            <Modal.Header>
-                <Modal.Title>Error</Modal.Title>
-            </Modal.Header>
-            <Modal.Body style={{ color: "red" }}>{error}</Modal.Body>
-        </Modal>
+        <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />
         <FlexboxGrid justify="center" style={{ marginTop: 200 }}>
             <FlexboxGrid.Item style={{ width: 500 }}>
                 <Panel header={<h3>Register</h3>} bordered>

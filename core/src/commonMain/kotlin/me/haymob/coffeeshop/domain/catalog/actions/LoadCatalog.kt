@@ -5,7 +5,9 @@ import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CategoryMapper
 import me.haymob.coffeeshop.mappers.ProductMapper
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 fun CatalogStore.loadCatalog() {
     setState { copy(isLoading = true) }
     shopService.categories().flatMapMerge { categories ->
