@@ -37,4 +37,8 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
     fun onEffect(effect: (StoreEffect) -> Unit) {
         _onEffect = effect
     }
+
+    fun onState(didSetState: () -> Unit) {
+        this.didSetState = didSetState
+    }
 }

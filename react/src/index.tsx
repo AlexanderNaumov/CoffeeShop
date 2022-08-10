@@ -1,6 +1,14 @@
 import { createRoot } from "react-dom/client"
-import { App } from "./App"
+import { BrowserRouter } from "react-router-dom"
+import React from "react"
+import App from "./App"
 
 const app = document.getElementById("app")
 const root = createRoot(app!!)
-root.render(<App />)
+root.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </React.StrictMode>
+)

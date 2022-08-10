@@ -6,7 +6,9 @@ import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.services.FieldsService
 import me.haymob.coffeeshop.store.Store
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 class LoginUIStore(
     internal val customerStore: CustomerStore,
     internal val fieldsService: FieldsService
