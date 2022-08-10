@@ -1,12 +1,13 @@
-import { FlexboxGrid, Panel, Form, Button, Modal, Loader } from "rsuite"
+import { FlexboxGrid, Panel, Form, Button } from "rsuite"
 import "../core.extensions"
 import { useStateFromStore } from "../hooks/Hooks"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import LoginUIStore = coffeeshop.ui.customer.login.LoginUIStore
 import LoginUIEffect = coffeeshop.ui.customer.login.LoginUIEffect
-import Field = coffeeshop.entities.Field
-import FieldType = coffeeshop.entities.FieldType
+import InputForm from "../InputForm"
+import FullScreenLoader from "../FullScreenLoader"
+import ErrorModal from "../ErrorModal"
 import Colors from "../Colors"
 import { Component, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -19,7 +20,7 @@ export default class Login extends Component {
 }
 
 function LoginContent(props: { store: LoginUIStore }) {
-    let store = props.store
+    let { store } = props
     let state = useStateFromStore(store)
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
@@ -30,12 +31,7 @@ function LoginContent(props: { store: LoginUIStore }) {
     })
 
     return <div style={{ width: "100%", top: 56, bottom: 0, position: "absolute", background: Colors.porcelain, zIndex: "-1" }}>
-        <Modal open={error != undefined} onClose={() => setError(undefined)}>
-            <Modal.Header>
-                <Modal.Title>Error</Modal.Title>
-            </Modal.Header>
-            <Modal.Body style={{ color: "red" }}>{error}</Modal.Body>
-        </Modal>
+        <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />
         <FlexboxGrid justify="center" style={{ marginTop: 200 }}>
             <FlexboxGrid.Item style={{ width: 500 }}>
                 <Panel header={<h3>Login</h3>} bordered>
@@ -51,31 +47,7 @@ function LoginContent(props: { store: LoginUIStore }) {
             </FlexboxGrid.Item>
         </FlexboxGrid>
         {
-            state.isLoading && <FullScreenLoader/>
+            state.isLoading && <FullScreenLoader />
         }
-    </div>
-}
-
-function InputForm(field: Field, onChange: (value: string) => void) {
-    let isPassword = field.type == FieldType.Password || field.type == FieldType.NewPassword
-    return <Form.Group>
-        <Form.ControlLabel>{field.type.name}</Form.ControlLabel>
-        {
-            isPassword ?
-                <Form.Control name="password" type="password" autoComplete="off" onChange={(value: string) => onChange(value)} /> :
-                <Form.Control name="name" onChange={(value: string) => {
-                    console.log(value)
-                    onChange(value)
-                }} />
-        }
-        {
-            field.error && <Form.HelpText style={{ color: "red" }}>{field.error}</Form.HelpText>
-        }
-    </Form.Group>
-}
-
-function FullScreenLoader() {
-    return <div style={{ width: "100%", top: 0, bottom: 0, position: "absolute", background: "rgba(1, 1, 1, 0.2)", display: "flex", justifyContent: "center", alignItems: "center"}}>
-        <Loader size="md"/>
     </div>
 }

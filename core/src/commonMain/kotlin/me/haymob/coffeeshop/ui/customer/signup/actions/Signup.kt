@@ -3,7 +3,9 @@ package me.haymob.coffeeshop.ui.customer.signup.actions
 import me.haymob.coffeeshop.domain.customer.actions.signup
 import me.haymob.coffeeshop.entities.FieldType
 import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 fun SignupUIStore.signup() {
     val fields = fieldsService.validateFields(currentState.fields)
     if (!fieldsService.isValidFields(fields)) {

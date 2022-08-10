@@ -18,7 +18,7 @@ export default class Catalog extends Component {
 }
 
 function CatalogContent(props: { store: CatalogUIStore }) {
-    let store = props.store
+    let { store } = props
     let state = useStateFromStore(store)
 
     useEffect(() => {
