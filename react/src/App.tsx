@@ -8,6 +8,7 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import ProductDetail from "./catalog/ProductDetail"
 import core from "./coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
+import Colors from "./Colors"
 
 export default function App() {
     let navigate = useNavigate()
@@ -19,7 +20,7 @@ export default function App() {
     }, [])
 
     return <Container>
-        <Header style={{ position: "sticky", top: 0 }}>
+        <Header style={{ position: "sticky", top: 0, zIndex: 100 }}>
             <Navbar>
                 <Navbar.Brand onClick={() => navigate("/")}>COFFEE SHOP</Navbar.Brand>
                 <Nav>
@@ -33,7 +34,7 @@ export default function App() {
                 </Nav>
             </Navbar>
         </Header>
-        <Content>
+        <Content style={{ top: 56, bottom: 0, left: 0, right: 0, position: "fixed", overflowY: "auto", background: Colors.porcelain }}>
             <Routes>
                 <Route path="/" element={<Catalog />} />
                 <Route path="/product/:id" element={<ProductDetail />} />

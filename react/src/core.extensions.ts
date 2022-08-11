@@ -1,8 +1,10 @@
+import ProductDetail from "./catalog/ProductDetail"
 import core from "./coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import loginActions = coffeeshop.ui.customer.login.actions
 import signupActions = coffeeshop.ui.customer.signup.actions
 import catalogActions = coffeeshop.ui.catalog.actions
+import productDetailActions = coffeeshop.ui.productDetail.actions
 import CatalogUIState = coffeeshop.ui.catalog.CatalogUIState
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
 import Product = coffeeshop.entities.Product
@@ -14,6 +16,7 @@ import Field = coffeeshop.entities.Field
 import FieldType = coffeeshop.entities.FieldType
 import SignupUIState = coffeeshop.ui.customer.signup.SignupUIState
 import SignupUIStore = coffeeshop.ui.customer.signup.SignupUIStore
+import ProductDetailUIStore = coffeeshop.ui.productDetail.ProductDetailUIStore
 
 
 declare module "./coffee-shop-core/CoffeeShop-core" {
@@ -24,6 +27,14 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
         interface CatalogUIStore {
             incrementProduct(product: Product): void
             decrementProduct(product: Product): void
+        }
+    }
+    namespace me.haymob.coffeeshop.ui.productDetail {
+        interface ProductDetailUIStore {
+            incrementProduct(): void
+            decrementProduct(): void
+            addProductToWishlist(): void
+            removeProductFromWishlist(): void
         }
     }
     namespace me.haymob.coffeeshop.ui.customer.login {
@@ -102,4 +113,19 @@ CatalogUIStore.prototype.incrementProduct = function(product: Product) {
 
 CatalogUIStore.prototype.decrementProduct = function(product: Product) {
     catalogActions.decrementProduct(this, product)
+}
+
+ProductDetailUIStore.prototype.incrementProduct = function() {
+    productDetailActions.incrementProduct(this)
+}
+ProductDetailUIStore.prototype.decrementProduct = function() {
+    productDetailActions.decrementProduct(this)
+}
+
+ProductDetailUIStore.prototype.addProductToWishlist = function() {
+    productDetailActions.addProductToWishlist(this)
+}
+
+ProductDetailUIStore.prototype.removeProductFromWishlist = function() {
+    productDetailActions.removeProductFromWishlist(this)
 }

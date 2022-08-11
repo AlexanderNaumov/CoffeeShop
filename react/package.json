@@ -17,6 +17,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
-    "rsuite": "^5.16.4"
+    "rsuite": "^5.16.5"
   }
 }

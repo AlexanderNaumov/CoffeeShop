@@ -5,9 +5,9 @@ import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import LoginUIStore = coffeeshop.ui.customer.login.LoginUIStore
 import LoginUIEffect = coffeeshop.ui.customer.login.LoginUIEffect
-import InputForm from "../InputForm"
-import FullScreenLoader from "../FullScreenLoader"
-import ErrorModal from "../ErrorModal"
+import InputForm from "../components/InputForm"
+import FullScreenLoader from "../components/FullScreenLoader"
+import ErrorModal from "../components/ErrorModal"
 import Colors from "../Colors"
 import { Component, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -30,14 +30,16 @@ function LoginContent(props: { store: LoginUIStore }) {
         if (effect == LoginUIEffect.Successes) navigate("/")
     })
 
-    return <div style={{ width: "100%", top: 56, bottom: 0, position: "absolute", background: Colors.porcelain, zIndex: "-1" }}>
+    return <div style={{ marginTop: 250 }}>
         <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />
         <FlexboxGrid justify="center" style={{ marginTop: 200 }}>
             <FlexboxGrid.Item style={{ width: 500 }}>
                 <Panel header={<h3>Login</h3>} bordered>
                     <Form fluid>
                         {
-                            state.getFields().map(field => InputForm(field, value => store.updateField(field.type, value)))
+                            state.getFields().map(field =>
+                                <InputForm field={field} onChange={value => store.updateField(field.type, value)} />
+                            )
                         }
                         <Form.Group>
                             <Button appearance="primary" onClick={() => store.login()}>Sign in</Button>

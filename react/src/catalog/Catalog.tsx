@@ -1,6 +1,4 @@
-import { IconButton, FlexboxGrid, Stack, Loader } from "rsuite"
-import PlusIcon from '@rsuite/icons/Plus'
-import MinusIcon from '@rsuite/icons/Minus'
+import { FlexboxGrid, Loader } from "rsuite"
 import { useStateFromStore } from "../hooks/Hooks"
 import "../core.extensions"
 import Colors from "../Colors"
@@ -9,7 +7,8 @@ import { useNavigate } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
-
+import ProductQtyButtons from "../components/ProductQtyButtons"
+import ProductLoader from "../components/ProductLoader"
 
 export default class Catalog extends Component {
     private store = coffeeshop.catalogUIStore()
@@ -29,13 +28,13 @@ function CatalogContent(props: { store: CatalogUIStore }) {
     let state = useStateFromStore(store)
     let navigate = useNavigate()
 
-    return <FlexboxGrid justify="center" style={{ background: Colors.porcelain }}>
+    return <FlexboxGrid justify="center">
         <FlexboxGrid.Item style={{ width: 700 }}>
             <FlexboxGrid>
                 {
                     state.getCategories().flatMap(category =>
                         category.getProducts().map(product =>
-                            <FlexboxGrid.Item colspan={12} onClick={ () => navigate(`product/${product.id}`)}>
+                            <FlexboxGrid.Item colspan={12} onClick={() => navigate(`product/${product.id}`)}>
                                 <div style={{ margin: 20, padding: 8, background: "white", borderRadius: 30 }}>
                                     <div style={{ background: Colors.gallery, borderRadius: 30, aspectRatio: "1", display: "flex", justifyContent: "center" }}>
                                         <img style={{ width: "80%" }} src={product.thumbnail} />
@@ -43,23 +42,10 @@ function CatalogContent(props: { store: CatalogUIStore }) {
                                     <div style={{ fontSize: 18, textAlign: "center", marginTop: 8 }}>{product.name}</div>
                                     <div style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", marginTop: 8 }}>{product.price.stringValue()}</div>
                                     <div style={{ marginTop: 8, display: "flex", justifyContent: "center" }}>
-                                        {
-                                            product.qty == 0 ?
-                                                <IconButton icon={<PlusIcon />} style={{ width: 100 }} onClick={() => store.incrementProduct(product)} /> :
-                                                <Stack spacing={16}>
-                                                    <IconButton icon={<PlusIcon />} onClick={() => store.incrementProduct(product)} />
-                                                    <div style={{ fontSize: 20 }}>{product.qty}</div>
-                                                    <IconButton icon={<MinusIcon />} onClick={() => store.decrementProduct(product)} />
-                                                </Stack>
-
-                                        }
+                                        <ProductQtyButtons qty={product.qty} inc={() => store.incrementProduct(product)} dec={() => store.decrementProduct(product)} />
                                     </div>
                                     {
-                                        product.isLoading && <div style={{ top: 0, left: 0, width: "100%", height: "100%", padding: 20, position: "absolute" }}>
-                                            <div style={{ background: "rgba(1, 1, 1, 0.05)", width: "100%", height: "100%", borderRadius: 30, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                <Loader size="md" />
-                                            </div>
-                                        </div>
+                                        product.isLoading && <ProductLoader padding={20} borderRadius={30} />
                                     }
                                 </div>
                             </FlexboxGrid.Item>
@@ -70,4 +56,3 @@ function CatalogContent(props: { store: CatalogUIStore }) {
         </FlexboxGrid.Item>
     </FlexboxGrid>
 }
-
