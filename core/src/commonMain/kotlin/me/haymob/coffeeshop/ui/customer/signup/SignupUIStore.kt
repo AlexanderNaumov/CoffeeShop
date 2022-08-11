@@ -21,6 +21,7 @@ class SignupUIStore(
             when (it) {
                 is CustomerEffect.Error -> setEffect(SignupUIEffect.Error(it.message))
                 is CustomerEffect.Successes -> setEffect(SignupUIEffect.Successes)
+                else -> {}
             }
         }.launchIn(scope)
     }

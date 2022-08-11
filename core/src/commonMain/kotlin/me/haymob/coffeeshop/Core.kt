@@ -1,6 +1,5 @@
 package me.haymob.coffeeshop
 
-import me.haymob.coffeeshop.domain.mediators.StoreMediator
 import me.haymob.coffeeshop.domain.services.AppStorage
 import me.haymob.coffeeshopsdk.*
 import org.koin.core.KoinApplication
@@ -22,6 +21,4 @@ fun coreInit() {
         storage.customerToken(),
         false
     ))
-
-    app.koin.get<StoreMediator>()
 }

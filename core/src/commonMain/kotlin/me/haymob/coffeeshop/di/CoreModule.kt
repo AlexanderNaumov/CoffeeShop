@@ -4,7 +4,7 @@ import me.haymob.coffeeshop.domain.services.*
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
-import me.haymob.coffeeshop.domain.mediators.StoreMediator
+import me.haymob.coffeeshop.domain.CombineStore
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.cart.checkout.CheckoutUIStore
@@ -28,6 +28,7 @@ val coreModule = module {
     singleOf(::AppStorage)
     singleOf(::CatalogStore)
     singleOf(::CartStore)
+    singleOf(::CombineStore)
     factoryOf(::CatalogUIStore)
     factoryOf(::CartUIStore)
     factoryOf(::ProductDetailUIStore)
@@ -36,7 +37,6 @@ val coreModule = module {
     factoryOf(::LoginUIStore)
     singleOf(::FieldsService)
     singleOf(::SignupUIStore)
-    singleOf(::StoreMediator)
     singleOf(::AccountUIStore)
     factoryOf(::AddressListUIStore)
     factoryOf(::CreateAddressUIStore)

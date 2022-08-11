@@ -16,7 +16,7 @@ class CartUIStore(
                 copy(
                     cart = it.cart,
                     isLoading = it.isLoading,
-                    isRefreshing = if (isRefreshing && !it.isLoading) false else isRefreshing
+                    isRefreshing = if (isRefreshing && it.isLoading.not()) false else isRefreshing
                 )
             }
         }.launchIn(scope)

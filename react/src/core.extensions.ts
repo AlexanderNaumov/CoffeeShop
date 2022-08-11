@@ -5,7 +5,6 @@ import signupActions = coffeeshop.ui.customer.signup.actions
 import catalogActions = coffeeshop.ui.catalog.actions
 import CatalogUIState = coffeeshop.ui.catalog.CatalogUIState
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
-import CatalogStore = coffeeshop.domain.catalog.CatalogStore
 import Product = coffeeshop.entities.Product
 import Category = coffeeshop.entities.Category
 import Price = coffeeshop.entities.Price
@@ -23,7 +22,6 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             getCategories(): Array<Category>
         }
         interface CatalogUIStore {
-            loadCatalog(): void
             incrementProduct(product: Product): void
             decrementProduct(product: Product): void
         }
@@ -52,11 +50,6 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
         }
         interface Price {
             stringValue(): String
-        }
-    }
-    namespace me.haymob.coffeeshop.domain.catalog {
-        interface CatalogStore {
-            loadCatalog(): void
         }
     }
 }
@@ -103,18 +96,10 @@ SignupUIStore.prototype.signup = function() {
     signupActions.signup(this)
 }
 
-CatalogUIStore.prototype.loadCatalog = function() {
-    catalogActions.loadCatalog(this)
-}
-
 CatalogUIStore.prototype.incrementProduct = function(product: Product) {
     catalogActions.incrementProduct(this, product)
 }
 
 CatalogUIStore.prototype.decrementProduct = function(product: Product) {
     catalogActions.decrementProduct(this, product)
-}
-
-CatalogStore.prototype.loadCatalog = function() {
-    coffeeshop.domain.catalog.actions.loadCatalog(this)
 }

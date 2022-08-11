@@ -21,7 +21,7 @@ internal fun CustomerStore.didLoadUser(result: Result<User>) {
         setEffect(CustomerEffect.Successes)
 
         val wishlist = user?.wishlist?.edges?.map { ProductMapper.productFromDto(it.node) } ?: emptyList()
-        mediator.wishlistDidLoad(wishlist)
+        setEffect(CustomerEffect.DidLoadWishlist(wishlist))
     }
     if (result.isFailure) {
         setEffect(CustomerEffect.Error(result.exceptionOrNull()?.message ?: "unknown error"))
@@ -44,7 +44,7 @@ internal fun CustomerStore.didLoadUserViewer(result: Result<UserViewer>) {
 
         val wishlist = viewer?.user?.wishlist?.edges?.map { ProductMapper.productFromDto(it.node) } ?: emptyList()
 
-        mediator.wishlistDidLoad(wishlist)
+        setEffect(CustomerEffect.DidLoadWishlist(wishlist))
         val token = viewer!!.sessionToken
         if (token.isNotEmpty()) {
             storage.setCustomerToken(token)

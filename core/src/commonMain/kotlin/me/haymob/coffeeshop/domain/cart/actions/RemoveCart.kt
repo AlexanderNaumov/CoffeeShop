@@ -5,5 +5,5 @@ import me.haymob.coffeeshop.domain.cart.CartStore
 
 fun CartStore.removeCart() {
     setState { copy(cart = null) }
-    mediator.cartDidLoad(emptyList())
+    setEffect(CartEffect.DidLoad(emptyList()))
 }

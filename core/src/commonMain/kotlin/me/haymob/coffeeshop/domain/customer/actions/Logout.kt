@@ -1,6 +1,7 @@
 package me.haymob.coffeeshop.domain.customer.actions
 
 import kotlinx.coroutines.flow.launchIn
+import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.flow.onResult
 
@@ -16,6 +17,7 @@ fun CustomerStore.logout() {
         }
         storage.removeCustomerToken()
         shopService.removeSessionToken()
-        mediator.customerLoggedOut()
+        setEffect(CustomerEffect.LoggedOut)
+        setEffect(CustomerEffect.DidLoadWishlist(emptyList()))
     }.launchIn(scope)
 }

@@ -13,7 +13,7 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
     }
 
     items.forEach {
-        mediator.cartProductSetLoading(it.product, true)
+        setEffect(CartEffect.ProductSetLoading(it.product, true))
     }
 
     items.asFlow().flatMapMerge {
@@ -28,10 +28,10 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
         }
 
         items.forEach {
-            mediator.cartProductSetLoading(it.product, false)
+            setEffect(CartEffect.ProductSetLoading(it.product, false))
         }
 
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        mediator.cartDidLoad(products)
+        setEffect(CartEffect.DidLoad(products))
     }.launchIn(scope)
 }

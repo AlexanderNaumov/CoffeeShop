@@ -12,10 +12,10 @@ import coffeeshop = core.me.haymob.coffeeshop
 export default function App() {
     let navigate = useNavigate()
 
-    let catalogStore = coffeeshop.catalogStore()
+    let combineStore = coffeeshop.combineStore()
 
     useEffect(() => {
-        catalogStore.loadCatalog()
+        combineStore.load()
     }, [])
 
     return <Container>

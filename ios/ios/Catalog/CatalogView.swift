@@ -7,10 +7,6 @@ struct CatalogView: View {
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 2)
     
-    init() {
-        store.loadCatalog()
-    }
-    
     var body: some View {
         ScrollView {
             VStack {

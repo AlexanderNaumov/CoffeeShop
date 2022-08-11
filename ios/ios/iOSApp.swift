@@ -6,6 +6,8 @@ struct iOSApp: App {
     
     init() {
         CoreKt.coreInit()
+        let store = CoreKt.app.koin.get(type: CombineStore.self) as! CombineStore
+        store.load()
     }
     
 	var body: some Scene {

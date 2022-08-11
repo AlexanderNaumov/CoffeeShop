@@ -18,7 +18,7 @@ class CatalogUIStore internal constructor(
                 copy(
                     categories = it.categories,
                     isLoading = it.isLoading,
-                    isRefreshing = if (isRefreshing && !it.isLoading) false else isRefreshing
+                    isRefreshing = if (isRefreshing && it.isLoading.not()) false else isRefreshing
                 )
             }
         }.launchIn(scope)

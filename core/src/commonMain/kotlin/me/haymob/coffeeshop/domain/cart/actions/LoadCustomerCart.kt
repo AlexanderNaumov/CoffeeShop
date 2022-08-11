@@ -17,6 +17,6 @@ fun CartStore.loadCustomerCart() {
             )
         }
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        mediator.cartDidLoad(products)
+        setEffect(CartEffect.DidLoad(products))
     }.launchIn(scope)
 }

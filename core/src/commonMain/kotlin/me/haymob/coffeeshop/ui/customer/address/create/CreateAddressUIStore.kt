@@ -29,6 +29,7 @@ class CreateAddressUIStore(
             when (it) {
                 is CustomerEffect.Error -> setEffect(CreateAddressUIEffect.Error(it.message))
                 is CustomerEffect.Successes -> setEffect(CreateAddressUIEffect.Successes)
+                else -> {}
             }
         }.launchIn(scope)
     }

@@ -16,10 +16,7 @@ fun CartStore.createOrder(paymentMethodId: String, shippingMethodId: String) {
 
         when {
             result.isFailure -> setEffect(CartEffect.Error(result.exceptionOrNull()?.message ?: "unknown error"))
-            result.isSuccess -> {
-                setEffect(CartEffect.OrderSuccess(result.getOrNull() ?: "null"))
-                mediator.orderSuccess()
-            }
+            result.isSuccess -> setEffect(CartEffect.OrderSuccess(result.getOrNull() ?: "null"))
         }
 
     }.launchIn(scope)

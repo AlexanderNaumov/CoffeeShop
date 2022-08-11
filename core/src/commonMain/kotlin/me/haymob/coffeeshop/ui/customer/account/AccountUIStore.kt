@@ -31,6 +31,7 @@ class AccountUIStore(
             when (it) {
                 is CustomerEffect.Error -> setEffect(AccountUIEffect.Error(it.message))
                 is CustomerEffect.Successes -> setEffect(AccountUIEffect.Successes)
+                else -> {}
             }
         }.launchIn(scope)
     }
