@@ -2,7 +2,9 @@ package me.haymob.coffeeshop.ui.cart.actions
 
 import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.entities.Cart
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 fun CartUIStore.selectCartItem(item: Cart.Item) {
     setState {
         val selectedItems = selectedItems.toMutableList()

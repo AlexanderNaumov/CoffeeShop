@@ -2,7 +2,9 @@ package me.haymob.coffeeshop.ui.cart
 
 import me.haymob.coffeeshop.entities.Cart
 import me.haymob.coffeeshop.store.State
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 data class CartUIState(
     val cart: Cart? = null,
     val isLoading: Boolean = false,

@@ -1,6 +1,7 @@
 package me.haymob.coffeeshop
 
 import me.haymob.coffeeshop.domain.CombineStore
+import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.customer.login.LoginUIStore
 import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
@@ -24,3 +25,6 @@ fun loginUIStore() = app.koin.get<LoginUIStore>()
 
 @_JsExport
 fun signupUIStore() = app.koin.get<SignupUIStore>()
+
+@_JsExport
+fun cartUIStore() = app.koin.get<CartUIStore>()

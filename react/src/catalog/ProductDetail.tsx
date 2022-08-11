@@ -1,8 +1,7 @@
-import { FlexboxGrid, Stack, Loader } from "rsuite"
+import { FlexboxGrid, Stack } from "rsuite"
 import { Component } from "react"
 import { useParams } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
-import Colors from "../Colors"
 import { useStateFromStore } from "../hooks/Hooks"
 import "../core.extensions"
 import coffeeshop = core.me.haymob.coffeeshop

@@ -1,4 +1,4 @@
-import { FlexboxGrid, Loader } from "rsuite"
+import { FlexboxGrid } from "rsuite"
 import { useStateFromStore } from "../hooks/Hooks"
 import "../core.extensions"
 import Colors from "../Colors"

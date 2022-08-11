@@ -2,7 +2,9 @@ package me.haymob.coffeeshop.ui.cart.actions
 
 import me.haymob.coffeeshop.domain.cart.actions.removeCartItems
 import me.haymob.coffeeshop.ui.cart.CartUIStore
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 fun CartUIStore.removeSelectedItems() {
     val cart = currentState.cart ?: return
     val items = cart.items.filter { currentState.selectedItems.contains(it.id) }
