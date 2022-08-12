@@ -13,6 +13,7 @@ import me.haymob.coffeeshop.ui.customer.login.LoginUIStore
 import me.haymob.coffeeshop.ui.customer.order.OrderListUIStore
 import me.haymob.coffeeshop.ui.customer.order.detail.OrderDetailUIStore
 import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
+import me.haymob.coffeeshop.ui.customer.wishlist.WishlistUIStore
 import me.haymob.coffeeshop.ui.productDetail.ProductDetailUIStore
 import me.haymob.multiplatformannotations._JsExport
 import org.koin.core.parameter.ParametersHolder
@@ -64,3 +65,6 @@ fun orderListUIStore() = app.koin.get<OrderListUIStore>()
 fun orderDetailUIStore(orderId: String) = app.koin.get<OrderDetailUIStore> {
     ParametersHolder(_values = mutableListOf(orderId))
 }
+
+@_JsExport
+fun wishlistUIStore() = app.koin.get<WishlistUIStore>()

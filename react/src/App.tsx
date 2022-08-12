@@ -20,6 +20,7 @@ import EditAddres from "./customer/EditAddres"
 import Checkout from "./cart/Checkout"
 import OrderList from "./customer/OrderList"
 import OrderDetail from "./customer/OrderDetail"
+import Wishlist from "./customer/Wishlist"
 
 export default function App() {
     let navigate = useNavigate()
@@ -61,6 +62,7 @@ export default function App() {
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/orders" element={<OrderList />} />
                     <Route path="/orders/:id" element={< OrderDetail openCart={openCart}/>} />
+                    <Route path="/wishlist" element={<Wishlist />} />
                 </Routes>
             </Content>
         </Container>

@@ -6,7 +6,9 @@ import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.store.Store
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 class WishlistUIStore(
     internal val customerStore: CustomerStore,
     internal val catalogStore: CatalogStore,

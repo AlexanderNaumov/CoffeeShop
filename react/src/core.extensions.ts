@@ -9,6 +9,7 @@ import catalogActions = coffeeshop.ui.catalog.actions
 import productDetailActions = coffeeshop.ui.productDetail.actions
 import cartActions = coffeeshop.ui.cart.actions
 import checkoutActions = coffeeshop.ui.cart.checkout.actions
+import wishlistActions = coffeeshop.ui.customer.wishlist.actions
 import CatalogUIState = coffeeshop.ui.catalog.CatalogUIState
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
 import Product = coffeeshop.entities.Product
@@ -40,6 +41,8 @@ import CheckoutUIState = coffeeshop.ui.cart.checkout.CheckoutUIState
 import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
 import OrderListUIState = coffeeshop.ui.customer.order.OrderListUIState
 import OrderDetailUIStore = coffeeshop.ui.customer.order.detail.OrderDetailUIStore
+import WishlistUIState = coffeeshop.ui.customer.wishlist.WishlistUIState
+import WishlistUIStore = coffeeshop.ui.customer.wishlist.WishlistUIStore
 
 declare module "./coffee-shop-core/CoffeeShop-core" {
     namespace me.haymob.coffeeshop.ui.catalog {
@@ -123,6 +126,16 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
     namespace me.haymob.coffeeshop.ui.customer.order.detail {
         interface OrderDetailUIStore {
             reorder(): void
+        }
+    }
+    namespace me.haymob.coffeeshop.ui.customer.wishlist {
+        interface WishlistUIState {
+            getWishlist(): Array<Product>
+        }
+        interface WishlistUIStore {
+            incrementProduct(product: Product): void
+            decrementProduct(product: Product): void
+            removeProductFromWishlist(product: Product): void
         }
     }
     namespace me.haymob.coffeeshop.entities {
@@ -343,4 +356,20 @@ Order.prototype.getProducts = function () {
 
 OrderDetailUIStore.prototype.reorder = function () {
     coffeeshop.ui.customer.order.detail.actions.reorder(this)
+}
+
+WishlistUIState.prototype.getWishlist = function() {
+    return toArray(this.wishlist["h_1"])
+}
+
+WishlistUIStore.prototype.incrementProduct = function(product: Product) {
+    wishlistActions.incrementProduct(this, product)
+}
+
+WishlistUIStore.prototype.decrementProduct = function(product: Product) {
+    wishlistActions.decrementProduct(this, product)
+}
+
+WishlistUIStore.prototype.removeProductFromWishlist = function(product: Product) {
+    wishlistActions.removeProductFromWishlist(this, product)
 }
