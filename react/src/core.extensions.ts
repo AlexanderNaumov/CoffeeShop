@@ -2,6 +2,7 @@ import core from "./coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import loginActions = coffeeshop.ui.customer.login.actions
 import signupActions = coffeeshop.ui.customer.signup.actions
+import accountActions = coffeeshop.ui.customer.account.actions
 import catalogActions = coffeeshop.ui.catalog.actions
 import productDetailActions = coffeeshop.ui.productDetail.actions
 import cartActions = coffeeshop.ui.cart.actions
@@ -20,6 +21,9 @@ import ProductDetailUIStore = coffeeshop.ui.productDetail.ProductDetailUIStore
 import Cart = coffeeshop.entities.Cart
 import CartUIState = coffeeshop.ui.cart.CartUIState
 import CartUIStore = coffeeshop.ui.cart.CartUIStore
+import CustomerUIStore = coffeeshop.ui.customer.CustomerUIStore
+import AccountUIStore = coffeeshop.ui.customer.account.AccountUIStore
+import AccountUIState = coffeeshop.ui.customer.account.AccountUIState
 
 declare module "./coffee-shop-core/CoffeeShop-core" {
     namespace me.haymob.coffeeshop.ui.catalog {
@@ -55,6 +59,20 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
         interface SignupUIStore {
             updateField(type: FieldType, value: string): void
             signup(): void
+        }
+    }
+    namespace me.haymob.coffeeshop.ui.customer {
+        interface CustomerUIStore {
+            logout(): void
+        }
+    }
+    namespace me.haymob.coffeeshop.ui.customer.account {
+        interface AccountUIStore {
+            updateCustomer(): void
+            updateField(type: FieldType, value: string): void
+        }
+        interface AccountUIState {
+            getFields(): Array<Field>
         }
     }
     namespace me.haymob.coffeeshop.entities {
@@ -124,6 +142,9 @@ SignupUIStore.prototype.updateField = function(type: FieldType, value: string) {
 SignupUIStore.prototype.signup = function() {
     signupActions.signup(this)
 }
+CustomerUIStore.prototype.logout = function() {
+    coffeeshop.ui.customer.actions.logout(this)
+}
 
 CatalogUIStore.prototype.incrementProduct = function(product: Product) {
     catalogActions.incrementProduct(this, product)
@@ -182,4 +203,16 @@ CartUIStore.prototype.selectAllItems = function() {
 
 CartUIStore.prototype.removeSelectedItems = function() {
     cartActions.removeSelectedItems(this)
+}
+
+AccountUIStore.prototype.updateCustomer = function() {
+    accountActions.updateCustomer(this)
+}
+
+AccountUIStore.prototype.updateField = function(type: FieldType, value: string) {
+    accountActions.updateField(this, type, value)
+}
+
+AccountUIState.prototype.getFields = function() {
+    return toArray(this.fields["h_1"])
 }

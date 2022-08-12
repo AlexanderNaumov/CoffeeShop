@@ -3,7 +3,9 @@ package me.haymob.coffeeshop.ui.customer.account.actions
 import me.haymob.coffeeshop.domain.customer.actions.updateCustomer
 import me.haymob.coffeeshop.entities.FieldType
 import me.haymob.coffeeshop.ui.customer.account.AccountUIStore
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 fun AccountUIStore.updateCustomer() {
     val fields = fieldsService.validateFields(currentState.fields)
     if (!fieldsService.isValidFields(fields)) {

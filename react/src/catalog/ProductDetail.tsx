@@ -1,8 +1,7 @@
 import { FlexboxGrid, Stack } from "rsuite"
 import { Component } from "react"
-import { useParams } from "react-router-dom"
+import { useParams , useMatch} from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
-import { useStateFromStore } from "../hooks/Hooks"
 import "../core.extensions"
 import coffeeshop = core.me.haymob.coffeeshop
 import ProductDetailUIStore = coffeeshop.ui.productDetail.ProductDetailUIStore
@@ -15,24 +14,28 @@ import favoriteFill from "../resources/favoriteFill.svg"
 export default () => <ProductDetail productId={useParams().id as string} />
 
 class ProductDetail extends Component<{ productId: string }> {
-
     private store: ProductDetailUIStore
 
     constructor(props: { productId: string }) {
         super(props)
         let { productId } = props
         this.store = coffeeshop.productDetailUIStore(productId)
-        console.log("hello ", this.store.currentState, productId)
+        this.store.onState(() => this.setState({}))
     }
 
     render() {
+        let { productId } = this.props
+        if (this.store.currentState.product?.id != productId) {
+            this.store = coffeeshop.productDetailUIStore(productId)
+            this.store.onState(() => this.setState({}))
+        }
         return <ProductDetailContent store={this.store} />
     }
 }
 
 function ProductDetailContent(props: { store: ProductDetailUIStore }) {
     let { store } = props
-    let state = useStateFromStore(store)
+    let state =  store.currentState
 
     let product = state.product
 

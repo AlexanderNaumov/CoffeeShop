@@ -1,5 +1,4 @@
 import { FlexboxGrid } from "rsuite"
-import { useStateFromStore } from "../hooks/Hooks"
 import "../core.extensions"
 import Colors from "../Colors"
 import { Component } from "react"
@@ -15,7 +14,7 @@ export default class Catalog extends Component {
 
     constructor(props: Object) {
         super(props)
-        console.log("catalog 2x init !!!!!!")
+        this.store.onState(() => this.setState({}))
     }
 
     render() {
@@ -25,7 +24,7 @@ export default class Catalog extends Component {
 
 function CatalogContent(props: { store: CatalogUIStore }) {
     let { store } = props
-    let state = useStateFromStore(store)
+    let state = store.currentState
     let navigate = useNavigate()
 
     return <FlexboxGrid justify="center">

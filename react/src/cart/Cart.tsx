@@ -4,21 +4,24 @@ import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import CartUIStore = coffeeshop.ui.cart.CartUIStore
 import { useNavigate } from "react-router-dom"
-import { useStateFromStore } from "../hooks/Hooks"
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import ProductLoader from "../components/ProductLoader"
 import Colors from "../Colors"
 
-export default class Cart extends Component {
+export default class Cart extends Component<{closeCart: () => void}> {
     private store = coffeeshop.cartUIStore()
+    constructor(props: {closeCart: () => void}) {
+        super(props)
+        this.store.onState(() => this.setState({}))
+    }
     render() {
-        return <CartContent store={this.store} />
+        return <CartContent store={this.store} closeCart={this.props.closeCart} />
     }
 }
 
-function CartContent(props: { store: CartUIStore }) {
-    let { store } = props
-    let state = useStateFromStore(store)
+function CartContent(props: { store: CartUIStore, closeCart: () => void }) {
+    let { store, closeCart } = props
+    let state = store.currentState
     let navigate = useNavigate()
 
     let cart = store.currentState.cart
@@ -34,7 +37,10 @@ function CartContent(props: { store: CartUIStore }) {
         </Stack>
         <List hover>
             {
-                cart.getItems().map(item => <List.Item onClick={() => navigate(`product/${item.product.id}`)}>
+                cart.getItems().map(item => <List.Item onClick={() => {
+                    closeCart()
+                    navigate(`product/${item.product.id}`)
+                }}>
                     <Stack justifyContent="space-between" style={{ marginLeft: 10, marginRight: 16 }}>
                         <Stack>
                             <Checkbox checked={state.itemSelected(item)} onClick={event => {

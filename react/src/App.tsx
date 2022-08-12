@@ -1,9 +1,10 @@
 import "rsuite/styles/index.less"
-import { Container, Header, Content, Navbar, Nav, Drawer, Stack, Button } from "rsuite"
+import { Container, Header, Content, Navbar, Nav, Drawer, Stack } from "rsuite"
 import { useEffect, useState } from "react"
 import Catalog from "./catalog/Catalog"
 import Login from "./customer/Login"
 import Signup from "./customer/Signup"
+import Account from "./customer/Account"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import ProductDetail from "./catalog/ProductDetail"
 import core from "./coffee-shop-core/CoffeeShop-core"
@@ -12,6 +13,7 @@ import Colors from "./Colors"
 import basket from "./resources/basket.svg"
 import Cart from "./cart/Cart"
 import CloseIcon from "@rsuite/icons/Close"
+import CustomerMenu from "./customer/CustomerMenu"
 
 export default function App() {
     let navigate = useNavigate()
@@ -21,6 +23,8 @@ export default function App() {
     useEffect(() => {
         combineStore.load()
     }, [])
+
+    let closeCart = () => setOpenCart(false)
 
     return <div>
         <Container>
@@ -33,10 +37,7 @@ export default function App() {
                         } style={{ width: 100 }} onClick={() => setOpenCart(true)}>Cart</Nav.Item>
                     </Nav>
                     <Nav pullRight>
-                        <Nav.Menu title="Customer">
-                            <Nav.Item onClick={() => navigate("/login")}>Login</Nav.Item>
-                            <Nav.Item onClick={() => navigate("/signup")}>Register</Nav.Item>
-                        </Nav.Menu>
+                        <CustomerMenu />
                     </Nav>
                 </Navbar>
             </Header>
@@ -46,17 +47,18 @@ export default function App() {
                     <Route path="/product/:id" element={<ProductDetail />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/account" element={<Account />} />
                 </Routes>
             </Content>
         </Container>
         <Drawer size="xs" placement="right" open={openCart} onClose={() => setOpenCart(false)}>
             <button onClick={() => setOpenCart(false)} style={{ background: "white", marginTop: 12, marginLeft: 12 }}>
                 <Stack spacing={12}>
-                    <CloseIcon style={{ fontSize: 20 }}/>
-                    <div style={{fontSize: 18, fontWeight: "bold"}}>CART</div>
+                    <CloseIcon style={{ fontSize: 20 }} />
+                    <div style={{ fontSize: 18, fontWeight: "bold" }}>CART</div>
                 </Stack>
             </button>
-            <Cart />
+            <Cart closeCart={closeCart} />
         </Drawer>
     </div>
 }

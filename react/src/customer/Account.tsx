@@ -2,41 +2,38 @@ import { FlexboxGrid, Panel, Form, Button } from "rsuite"
 import "../core.extensions"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
-import SignupUIStore = coffeeshop.ui.customer.signup.SignupUIStore
-import SignupUIEffect = coffeeshop.ui.customer.signup.SignupUIEffect
+import AccountUIStore = coffeeshop.ui.customer.account.AccountUIStore
+import AccountUIEffect = coffeeshop.ui.customer.account.AccountUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
 import { Component, useState } from "react"
-import { useNavigate } from "react-router-dom"
 
-export default class Signup extends Component {
-    private store = coffeeshop.signupUIStore()
+export default class Account extends Component {
+    private store = coffeeshop.accountUIStore()
     constructor(props: Object) {
         super(props)
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <SignupContent store={this.store} />
+        return <AccountContent store={this.store} />
     }
 }
 
-function SignupContent(props: { store: SignupUIStore }) {
+function AccountContent(props: { store: AccountUIStore }) {
     let { store } = props
     let state = store.currentState
-    let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
     store.onEffect(effect => {
-        if (effect instanceof SignupUIEffect.Error) setError(effect.message)
-        if (effect == SignupUIEffect.Successes) navigate("/")
+        if (effect instanceof AccountUIEffect.Error) setError(effect.message)
     })
 
     return <div>
         <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />
         <FlexboxGrid justify="center" style={{ marginTop: 150 }}>
             <FlexboxGrid.Item style={{ width: 500 }}>
-                <Panel header={<h3>Register</h3>} bordered>
+                <Panel header={<h3>Account</h3>} bordered>
                     <Form fluid>
                         {
                             state.getFields().map(field =>
@@ -44,7 +41,7 @@ function SignupContent(props: { store: SignupUIStore }) {
                             )
                         }
                         <Form.Group>
-                            <Button appearance="primary" onClick={() => store.signup()}>Sign up</Button>
+                            <Button appearance="primary" onClick={() => store.updateCustomer()}>Update</Button>
                         </Form.Group>
                     </Form>
                 </Panel>
