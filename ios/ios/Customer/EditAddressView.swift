@@ -2,9 +2,9 @@ import SwiftUI
 import core
 
 struct EditAddresRoute: SwiftUIRoute {
-    let address: Address
+    let addressId: String
     var body: some View {
-        EditAddresView(store: Store(wrappedValue: ios.inject(params: [address])))
+        EditAddresView(store: Store(wrappedValue: ios.inject(params: [addressId])))
     }
     var title: String? {
         "Edit Address".uppercased()

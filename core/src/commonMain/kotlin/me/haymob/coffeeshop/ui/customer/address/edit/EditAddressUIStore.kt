@@ -8,11 +8,13 @@ import me.haymob.coffeeshop.domain.services.FieldsService
 import me.haymob.coffeeshop.entities.Address
 import me.haymob.coffeeshop.mappers.FieldMapper
 import me.haymob.coffeeshop.store.Store
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 class EditAddressUIStore(
     internal val customerStore: CustomerStore,
     internal val fieldsService: FieldsService,
-    internal val address: Address
+    internal val addressId: String
 ): Store<EditAddressUIState, EditAddressUIEffect>(EditAddressUIState()) {
     init {
         customerStore.state.onEach {
@@ -20,8 +22,9 @@ class EditAddressUIStore(
                 if (it.isLoading) {
                     copy(isLoading = it.isLoading)
                 } else {
+                    val fields = it.customer?.addresses?.find { address -> address.id == addressId  }?.let(FieldMapper::addressFieldFromAddress) ?: emptyList()
                     copy(
-                        fields = FieldMapper.addressFieldFromAddress(address),
+                        fields = fields,
                         isLoading = it.isLoading
                     )
                 }

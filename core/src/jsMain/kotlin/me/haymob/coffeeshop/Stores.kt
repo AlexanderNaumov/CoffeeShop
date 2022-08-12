@@ -5,6 +5,9 @@ import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.customer.CustomerUIStore
 import me.haymob.coffeeshop.ui.customer.account.AccountUIStore
+import me.haymob.coffeeshop.ui.customer.address.create.CreateAddressUIStore
+import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIStore
+import me.haymob.coffeeshop.ui.customer.address.list.AddressListUIStore
 import me.haymob.coffeeshop.ui.customer.login.LoginUIStore
 import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
 import me.haymob.coffeeshop.ui.productDetail.ProductDetailUIStore
@@ -18,7 +21,7 @@ fun catalogUIStore() = app.koin.get<CatalogUIStore>()
 fun combineStore() = app.koin.get<CombineStore>()
 
 @_JsExport
-fun productDetailUIStore(productId: String) = app.koin.get<ProductDetailUIStore>() {
+fun productDetailUIStore(productId: String) = app.koin.get<ProductDetailUIStore> {
     ParametersHolder(_values = mutableListOf(productId))
 }
 
@@ -36,3 +39,14 @@ fun customerUIStore() = app.koin.get<CustomerUIStore>()
 
 @_JsExport
 fun accountUIStore() = app.koin.get<AccountUIStore>()
+
+@_JsExport
+fun addressListUIStore() = app.koin.get<AddressListUIStore>()
+
+@_JsExport
+fun createAddressUIStore() = app.koin.get<CreateAddressUIStore>()
+
+@_JsExport
+fun editAddressUIStore(addressId: String) = app.koin.get<EditAddressUIStore> {
+    ParametersHolder(_values = mutableListOf(addressId))
+}

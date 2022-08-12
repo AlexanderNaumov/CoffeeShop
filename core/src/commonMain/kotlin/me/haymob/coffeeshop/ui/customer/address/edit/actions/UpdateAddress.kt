@@ -3,7 +3,9 @@ package me.haymob.coffeeshop.ui.customer.address.edit.actions
 import me.haymob.coffeeshop.domain.customer.actions.updateAddress
 import me.haymob.coffeeshop.entities.FieldType
 import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIStore
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 fun EditAddressUIStore.updateAddress() {
     val fields = fieldsService.validateFields(currentState.fields)
     if (!fieldsService.isValidFields(fields)) {
@@ -17,5 +19,5 @@ fun EditAddressUIStore.updateAddress() {
     val street = fieldsService.valueOfType(currentState.fields, FieldType.Street) ?: return
     val postcode = fieldsService.valueOfType(currentState.fields, FieldType.Postcode) ?: return
 
-    customerStore.updateAddress(address.id, firstName, lastName, city, street, postcode)
+    customerStore.updateAddress(addressId, firstName, lastName, city, street, postcode)
 }

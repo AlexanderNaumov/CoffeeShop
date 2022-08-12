@@ -66,9 +66,9 @@ function CartContent(props: { store: CartUIStore, closeCart: () => void }) {
             }
         </List>
         {
-            cart.totalPrice != null && <Stack justifyContent="space-between" style={{ height: 50, marginLeft: 18, marginRight: 18 }}>
-                <div style={{ fontSize: 20 }}>TOTAL</div>
-                <div style={{ fontSize: 20 }}>{cart.totalPrice.stringValue()}</div>
+            cart.totalPrice != null && <Stack justifyContent="space-between" style={{ height: 50, marginLeft: 18, marginRight: 18, fontSize: 20 }}>
+                <div>TOTAL</div>
+                <div>{cart.totalPrice.stringValue()}</div>
             </Stack>
         }
         {

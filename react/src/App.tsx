@@ -14,6 +14,9 @@ import basket from "./resources/basket.svg"
 import Cart from "./cart/Cart"
 import CloseIcon from "@rsuite/icons/Close"
 import CustomerMenu from "./customer/CustomerMenu"
+import AddressList from "./customer/AddressList"
+import CreateAddress from "./customer/CreateAddress"
+import EditAddres from "./customer/EditAddres"
 
 export default function App() {
     let navigate = useNavigate()
@@ -48,6 +51,9 @@ export default function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/account" element={<Account />} />
+                    <Route path="/addresses" element={<AddressList />} />
+                    <Route path="/addresses/create" element={<CreateAddress />} />
+                    <Route path="/addresses/:id" element={<EditAddres />} />
                 </Routes>
             </Content>
         </Container>

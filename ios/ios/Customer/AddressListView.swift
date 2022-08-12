@@ -24,7 +24,7 @@ private struct AddressListView: View {
                 ForEach(store.currentState.addresses) { address in
                     HStack {
                         Button {
-                            router.open(EditAddresRoute(address: address))
+                            router.open(EditAddresRoute(addressId: address.id))
                         } label: {
                             Text("\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)")
                                 .font(.appRegular)
