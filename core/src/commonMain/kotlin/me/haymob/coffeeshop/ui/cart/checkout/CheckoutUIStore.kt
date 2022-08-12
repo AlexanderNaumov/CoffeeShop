@@ -7,9 +7,11 @@ import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.cart.actions.setAddress
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.store.Store
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 class CheckoutUIStore(
-    val cartStore: CartStore,
+    internal val cartStore: CartStore,
     customerStore: CustomerStore
 ): Store<CheckoutUIState, CheckoutUIEffect>(CheckoutUIState()) {
     init {

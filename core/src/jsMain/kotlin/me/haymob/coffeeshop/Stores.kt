@@ -2,6 +2,7 @@ package me.haymob.coffeeshop
 
 import me.haymob.coffeeshop.domain.CombineStore
 import me.haymob.coffeeshop.ui.cart.CartUIStore
+import me.haymob.coffeeshop.ui.cart.checkout.CheckoutUIStore
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.customer.CustomerUIStore
 import me.haymob.coffeeshop.ui.customer.account.AccountUIStore
@@ -50,3 +51,6 @@ fun createAddressUIStore() = app.koin.get<CreateAddressUIStore>()
 fun editAddressUIStore(addressId: String) = app.koin.get<EditAddressUIStore> {
     ParametersHolder(_values = mutableListOf(addressId))
 }
+
+@_JsExport
+fun checkoutUIStore() = app.koin.get<CheckoutUIStore>()

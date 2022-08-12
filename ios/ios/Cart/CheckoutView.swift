@@ -44,7 +44,7 @@ private struct CheckoutView: View {
                                 header: Text("Payment Methods"),
                                 content: {
                                     ForEach(cart.paymentMethods) { method in
-                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.paymentMethodSelected(method: method)) {
+                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.equalPaymentMethod(method: method)) {
                                             store.selectPayment(method: method)
                                         }
                                     }
@@ -54,7 +54,7 @@ private struct CheckoutView: View {
                                 header:  Text("Shipping Methods"),
                                 content: {
                                     ForEach(cart.shippingMethods) { method in
-                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.shippingMethodId(method: method)) {
+                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.equalShippingMethod(method: method)) {
                                             store.selectShipping(method: method)
                                         }
                                     }
@@ -66,7 +66,7 @@ private struct CheckoutView: View {
                                     ForEach(addresses) { address in
                                         CheckoutCell(
                                             title: "\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)",
-                                            chckmarkFilled: store.currentState.addressSelected(address: address)
+                                            chckmarkFilled: store.currentState.equalAddress(address: address)
                                         ) {
                                             store.setAddress(address: address)
                                         }

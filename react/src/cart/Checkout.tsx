@@ -1,0 +1,142 @@
+import { FlexboxGrid, List, Panel, Button, ButtonToolbar, Stack, Checkbox, Modal } from "rsuite"
+import "../core.extensions"
+import core from "../coffee-shop-core/CoffeeShop-core"
+import coffeeshop = core.me.haymob.coffeeshop
+import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
+import CheckoutUIEffect = coffeeshop.ui.cart.checkout.CheckoutUIEffect
+import { Component, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import FullScreenLoader from "../components/FullScreenLoader"
+import ErrorModal from "../components/ErrorModal"
+
+export default class Checkout extends Component {
+    private store = coffeeshop.checkoutUIStore()
+    constructor(props: Object) {
+        super(props)
+        this.store.onState(() => this.setState({}))
+    }
+    render() {
+        return <CheckoutContent store={this.store} />
+    }
+}
+
+function CheckoutContent(props: { store: CheckoutUIStore }) {
+    let { store } = props
+    let state = store.currentState
+    let navigate = useNavigate()
+
+    let [error, setError] = useState<string>()
+    let [success, setSuccess] = useState<string>()
+
+    let cart = state.cart
+
+    store.onEffect(effect => {
+        if (effect instanceof CheckoutUIEffect.OrderSuccess) setSuccess(effect.id)
+        if (effect instanceof CheckoutUIEffect.Error) setError(effect.message)
+    })
+
+    let closeSuccess = () => setSuccess(undefined)
+    return <div>
+        <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />
+        <Modal open={success != undefined} onClose={closeSuccess}>
+            <Modal.Header>
+                <Modal.Title>Success</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Oredr ID: {success}</Modal.Body>
+            <Modal.Footer>
+                <Button onClick={() => {
+                    closeSuccess()
+                    navigate("/")
+                }} appearance="primary">
+                    Ok
+                </Button>
+            </Modal.Footer>
+        </Modal>
+        {
+            cart != null ? <div>
+                <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
+                    <FlexboxGrid.Item style={{ width: 500 }}>
+                        <Panel bordered style={{ background: "white" }}>
+                            <Header title="Payment Methods" />
+                            <List size="md" bordered>
+                                {
+                                    cart.getPaymentMethods().map(method => <CheckoutCell
+                                        title={method.title}
+                                        checked={state.equalPaymentMethod(method)}
+                                        action={() => store.selectPayment(method)}
+                                    />)
+                                }
+                            </List>
+                            <Header title="Shipping Methods" />
+                            <List size="md" bordered>
+                                {
+                                    cart.getShippingMethods().map(method => <CheckoutCell
+                                        title={method.title}
+                                        checked={state.equalShippingMethod(method)}
+                                        action={() => store.selectShipping(method)}
+                                    />)
+                                }
+                            </List>
+                            <Header title="Address" />
+                            <List size="md" bordered>
+                                {
+                                    state.getAddresses().map(address => <CheckoutCell
+                                        title={`${address.firstName} ${address.lastName}, ${address.city}, ${address.street}, ${address.postcode}`}
+                                        checked={state.equalAddress(address)}
+                                        action={() => store.setAddress(address)}
+                                    />)
+                                }
+                            </List>
+                            <Header title="Items" />
+                            <List size="md" bordered>
+                                {
+                                    cart.getItems().map(item => <List.Item>
+                                        <Stack justifyContent="space-between">
+                                            <Stack>
+                                                <img src={item.product.thumbnail} style={{ width: 50, height: 50, objectFit: "contain" }} />
+                                                <div style={{ marginLeft: 8 }}>
+                                                    <div>{item.product.name}</div>
+                                                    <div style={{ fontWeight: "bold", marginTop: 2 }}>{item.product.price.stringValue()}</div>
+                                                </div>
+                                            </Stack>
+                                            <div style={{ fontSize: 18 }}>{item.product.qty}x</div>
+                                        </Stack>
+                                    </List.Item>)
+                                }
+                                <List.Item>
+                                    {
+                                        cart!.totalPrice != null && <Stack justifyContent="space-between" style={{ fontSize: 20 }}>
+                                            <div>TOTAL</div>
+                                            <div>{cart!.totalPrice.stringValue()}</div>
+                                        </Stack>
+                                    }
+                                </List.Item>
+                            </List>
+                            <ButtonToolbar style={{ marginTop: 30 }} onClick={() => {
+                                if (state.isActiveOrderButton) store.createOrder()
+                            }}>
+                                <Button appearance="primary" color="green" style={{
+                                    background: state.isActiveOrderButton ? undefined : "gray"
+                                }} block>Create Oreder</Button>
+                            </ButtonToolbar>
+                        </Panel>
+                    </FlexboxGrid.Item>
+                </FlexboxGrid>
+                {
+                    state.isLoading && <FullScreenLoader />
+                }
+            </div> : <div></div>
+        }
+    </div>
+}
+
+function Header(props: { title: string }) {
+    return <div style={{ marginLeft: 4, marginTop: 18, marginBottom: 12 }}>{props.title}</div>
+}
+
+function CheckoutCell(props: { title: string, checked: boolean, action: () => void }) {
+    let { title, checked, action } = props
+    return <List.Item>
+        <Checkbox checked={checked} onClick={action}>{title}</Checkbox>
+    </List.Item>
+}

@@ -22,7 +22,7 @@ function AddressListContent(props: { store: AddressListUIStore }) {
     let state = store.currentState
     let navigate = useNavigate()
 
-    return <FlexboxGrid justify="center" style={{ marginTop: 150 }}>
+    return <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
         <FlexboxGrid.Item style={{ width: 500 }}>
             <Panel header={
                 <Button appearance="subtle" onClick={() => navigate("create")}>New Address</Button>

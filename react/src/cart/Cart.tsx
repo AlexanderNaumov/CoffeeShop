@@ -72,7 +72,10 @@ function CartContent(props: { store: CartUIStore, closeCart: () => void }) {
             </Stack>
         }
         {
-            state.isShowCheckoutButton && <ButtonToolbar style={{ marginLeft: 18, marginRight: 18 }}>
+            state.isShowCheckoutButton && <ButtonToolbar style={{ marginLeft: 18, marginRight: 18 }} onClick={ () => {
+                closeCart()
+                navigate("/checkout")
+            } }>
                 <Button appearance="primary" color="green" block>CHECKOUT</Button>
             </ButtonToolbar>
         }

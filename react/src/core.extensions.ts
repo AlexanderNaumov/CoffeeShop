@@ -1,4 +1,4 @@
-import core from "./coffee-shop-core/CoffeeShop-core"
+import core, { me } from "./coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import loginActions = coffeeshop.ui.customer.login.actions
 import signupActions = coffeeshop.ui.customer.signup.actions
@@ -8,12 +8,15 @@ import editAddressActions = coffeeshop.ui.customer.address.edit.actions
 import catalogActions = coffeeshop.ui.catalog.actions
 import productDetailActions = coffeeshop.ui.productDetail.actions
 import cartActions = coffeeshop.ui.cart.actions
+import checkoutActions = coffeeshop.ui.cart.checkout.actions
 import CatalogUIState = coffeeshop.ui.catalog.CatalogUIState
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
 import Product = coffeeshop.entities.Product
 import Category = coffeeshop.entities.Category
 import Price = coffeeshop.entities.Price
 import Address = coffeeshop.entities.Address
+import PaymentMethod = coffeeshop.entities.PaymentMethod
+import ShippingMethod = coffeeshop.entities.ShippingMethod
 import LoginUIState = coffeeshop.ui.customer.login.LoginUIState
 import LoginUIStore = coffeeshop.ui.customer.login.LoginUIStore
 import Field = coffeeshop.entities.Field
@@ -32,6 +35,8 @@ import CreateAddressUIStore = coffeeshop.ui.customer.address.create.CreateAddres
 import CreateAddressUIState = coffeeshop.ui.customer.address.create.CreateAddressUIState
 import EditAddressUIStore = coffeeshop.ui.customer.address.edit.EditAddressUIStore
 import EditAddressUIState = coffeeshop.ui.customer.address.edit.EditAddressUIState
+import CheckoutUIState = coffeeshop.ui.cart.checkout.CheckoutUIState
+import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
 
 declare module "./coffee-shop-core/CoffeeShop-core" {
     namespace me.haymob.coffeeshop.ui.catalog {
@@ -130,6 +135,17 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             selectCartItem(item: Cart.Item): void
             selectAllItems(): void
             removeSelectedItems(): void
+        }
+    }
+    namespace me.haymob.coffeeshop.ui.cart.checkout {
+        interface CheckoutUIState {
+            getAddresses(): Array<Address>
+        }
+        interface CheckoutUIStore {
+            createOrder(): void
+            selectPayment(method: PaymentMethod): void
+            selectShipping(method: ShippingMethod): void
+            setAddress(address: Address): void
         }
     }
 }
@@ -279,4 +295,24 @@ EditAddressUIStore.prototype.updateField = function(type: FieldType, value: stri
 
 EditAddressUIState.prototype.getFields = function() {
     return toArray(this.fields["h_1"])
+}
+
+CheckoutUIState.prototype.getAddresses = function() {
+    return toArray(this.addresses["h_1"])
+}
+
+CheckoutUIStore.prototype.createOrder = function() {
+    checkoutActions.createOrder(this)
+}
+
+CheckoutUIStore.prototype.selectPayment = function(method: PaymentMethod) {
+    checkoutActions.selectPayment(this, method)
+}
+
+CheckoutUIStore.prototype.selectShipping = function(method: ShippingMethod) {
+    checkoutActions.selectShipping(this, method)
+}
+
+CheckoutUIStore.prototype.setAddress = function(address: Address) {
+    checkoutActions.setAddress(this, address)
 }

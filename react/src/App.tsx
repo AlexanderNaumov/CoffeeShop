@@ -17,6 +17,7 @@ import CustomerMenu from "./customer/CustomerMenu"
 import AddressList from "./customer/AddressList"
 import CreateAddress from "./customer/CreateAddress"
 import EditAddres from "./customer/EditAddres"
+import Checkout from "./cart/Checkout"
 
 export default function App() {
     let navigate = useNavigate()
@@ -54,6 +55,7 @@ export default function App() {
                     <Route path="/addresses" element={<AddressList />} />
                     <Route path="/addresses/create" element={<CreateAddress />} />
                     <Route path="/addresses/:id" element={<EditAddres />} />
+                    <Route path="/checkout" element={<Checkout />} />
                 </Routes>
             </Content>
         </Container>
