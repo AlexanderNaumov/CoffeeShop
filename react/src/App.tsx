@@ -18,10 +18,12 @@ import AddressList from "./customer/AddressList"
 import CreateAddress from "./customer/CreateAddress"
 import EditAddres from "./customer/EditAddres"
 import Checkout from "./cart/Checkout"
+import OrderList from "./customer/OrderList"
+import OrderDetail from "./customer/OrderDetail"
 
 export default function App() {
     let navigate = useNavigate()
-    let [openCart, setOpenCart] = useState(false)
+    let [isOpenCart, setOpenCart] = useState(false)
     let combineStore = coffeeshop.combineStore()
 
     useEffect(() => {
@@ -29,6 +31,7 @@ export default function App() {
     }, [])
 
     let closeCart = () => setOpenCart(false)
+    let openCart = () => setOpenCart(true)
 
     return <div>
         <Container>
@@ -56,10 +59,12 @@ export default function App() {
                     <Route path="/addresses/create" element={<CreateAddress />} />
                     <Route path="/addresses/:id" element={<EditAddres />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/orders" element={<OrderList />} />
+                    <Route path="/orders/:id" element={< OrderDetail openCart={openCart}/>} />
                 </Routes>
             </Content>
         </Container>
-        <Drawer size="xs" placement="right" open={openCart} onClose={() => setOpenCart(false)}>
+        <Drawer size="xs" placement="right" open={isOpenCart} onClose={() => setOpenCart(false)}>
             <button onClick={() => setOpenCart(false)} style={{ background: "white", marginTop: 12, marginLeft: 12 }}>
                 <Stack spacing={12}>
                     <CloseIcon style={{ fontSize: 20 }} />

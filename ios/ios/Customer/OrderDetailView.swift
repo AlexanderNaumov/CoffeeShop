@@ -2,12 +2,9 @@ import SwiftUI
 import core
 
 struct OrderDetailRoute: SwiftUIRoute {
-    var order: Order
+    var orderId: String
     var body: some View {
-        OrderDetailView(store: Store(wrappedValue: ios.inject(params: [order])))
-    }
-    var title: String? {
-        "# \(order.id)"
+        OrderDetailView(store: Store(wrappedValue: ios.inject(params: [orderId])))
     }
 }
 
@@ -16,8 +13,8 @@ private struct OrderDetailView: View {
     @EnvironmentObject private var router: Router
     
     var body: some View {
-        let order = store.currentState.order
-        return ZStack {
+        guard let order = store.currentState.order else { return AnyView(EmptyView()) }
+        return AnyView(ZStack {
             VStack(spacing: 0) {
                 List {
                     OrderDetailSection(title: "Payment Method", content: order.paymentMethod.title)
@@ -63,7 +60,7 @@ private struct OrderDetailView: View {
             if store.currentState.isLoading {
                 FullScreenLoader()
             }
-        }
+        })
     }
 }
 

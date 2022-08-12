@@ -8,6 +8,8 @@ import { Component, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
+import OrderDetailHeader from "../components/OrderDetailHeader"
+import OrderProductCell from "../components/OrderProductCell"
 
 export default class Checkout extends Component {
     private store = coffeeshop.checkoutUIStore()
@@ -57,7 +59,7 @@ function CheckoutContent(props: { store: CheckoutUIStore }) {
                 <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
                     <FlexboxGrid.Item style={{ width: 500 }}>
                         <Panel bordered style={{ background: "white" }}>
-                            <Header title="Payment Methods" />
+                            <OrderDetailHeader title="Payment Methods" />
                             <List size="md" bordered>
                                 {
                                     cart.getPaymentMethods().map(method => <CheckoutCell
@@ -67,7 +69,7 @@ function CheckoutContent(props: { store: CheckoutUIStore }) {
                                     />)
                                 }
                             </List>
-                            <Header title="Shipping Methods" />
+                            <OrderDetailHeader title="Shipping Methods" />
                             <List size="md" bordered>
                                 {
                                     cart.getShippingMethods().map(method => <CheckoutCell
@@ -77,7 +79,7 @@ function CheckoutContent(props: { store: CheckoutUIStore }) {
                                     />)
                                 }
                             </List>
-                            <Header title="Address" />
+                            <OrderDetailHeader title="Address" />
                             <List size="md" bordered>
                                 {
                                     state.getAddresses().map(address => <CheckoutCell
@@ -87,21 +89,10 @@ function CheckoutContent(props: { store: CheckoutUIStore }) {
                                     />)
                                 }
                             </List>
-                            <Header title="Items" />
+                            <OrderDetailHeader title="Items" />
                             <List size="md" bordered>
                                 {
-                                    cart.getItems().map(item => <List.Item>
-                                        <Stack justifyContent="space-between">
-                                            <Stack>
-                                                <img src={item.product.thumbnail} style={{ width: 50, height: 50, objectFit: "contain" }} />
-                                                <div style={{ marginLeft: 8 }}>
-                                                    <div>{item.product.name}</div>
-                                                    <div style={{ fontWeight: "bold", marginTop: 2 }}>{item.product.price.stringValue()}</div>
-                                                </div>
-                                            </Stack>
-                                            <div style={{ fontSize: 18 }}>{item.product.qty}x</div>
-                                        </Stack>
-                                    </List.Item>)
+                                    cart.getItems().map(item => <OrderProductCell product={item.product}/>)
                                 }
                                 <List.Item>
                                     {
@@ -128,10 +119,6 @@ function CheckoutContent(props: { store: CheckoutUIStore }) {
             </div> : <div></div>
         }
     </div>
-}
-
-function Header(props: { title: string }) {
-    return <div style={{ marginLeft: 4, marginTop: 18, marginBottom: 12 }}>{props.title}</div>
 }
 
 function CheckoutCell(props: { title: string, checked: boolean, action: () => void }) {

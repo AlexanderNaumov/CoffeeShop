@@ -17,6 +17,7 @@ import Price = coffeeshop.entities.Price
 import Address = coffeeshop.entities.Address
 import PaymentMethod = coffeeshop.entities.PaymentMethod
 import ShippingMethod = coffeeshop.entities.ShippingMethod
+import Order = coffeeshop.entities.Order
 import LoginUIState = coffeeshop.ui.customer.login.LoginUIState
 import LoginUIStore = coffeeshop.ui.customer.login.LoginUIStore
 import Field = coffeeshop.entities.Field
@@ -37,6 +38,8 @@ import EditAddressUIStore = coffeeshop.ui.customer.address.edit.EditAddressUISto
 import EditAddressUIState = coffeeshop.ui.customer.address.edit.EditAddressUIState
 import CheckoutUIState = coffeeshop.ui.cart.checkout.CheckoutUIState
 import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
+import OrderListUIState = coffeeshop.ui.customer.order.OrderListUIState
+import OrderDetailUIStore = coffeeshop.ui.customer.order.detail.OrderDetailUIStore
 
 declare module "./coffee-shop-core/CoffeeShop-core" {
     namespace me.haymob.coffeeshop.ui.catalog {
@@ -112,6 +115,16 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             updateField(type: FieldType, value: string): void
         }
     }
+    namespace me.haymob.coffeeshop.ui.customer.order {
+        interface OrderListUIState {
+            getOrders(): Array<Order>
+        }
+    }
+    namespace me.haymob.coffeeshop.ui.customer.order.detail {
+        interface OrderDetailUIStore {
+            reorder(): void
+        }
+    }
     namespace me.haymob.coffeeshop.entities {
         interface Category {
             getProducts(): Array<Product>
@@ -123,6 +136,9 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             getItems(): Array<Cart.Item>
             getPaymentMethods(): Array<PaymentMethod>
             getShippingMethods(): Array<ShippingMethod>
+        }
+        interface Order {
+            getProducts(): Array<Product>
         }
     }
     namespace me.haymob.coffeeshop.ui.cart {
@@ -269,50 +285,62 @@ AddressListUIState.prototype.getAddresses = function () {
     return toArray(this.addresses["h_1"])
 }
 
-CreateAddressUIStore.prototype.createAddress = function() {
+CreateAddressUIStore.prototype.createAddress = function () {
     createAddressActions.createAddress(this)
 }
 
-CreateAddressUIStore.prototype.updateField = function(type: FieldType, value: string) {
+CreateAddressUIStore.prototype.updateField = function (type: FieldType, value: string) {
     createAddressActions.updateField(this, type, value)
 }
 
-CreateAddressUIState.prototype.getFields = function() {
+CreateAddressUIState.prototype.getFields = function () {
     return toArray(this.fields["h_1"])
 }
 
-EditAddressUIStore.prototype.updateAddress = function() {
+EditAddressUIStore.prototype.updateAddress = function () {
     editAddressActions.updateAddress(this)
 }
 
-EditAddressUIStore.prototype.removeAddress = function() {
+EditAddressUIStore.prototype.removeAddress = function () {
     editAddressActions.removeAddress(this)
 }
 
-EditAddressUIStore.prototype.updateField = function(type: FieldType, value: string) {
+EditAddressUIStore.prototype.updateField = function (type: FieldType, value: string) {
     editAddressActions.updateField(this, type, value)
 }
 
-EditAddressUIState.prototype.getFields = function() {
+EditAddressUIState.prototype.getFields = function () {
     return toArray(this.fields["h_1"])
 }
 
-CheckoutUIState.prototype.getAddresses = function() {
+CheckoutUIState.prototype.getAddresses = function () {
     return toArray(this.addresses["h_1"])
 }
 
-CheckoutUIStore.prototype.createOrder = function() {
+CheckoutUIStore.prototype.createOrder = function () {
     checkoutActions.createOrder(this)
 }
 
-CheckoutUIStore.prototype.selectPayment = function(method: PaymentMethod) {
+CheckoutUIStore.prototype.selectPayment = function (method: PaymentMethod) {
     checkoutActions.selectPayment(this, method)
 }
 
-CheckoutUIStore.prototype.selectShipping = function(method: ShippingMethod) {
+CheckoutUIStore.prototype.selectShipping = function (method: ShippingMethod) {
     checkoutActions.selectShipping(this, method)
 }
 
-CheckoutUIStore.prototype.setAddress = function(address: Address) {
+CheckoutUIStore.prototype.setAddress = function (address: Address) {
     checkoutActions.setAddress(this, address)
+}
+
+OrderListUIState.prototype.getOrders = function () {
+    return toArray(this.orders["h_1"])
+}
+
+Order.prototype.getProducts = function () {
+    return toArray(this.products["h_1"])
+}
+
+OrderDetailUIStore.prototype.reorder = function () {
+    coffeeshop.ui.customer.order.detail.actions.reorder(this)
 }

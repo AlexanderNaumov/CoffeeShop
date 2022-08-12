@@ -22,7 +22,7 @@ private struct OrderListView: View {
         return List(orders) { order in
             HStack {
                 Button {
-                    router.open(OrderDetailRoute(order: order))
+                    router.open(OrderDetailRoute(orderId: order.id))
                 } label: {
                     HStack {
                         Text("#")

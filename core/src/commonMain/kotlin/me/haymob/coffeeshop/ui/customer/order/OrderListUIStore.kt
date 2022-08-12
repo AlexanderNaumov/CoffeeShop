@@ -4,9 +4,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.store.Store
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 class OrderListUIStore(
-    val customerStore: CustomerStore
+    internal val customerStore: CustomerStore
 ): Store<OrderListUIState, Unit>(OrderListUIState()) {
     init {
         customerStore.state.onEach {

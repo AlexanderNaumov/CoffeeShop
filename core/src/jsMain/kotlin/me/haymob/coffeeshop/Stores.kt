@@ -10,6 +10,8 @@ import me.haymob.coffeeshop.ui.customer.address.create.CreateAddressUIStore
 import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIStore
 import me.haymob.coffeeshop.ui.customer.address.list.AddressListUIStore
 import me.haymob.coffeeshop.ui.customer.login.LoginUIStore
+import me.haymob.coffeeshop.ui.customer.order.OrderListUIStore
+import me.haymob.coffeeshop.ui.customer.order.detail.OrderDetailUIStore
 import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
 import me.haymob.coffeeshop.ui.productDetail.ProductDetailUIStore
 import me.haymob.multiplatformannotations._JsExport
@@ -54,3 +56,11 @@ fun editAddressUIStore(addressId: String) = app.koin.get<EditAddressUIStore> {
 
 @_JsExport
 fun checkoutUIStore() = app.koin.get<CheckoutUIStore>()
+
+@_JsExport
+fun orderListUIStore() = app.koin.get<OrderListUIStore>()
+
+@_JsExport
+fun orderDetailUIStore(orderId: String) = app.koin.get<OrderDetailUIStore> {
+    ParametersHolder(_values = mutableListOf(orderId))
+}

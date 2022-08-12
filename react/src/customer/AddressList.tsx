@@ -25,7 +25,7 @@ function AddressListContent(props: { store: AddressListUIStore }) {
     return <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
         <FlexboxGrid.Item style={{ width: 500 }}>
             <Panel header={
-                <Button appearance="subtle" onClick={() => navigate("create")}>New Address</Button>
+                <Button onClick={() => navigate("create")}>New Address</Button>
             } bordered style={{background: "white"}}>
                 <List hover size="lg" bordered>
                     {
