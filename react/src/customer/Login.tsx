@@ -7,7 +7,7 @@ import LoginUIEffect = coffeeshop.ui.customer.login.LoginUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState } from "react"
+import { Component, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default class Login extends Component {
@@ -27,9 +27,14 @@ function LoginView(props: { store: LoginUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    store.onEffect(effect => {
-        if (effect instanceof LoginUIEffect.Error) setError(effect.message)
-        if (effect == LoginUIEffect.Successes) navigate("/")
+    useEffect(() => {
+        store.didSetEffect = effect => {
+            if (effect instanceof LoginUIEffect.Error) setError(effect.message)
+            if (effect == LoginUIEffect.Successes) navigate("/")
+        }
+        return () => {
+            store.didSetEffect = null
+        }
     })
 
     return <div>
