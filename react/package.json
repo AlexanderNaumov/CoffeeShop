@@ -4,7 +4,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "rparcel build"
+    "build": "parcel build"
   },
   "devDependencies": {
     "@parcel/transformer-inline-string": "^2.7.0",

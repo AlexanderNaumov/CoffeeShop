@@ -7,7 +7,7 @@ import CreateAddressUIEffect = coffeeshop.ui.customer.address.create.CreateAddre
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState } from "react"
+import { Component, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default class CreateAddress extends Component {
@@ -15,6 +15,7 @@ export default class CreateAddress extends Component {
     constructor(props: Object) {
         super(props)
         this.store.onState(() => this.setState({}))
+        
     }
     render() {
         return <CreateAddressView store={this.store} />
@@ -27,9 +28,15 @@ function CreateAddressView(props: { store: CreateAddressUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    store.onEffect(effect => {
-        if (effect instanceof CreateAddressUIEffect.Error) setError(effect.message)
-        if (effect == CreateAddressUIEffect.Successes) navigate("/addresses")
+    useEffect(() => {
+        let mount = true
+        store.didSetEffect = effect => {
+            if (effect instanceof CreateAddressUIEffect.Error) setError(effect.message)
+            if (effect == CreateAddressUIEffect.Successes) navigate("/addresses")
+        }
+        return () => {
+            store.didSetEffect = null
+        }
     })
 
     return <div>

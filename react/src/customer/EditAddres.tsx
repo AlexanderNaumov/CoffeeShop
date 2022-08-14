@@ -7,7 +7,7 @@ import EditAddressUIEffect = coffeeshop.ui.customer.address.edit.EditAddressUIEf
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState } from "react"
+import { Component, useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default () => <EditAddres addressId={useParams().id as string} />
@@ -30,9 +30,14 @@ function EditAddresView(props: { store: EditAddressUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    store.onEffect(effect => {
-        if (effect instanceof EditAddressUIEffect.Error) setError(effect.message)
-        if (effect == EditAddressUIEffect.Successes) navigate("/addresses")
+    useEffect(() => {
+        store.didSetEffect = effect => {
+            if (effect instanceof EditAddressUIEffect.Error) setError(effect.message)
+            if (effect == EditAddressUIEffect.Successes) navigate("/addresses")
+        }
+        return () => {
+            store.didSetEffect = null
+        }
     })
 
     return <div>

@@ -4,7 +4,7 @@ import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
 import CheckoutUIEffect = coffeeshop.ui.cart.checkout.CheckoutUIEffect
-import { Component, useState } from "react"
+import { Component, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
@@ -32,9 +32,14 @@ function CheckoutView(props: { store: CheckoutUIStore }) {
 
     let cart = state.cart
 
-    store.onEffect(effect => {
-        if (effect instanceof CheckoutUIEffect.OrderSuccess) setSuccess(effect.id)
-        if (effect instanceof CheckoutUIEffect.Error) setError(effect.message)
+    useEffect(() => {
+        store.didSetEffect = effect => {
+            if (effect instanceof CheckoutUIEffect.OrderSuccess) setSuccess(effect.id)
+            if (effect instanceof CheckoutUIEffect.Error) setError(effect.message)
+        }
+        return () => {
+            store.didSetEffect = null
+        }
     })
 
     let closeSuccess = () => setSuccess(undefined)
