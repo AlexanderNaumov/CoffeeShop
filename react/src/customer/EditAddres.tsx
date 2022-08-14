@@ -20,11 +20,11 @@ class EditAddres extends Component<{ addressId: string }> {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <EditAddresContent store={this.store} />
+        return <EditAddresView store={this.store} />
     }
 }
 
-function EditAddresContent(props: { store: EditAddressUIStore }) {
+function EditAddresView(props: { store: EditAddressUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()

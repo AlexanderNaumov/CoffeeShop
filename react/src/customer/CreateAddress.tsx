@@ -17,11 +17,11 @@ export default class CreateAddress extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <CreateAddressContent store={this.store} />
+        return <CreateAddressView store={this.store} />
     }
 }
 
-function CreateAddressContent(props: { store: CreateAddressUIStore }) {
+function CreateAddressView(props: { store: CreateAddressUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()

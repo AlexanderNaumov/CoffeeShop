@@ -13,11 +13,11 @@ export default class AddressList extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <AddressListContent store={this.store} />
+        return <AddressListView store={this.store} />
     }
 }
 
-function AddressListContent(props: { store: AddressListUIStore }) {
+function AddressListView(props: { store: AddressListUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()

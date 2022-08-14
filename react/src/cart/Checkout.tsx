@@ -18,11 +18,11 @@ export default class Checkout extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <CheckoutContent store={this.store} />
+        return <CheckoutView store={this.store} />
     }
 }
 
-function CheckoutContent(props: { store: CheckoutUIStore }) {
+function CheckoutView(props: { store: CheckoutUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()

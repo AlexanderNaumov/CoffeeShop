@@ -9,21 +9,23 @@ import FullScreenLoader from "../components/FullScreenLoader"
 import OrderDetailHeader from "../components/OrderDetailHeader"
 import OrderProductCell from "../components/OrderProductCell"
 
-export default (props: { openCart: () => void }) => <OrderDetail orderId={useParams().id as string} openCart={props.openCart} />
+type OpenCart = () => void
 
-class OrderDetail extends Component<{ orderId: string, openCart: () => void }> {
+export default (props: { openCart: OpenCart }) => <OrderDetail orderId={useParams().id as string} openCart={props.openCart} />
+
+class OrderDetail extends Component<{ orderId: string, openCart: OpenCart }> {
     private store: OrderDetailUIStore
-    constructor(props: { orderId: string, openCart: () => void }) {
+    constructor(props: { orderId: string, openCart: OpenCart }) {
         super(props)
         this.store = coffeeshop.orderDetailUIStore(props.orderId)
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <OrderDetailContent store={this.store} openCart={this.props.openCart} />
+        return <OrderDetailView store={this.store} openCart={this.props.openCart} />
     }
 }
 
-function OrderDetailContent(props: { store: OrderDetailUIStore, openCart: () => void }) {
+function OrderDetailView(props: { store: OrderDetailUIStore, openCart: OpenCart }) {
     let { store, openCart } = props
     let state = store.currentState
     let order = state.order

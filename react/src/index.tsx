@@ -6,9 +6,7 @@ import App from "./App"
 const app = document.getElementById("app")
 const root = createRoot(app!!)
 root.render(
-    <StrictMode>
-        <BrowserRouter>
-             <App />
-        </BrowserRouter>
-    </StrictMode>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
 )

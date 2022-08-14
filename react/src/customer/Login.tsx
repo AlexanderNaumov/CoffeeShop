@@ -17,11 +17,11 @@ export default class Login extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <LoginContent store={this.store} />
+        return <LoginView store={this.store} />
     }
 }
 
-function LoginContent(props: { store: LoginUIStore }) {
+function LoginView(props: { store: LoginUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()

@@ -18,11 +18,11 @@ export default class Catalog extends Component {
     }
 
     render() {
-        return <CatalogContent store={this.store} />
+        return <CatalogView store={this.store} />
     }
 }
 
-function CatalogContent(props: { store: CatalogUIStore }) {
+function CatalogView(props: { store: CatalogUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()
@@ -33,7 +33,7 @@ function CatalogContent(props: { store: CatalogUIStore }) {
                 {
                     state.getCategories().flatMap(category =>
                         category.getProducts().map(product =>
-                            <FlexboxGrid.Item colspan={12} onClick={() => navigate(`product/${product.id}`)}>
+                            <FlexboxGrid.Item key={product.id} colspan={12} onClick={() => navigate(`product/${product.id}`)}>
                                 <div style={{ margin: 20, padding: 8, background: "white", borderRadius: 30 }}>
                                     <div style={{ background: Colors.gallery, borderRadius: 30, aspectRatio: "1", display: "flex", justifyContent: "center" }}>
                                         <img style={{ width: "80%" }} src={product.thumbnail} />

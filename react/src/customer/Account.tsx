@@ -16,11 +16,11 @@ export default class Account extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <AccountContent store={this.store} />
+        return <AccountView store={this.store} />
     }
 }
 
-function AccountContent(props: { store: AccountUIStore }) {
+function AccountView(props: { store: AccountUIStore }) {
     let { store } = props
     let state = store.currentState
     let [error, setError] = useState<string>()

@@ -53,7 +53,7 @@ class CombineStore(
                 is CustomerEffect.LoggedOut -> cartStore.removeCart()
                 else -> {}
             }
-        }
+        }.launchIn(scope)
 
         combine(
             catalogStore.effect.mapNotNull { it as? CatalogEffect.DidLoad },

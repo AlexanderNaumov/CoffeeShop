@@ -16,11 +16,11 @@ export default class Wishlist extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <WishlistContent store={this.store} />
+        return <WishlistView store={this.store} />
     }
 }
 
-function WishlistContent(props: { store: WishlistUIStore }) {
+function WishlistView(props: { store: WishlistUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()

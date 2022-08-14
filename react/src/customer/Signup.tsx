@@ -17,11 +17,11 @@ export default class Signup extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <SignupContent store={this.store} />
+        return <SignupView store={this.store} />
     }
 }
 
-function SignupContent(props: { store: SignupUIStore }) {
+function SignupView(props: { store: SignupUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()

@@ -29,11 +29,11 @@ class ProductDetail extends Component<{ productId: string }> {
             this.store = coffeeshop.productDetailUIStore(productId)
             this.store.onState(() => this.setState({}))
         }
-        return <ProductDetailContent store={this.store} />
+        return <ProductDetailView store={this.store} />
     }
 }
 
-function ProductDetailContent(props: { store: ProductDetailUIStore }) {
+function ProductDetailView(props: { store: ProductDetailUIStore }) {
     let { store } = props
     let state =  store.currentState
 

@@ -13,11 +13,11 @@ export default class OrderList extends Component {
         this.store.onState(() => this.setState({}))
     }
     render() {
-        return <OrderListContent store={this.store} />
+        return <OrderListView store={this.store} />
     }
 }
 
-function OrderListContent(props: { store: OrderListUIStore }) {
+function OrderListView(props: { store: OrderListUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()
