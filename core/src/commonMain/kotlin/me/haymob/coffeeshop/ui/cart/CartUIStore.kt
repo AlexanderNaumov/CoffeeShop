@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
+import me.haymob.coffeeshop.flow.withUnretained
 import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
@@ -13,20 +14,20 @@ class CartUIStore(
     customerStore: CustomerStore
 ): Store<CartUIState, Unit>(CartUIState()) {
     init {
-        cartStore.state.onEach {
-            setState {
+        cartStore.state.withUnretained(this) { store, cartState ->
+            store.setState {
                 copy(
-                    cart = it.cart,
-                    isLoading = it.isLoading,
-                    isRefreshing = if (isRefreshing && it.isLoading.not()) false else isRefreshing
+                    cart = cartState.cart,
+                    isLoading = cartState.isLoading,
+                    isRefreshing = if (isRefreshing && cartState.isLoading.not()) false else isRefreshing
                 )
             }
         }.launchIn(scope)
-        customerStore.state.onEach {
-            setState {
+        customerStore.state.withUnretained(this) { store, customerState ->
+            store.setState {
                 copy(
-                    isShowCheckoutButton = it.isLoggedIn,
-                    isActiveCheckoutButton =  it.customer?.addresses?.isNotEmpty() ?: false
+                    isShowCheckoutButton = customerState.isLoggedIn,
+                    isActiveCheckoutButton =  customerState.customer?.addresses?.isNotEmpty() ?: false
                 )
             }
         }.launchIn(scope)

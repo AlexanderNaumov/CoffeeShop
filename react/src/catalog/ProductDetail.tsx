@@ -1,6 +1,6 @@
 import { FlexboxGrid, Stack } from "rsuite"
 import { Component } from "react"
-import { useParams , useMatch} from "react-router-dom"
+import { useParams } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import "../core.extensions"
 import coffeeshop = core.me.haymob.coffeeshop
@@ -35,7 +35,7 @@ class ProductDetail extends Component<{ productId: string }> {
 
 function ProductDetailView(props: { store: ProductDetailUIStore }) {
     let { store } = props
-    let state =  store.currentState
+    let state = store.currentState
 
     let product = state.product
 

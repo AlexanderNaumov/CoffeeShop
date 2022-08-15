@@ -29,7 +29,7 @@ function AddressListView(props: { store: AddressListUIStore }) {
             } bordered style={{background: "white"}}>
                 <List hover size="lg" bordered>
                     {
-                        state.getAddresses().map(address => <List.Item onClick={() => navigate(`${address.id}`)}>
+                        state.getAddresses().map(address => <List.Item key={address.id} onClick={() => navigate(`${address.id}`)}>
                             <div style={{ fontSize: 15 }}>
                                 <div>{address.firstName} {address.lastName}</div>
                                 <div>{address.city}, {address.street}, {address.postcode}</div>

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
-import me.haymob.coffeeshop.entities.Product
+import me.haymob.coffeeshop.flow.withUnretained
 import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
@@ -17,16 +17,16 @@ class ProductDetailUIStore(
     productId: String
 ): Store<ProductDetailUIState, Unit>(ProductDetailUIState()) {
     init {
-        catalogStore.state.onEach { catalogState ->
-            setState {
+        catalogStore.state.withUnretained(this) { store, catalogState ->
+            store.setState {
                 copy(
                     product = catalogState.categories.flatMap { it.products }.find { it.id == productId }
                 )
             }
         }.launchIn(scope)
-        customerStore.state.onEach {
-            setState {
-                copy(isShowWishlist = it.isLoggedIn)
+        customerStore.state.withUnretained(this) { store, customerState ->
+            store.setState {
+                copy(isShowWishlist = customerState.isLoggedIn)
             }
         }.launchIn(scope)
     }

@@ -6,7 +6,7 @@ import FieldType = core.me.haymob.coffeeshop.entities.FieldType
 export default function InputForm(props: {field: Field, onChange: (value: string) => void}) {
     let { field, onChange } = props
     let isPassword = field.type == FieldType.Password || field.type == FieldType.NewPassword
-    return <Form.Group>
+    return <Form.Group id={field.type.name}>
         <Form.ControlLabel>{field.type.name}</Form.ControlLabel>
         {
             isPassword ?

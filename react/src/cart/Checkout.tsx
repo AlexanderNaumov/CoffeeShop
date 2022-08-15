@@ -68,6 +68,7 @@ function CheckoutView(props: { store: CheckoutUIStore }) {
                             <List size="md" bordered>
                                 {
                                     cart.getPaymentMethods().map(method => <CheckoutCell
+                                        key={method.id}
                                         title={method.title}
                                         checked={state.equalPaymentMethod(method)}
                                         action={() => store.selectPayment(method)}
@@ -78,6 +79,7 @@ function CheckoutView(props: { store: CheckoutUIStore }) {
                             <List size="md" bordered>
                                 {
                                     cart.getShippingMethods().map(method => <CheckoutCell
+                                        key={method.id}
                                         title={method.title}
                                         checked={state.equalShippingMethod(method)}
                                         action={() => store.selectShipping(method)}
@@ -88,6 +90,7 @@ function CheckoutView(props: { store: CheckoutUIStore }) {
                             <List size="md" bordered>
                                 {
                                     state.getAddresses().map(address => <CheckoutCell
+                                        key={address.id}
                                         title={`${address.firstName} ${address.lastName}, ${address.city}, ${address.street}, ${address.postcode}`}
                                         checked={state.equalAddress(address)}
                                         action={() => store.setAddress(address)}
@@ -97,7 +100,7 @@ function CheckoutView(props: { store: CheckoutUIStore }) {
                             <OrderDetailHeader title="Items" />
                             <List size="md" bordered>
                                 {
-                                    cart.getItems().map(item => <OrderProductCell product={item.product}/>)
+                                    cart.getItems().map(item => <OrderProductCell key={item.id} product={item.product} />)
                                 }
                                 <List.Item>
                                     {

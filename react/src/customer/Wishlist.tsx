@@ -33,7 +33,7 @@ function WishlistView(props: { store: WishlistUIStore }) {
                     wishlist.length > 0 ?
                         <List hover size="lg" bordered>
                             {
-                                wishlist.map(product => <List.Item onClick={() => navigate(`/product/${product.id}`)}>
+                                wishlist.map(product => <List.Item key={product.id} onClick={() => navigate(`/product/${product.id}`)}>
                                     <Stack justifyContent="space-between">
                                         <Stack>
                                             <img src={product.thumbnail} style={{ width: 50, height: 50, objectFit: "contain" }} />

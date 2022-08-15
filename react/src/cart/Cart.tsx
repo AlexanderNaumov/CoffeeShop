@@ -37,7 +37,7 @@ function CartContent(props: { store: CartUIStore, closeCart: () => void }) {
         </Stack>
         <List hover>
             {
-                cart.getItems().map(item => <List.Item onClick={() => {
+                cart.getItems().map(item => <List.Item key={item.id} onClick={() => {
                     closeCart()
                     navigate(`product/${item.product.id}`)
                 }}>

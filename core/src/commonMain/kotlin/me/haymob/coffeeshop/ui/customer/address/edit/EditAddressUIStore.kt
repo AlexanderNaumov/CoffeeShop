@@ -6,6 +6,7 @@ import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.services.FieldsService
 import me.haymob.coffeeshop.entities.Address
+import me.haymob.coffeeshop.flow.withUnretained
 import me.haymob.coffeeshop.mappers.FieldMapper
 import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
@@ -17,23 +18,23 @@ class EditAddressUIStore(
     internal val addressId: String
 ): Store<EditAddressUIState, EditAddressUIEffect>(EditAddressUIState()) {
     init {
-        customerStore.state.onEach {
-            setState {
-                if (it.isLoading) {
-                    copy(isLoading = it.isLoading)
+        customerStore.state.withUnretained(this) { store, customerState ->
+            store.setState {
+                if (customerState.isLoading) {
+                    copy(isLoading = customerState.isLoading)
                 } else {
-                    val fields = it.customer?.addresses?.find { address -> address.id == addressId  }?.let(FieldMapper::addressFieldFromAddress) ?: emptyList()
+                    val fields = customerState.customer?.addresses?.find { address -> address.id == addressId  }?.let(FieldMapper::addressFieldFromAddress) ?: emptyList()
                     copy(
                         fields = fields,
-                        isLoading = it.isLoading
+                        isLoading = customerState.isLoading
                     )
                 }
             }
         }.launchIn(scope)
-        customerStore.effect.onEach {
-            when (it) {
-                is CustomerEffect.Error -> setEffect(EditAddressUIEffect.Error(it.message))
-                is CustomerEffect.Successes -> setEffect(EditAddressUIEffect.Successes)
+        customerStore.effect.withUnretained(this) { store, customerEffect ->
+            when (customerEffect) {
+                is CustomerEffect.Error -> store.setEffect(EditAddressUIEffect.Error(customerEffect.message))
+                is CustomerEffect.Successes -> store.setEffect(EditAddressUIEffect.Successes)
                 else -> {}
             }
         }.launchIn(scope)

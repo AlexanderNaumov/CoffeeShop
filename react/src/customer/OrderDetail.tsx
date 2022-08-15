@@ -54,7 +54,7 @@ function OrderDetailView(props: { store: OrderDetailUIStore, openCart: OpenCart 
                     <OrderDetailHeader title="Items" />
                     <List size="md" bordered>
                         {
-                            order.getProducts().map(product => <OrderProductCell product={product} />)
+                            order.getProducts().map(product => <OrderProductCell key={product.id} product={product} />)
                         }
                         <List.Item>
                             {

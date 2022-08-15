@@ -47,7 +47,7 @@ function CreateAddressView(props: { store: CreateAddressUIStore }) {
                     <Form fluid>
                         {
                             state.getFields().map(field =>
-                                <InputForm field={field} onChange={value => store.updateField(field.type, value)} />
+                                <InputForm key={field.type.name} field={field} onChange={value => store.updateField(field.type, value)} />
                             )
                         }
                         <Form.Group>

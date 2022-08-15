@@ -27,7 +27,7 @@ function OrderListView(props: { store: OrderListUIStore }) {
             <Panel header="Orders" bordered style={{ background: "white" }}>
                 <List hover size="lg" bordered>
                     {
-                        state.getOrders().map(order => <List.Item onClick={() => navigate(`/orders/${order.id}`)}>
+                        state.getOrders().map(order => <List.Item key={order.id} onClick={() => navigate(`/orders/${order.id}`)}>
                             <Stack justifyContent="space-between" style={{ fontSize: 15 }}>
                                 <div># {order.id}</div>
                                 <div>{new Date(order.createdAt).toLocaleString()}</div>

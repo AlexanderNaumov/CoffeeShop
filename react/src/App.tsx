@@ -1,5 +1,5 @@
 import "rsuite/styles/index.less"
-import { Container, Header, Content, Navbar, Nav, Drawer, Stack } from "rsuite"
+import { Container, Header, Content, Navbar, Nav, Drawer, Stack, Animation } from "rsuite"
 import { useEffect, useState } from "react"
 import Catalog from "./catalog/Catalog"
 import Login from "./customer/Login"
@@ -61,7 +61,7 @@ export default function App() {
                     <Route path="/addresses/:id" element={<EditAddres />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/orders" element={<OrderList />} />
-                    <Route path="/orders/:id" element={< OrderDetail openCart={openCart}/>} />
+                    <Route path="/orders/:id" element={< OrderDetail openCart={openCart} />} />
                     <Route path="/wishlist" element={<Wishlist />} />
                 </Routes>
             </Content>
