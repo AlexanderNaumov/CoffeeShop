@@ -6,7 +6,7 @@ struct iOSApp: App {
     
     init() {
         CoreKt.coreInit()
-        let store = CoreKt.app.koin.get(type: CombineStore.self) as! CombineStore
+        let store = CoreKt.app.koin.get(type: AppStore.self) as! AppStore
         store.load()
     }
     
