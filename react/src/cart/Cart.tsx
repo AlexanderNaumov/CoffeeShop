@@ -26,7 +26,7 @@ function CartContent(props: { store: CartUIStore, closeCart: () => void }) {
 
     let cart = store.currentState.cart
 
-    if (cart == null || cart.getItems().length == 0) return <div>Empty Cart</div>
+    if (cart == null || cart.getItems().length == 0) return <div style={{marginLeft: 50, marginTop: 8}}>is empty</div>
 
     return <div style={{ top: 56, bottom: 0, left: 0, right: 0, position: "fixed", overflowY: "auto", background: Colors.porcelain }}>
         <Stack justifyContent="space-between" style={{ marginLeft: 10, marginRight: 16, height: 46 }}>

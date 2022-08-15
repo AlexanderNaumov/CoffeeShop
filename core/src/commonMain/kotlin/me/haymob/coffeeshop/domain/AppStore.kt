@@ -24,13 +24,15 @@ import me.haymob.coffeeshop.entities.Product
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class CombineStore(
+class AppStore(
     internal val cartStore: CartStore,
     internal val catalogStore: CatalogStore,
     internal val customerStore: CustomerStore
 ) {
 
     private val scope = CoroutineScope(Dispatchers.Unconfined + Job())
+
+    fun loggedIn() = customerStore.currentState.isLoggedIn
 
     init {
         cartStore.effect.onEach {

@@ -21,22 +21,27 @@ function AddressListView(props: { store: AddressListUIStore }) {
     let { store } = props
     let state = store.currentState
     let navigate = useNavigate()
+    let addresses = state.getAddresses()
 
     return <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
         <FlexboxGrid.Item style={{ width: 500 }}>
             <Panel header={
                 <Button onClick={() => navigate("create")}>New Address</Button>
-            } bordered style={{background: "white"}}>
-                <List hover size="lg" bordered>
-                    {
-                        state.getAddresses().map(address => <List.Item key={address.id} onClick={() => navigate(`${address.id}`)}>
-                            <div style={{ fontSize: 15 }}>
-                                <div>{address.firstName} {address.lastName}</div>
-                                <div>{address.city}, {address.street}, {address.postcode}</div>
-                            </div>
-                        </List.Item>)
-                    }
-                </List>
+            } bordered style={{ background: "white" }}>
+                {addresses.length > 0 ?
+                    <List hover size="lg" bordered>
+                        {
+                            addresses.map(address => <List.Item key={address.id} onClick={() => navigate(`${address.id}`)}>
+                                <div style={{ fontSize: 15 }}>
+                                    <div>{address.firstName} {address.lastName}</div>
+                                    <div>{address.city}, {address.street}, {address.postcode}</div>
+                                </div>
+                            </List.Item>)
+                        }
+                    </List> :
+                    <div></div>
+                }
+
             </Panel>
 
         </FlexboxGrid.Item>

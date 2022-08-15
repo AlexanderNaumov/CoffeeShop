@@ -38,6 +38,7 @@ function CustomerMenuContent(props: { store: CustomerUIStore }) {
                     <Button onClick={() => {
                         store.logout()
                         closeLogout()
+                        navigate("/")
                     }} appearance="primary">Logout</Button>
                     <Button onClick={closeLogout} appearance="subtle">Cancel</Button>
                 </Modal.Footer>

@@ -1,11 +1,11 @@
 import "rsuite/styles/index.less"
-import { Container, Header, Content, Navbar, Nav, Drawer, Stack, Animation } from "rsuite"
+import { Container, Header, Content, Navbar, Nav, Drawer, Stack } from "rsuite"
 import { useEffect, useState } from "react"
 import Catalog from "./catalog/Catalog"
 import Login from "./customer/Login"
 import Signup from "./customer/Signup"
 import Account from "./customer/Account"
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom"
 import ProductDetail from "./catalog/ProductDetail"
 import core from "./coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
@@ -21,15 +21,18 @@ import Checkout from "./cart/Checkout"
 import OrderList from "./customer/OrderList"
 import OrderDetail from "./customer/OrderDetail"
 import Wishlist from "./customer/Wishlist"
+import NeedLogin from "./NeedLogin"
 
 export default function App() {
     let navigate = useNavigate()
     let [isOpenCart, setOpenCart] = useState(false)
-    let combineStore = coffeeshop.combineStore()
+    let appStore = coffeeshop.appStore()
+    let isLoggedIn = appStore.loggedIn()
 
     useEffect(() => {
-        combineStore.load()
+        appStore.load()
     }, [])
+
 
     let closeCart = () => setOpenCart(false)
     let openCart = () => setOpenCart(true)
@@ -53,16 +56,36 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Catalog />} />
                     <Route path="/product/:id" element={<ProductDetail />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/account" element={<Account />} />
-                    <Route path="/addresses" element={<AddressList />} />
-                    <Route path="/addresses/create" element={<CreateAddress />} />
-                    <Route path="/addresses/:id" element={<EditAddres />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/orders" element={<OrderList />} />
-                    <Route path="/orders/:id" element={< OrderDetail openCart={openCart} />} />
-                    <Route path="/wishlist" element={<Wishlist />} />
+                    <Route path="/login" element={
+                        isLoggedIn ? <Navigate to="/" /> : <Login />
+                    } />
+                    <Route path="/signup" element={
+                        isLoggedIn ? <Navigate to="/" /> : <Signup />
+                    } />
+                    <Route path="/account" element={
+                        isLoggedIn ? <Account /> : <NeedLogin />
+                    } />
+                    <Route path="/addresses" element={
+                        isLoggedIn ? <AddressList /> : <NeedLogin />
+                    } />
+                    <Route path="/addresses/create" element={
+                        isLoggedIn ? <CreateAddress /> : <NeedLogin />
+                    } />
+                    <Route path="/addresses/:id" element={
+                        isLoggedIn ? <EditAddres /> : <NeedLogin />
+                    } />
+                    <Route path="/checkout" element={
+                        isLoggedIn ? <Checkout /> : <NeedLogin />
+                    } />
+                    <Route path="/orders" element={
+                        isLoggedIn ? <OrderList /> : <NeedLogin />
+                    } />
+                    <Route path="/orders/:id" element={
+                        isLoggedIn ? < OrderDetail openCart={openCart} /> : <NeedLogin />
+                    } />
+                    <Route path="/wishlist" element={
+                        isLoggedIn ? <Wishlist /> : <NeedLogin />
+                    } />
                 </Routes>
             </Content>
         </Container>

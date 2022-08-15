@@ -60,7 +60,7 @@ function WishlistView(props: { store: WishlistUIStore }) {
                                 </List.Item>)
                             }
                         </List> :
-                        <div>Empty</div>
+                        <div>is empty</div>
                 }
             </Panel>
 

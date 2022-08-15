@@ -1,6 +1,6 @@
 package me.haymob.coffeeshop
 
-import me.haymob.coffeeshop.domain.CombineStore
+import me.haymob.coffeeshop.domain.AppStore
 import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.cart.checkout.CheckoutUIStore
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
@@ -22,7 +22,7 @@ import org.koin.core.parameter.ParametersHolder
 fun catalogUIStore() = app.koin.get<CatalogUIStore>()
 
 @_JsExport
-fun combineStore() = app.koin.get<CombineStore>()
+fun appStore() = app.koin.get<AppStore>()
 
 @_JsExport
 fun productDetailUIStore(productId: String) = app.koin.get<ProductDetailUIStore> {
