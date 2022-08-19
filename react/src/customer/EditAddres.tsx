@@ -14,7 +14,7 @@ import SComponent from "../SComponent"
 export default () => <EditAddres addressId={useParams().id as string} />
 
 class EditAddres extends SComponent<EditAddressUIStore, { addressId: string }> {
-    protected store: EditAddressUIStore
+    protected store
     constructor(props: { addressId: string }) {
         super(props)
         this.store = coffeeshop.editAddressUIStore(props.addressId)
@@ -30,10 +30,10 @@ function EditAddresView(props: { store: EditAddressUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    store.didSetEffect = effect => {
+    store.onEffect(effect => {
         if (effect instanceof EditAddressUIEffect.Error) setError(effect.message)
         if (effect == EditAddressUIEffect.Successes) navigate("/addresses")
-    }
+    })
 
     return <div>
         <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />

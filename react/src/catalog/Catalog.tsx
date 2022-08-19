@@ -1,7 +1,6 @@
 import { FlexboxGrid } from "rsuite"
 import "../core.extensions"
 import Colors from "../Colors"
-import { Component } from "react"
 import { useNavigate } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop

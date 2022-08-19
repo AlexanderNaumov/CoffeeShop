@@ -24,10 +24,10 @@ function CreateAddressView(props: { store: CreateAddressUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    store.didSetEffect = effect => {
+    store.onEffect(effect => {
         if (effect instanceof CreateAddressUIEffect.Error) setError(effect.message)
         if (effect == CreateAddressUIEffect.Successes) navigate("/addresses")
-    }
+    })
 
     return <div>
         <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />
