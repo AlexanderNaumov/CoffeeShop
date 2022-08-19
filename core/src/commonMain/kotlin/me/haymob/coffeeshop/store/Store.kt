@@ -14,14 +14,19 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
     val currentState
     get() = state.value
 
-    var didSetState: (() -> Unit)? = null
+    var didSetState: ((StoreState) -> Unit)? = null
     var didSetEffect: ((StoreEffect) -> Unit)? = null
 
     fun setState(reduce: StoreState.() -> StoreState) {
         scope.launch {
-            _state.emit(currentState.reduce())
-            didSetState?.invoke()
+            val newState = currentState.reduce()
+            _state.emit(newState)
+            didSetState?.invoke(newState)
         }
+    }
+
+    fun onState(didSetState: (StoreState) -> Unit) {
+        this.didSetState = didSetState
     }
 
     private val _effect = MutableSharedFlow<StoreEffect>()
@@ -38,7 +43,7 @@ abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
         this.didSetEffect = didSetEffect
     }
 
-    fun onState(didSetState: () -> Unit) {
-        this.didSetState = didSetState
+    fun destroy() {
+        scope.cancel()
     }
 }

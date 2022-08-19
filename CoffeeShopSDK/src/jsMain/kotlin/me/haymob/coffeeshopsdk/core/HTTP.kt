@@ -1,11 +1,12 @@
 package me.haymob.coffeeshopsdk.core
 
 import kotlinx.browser.window
-import kotlinx.coroutines.await
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.take
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -101,7 +102,5 @@ internal actual fun http(
             isCanceled = true
             cancel()
         }
-    }
-
-
+    }.take(1)
 }

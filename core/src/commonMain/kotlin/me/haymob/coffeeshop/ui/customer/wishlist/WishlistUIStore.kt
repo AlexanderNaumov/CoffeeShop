@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
-import me.haymob.coffeeshop.flow.withUnretained
 import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
@@ -16,12 +15,12 @@ class WishlistUIStore(
     internal val cartStore: CartStore
 ): Store<WishlistUIState, Unit>(WishlistUIState()) {
     init {
-        customerStore.state.withUnretained(this) { store, customerState ->
-            store.setState {
+        customerStore.state.onEach {
+            setState {
                 copy(
-                    wishlist = customerState.customer?.wishlist ?: emptyList(),
-                    isLoading = customerState.isLoading,
-                    isRefreshing = if (isRefreshing && customerState.isLoading.not()) false else isRefreshing
+                    wishlist = it.customer?.wishlist ?: emptyList(),
+                    isLoading = it.isLoading,
+                    isRefreshing = if (isRefreshing && it.isLoading.not()) false else isRefreshing
                 )
             }
         }.launchIn(scope)

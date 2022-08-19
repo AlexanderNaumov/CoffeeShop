@@ -124,5 +124,5 @@ private fun _http(
             task.cancel()
             cancel()
         }
-    }
+    }.take(1)
 }

@@ -98,5 +98,5 @@ internal actual fun http(
             call.cancel()
             cancel()
         }
-    }
+    }.take(1)
 }

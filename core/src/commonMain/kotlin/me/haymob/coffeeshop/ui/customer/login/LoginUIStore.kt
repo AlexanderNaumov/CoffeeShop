@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.onEach
 import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.services.FieldsService
-import me.haymob.coffeeshop.flow.withUnretained
 import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
@@ -15,13 +14,13 @@ class LoginUIStore(
     internal val fieldsService: FieldsService
 ): Store<LoginUIState, LoginUIEffect>(LoginUIState()) {
     init {
-        customerStore.state.withUnretained(this) { store, customerState ->
-            store.setState { copy(isLoading = customerState.isLoading) }
+        customerStore.state.onEach {
+            setState { copy(isLoading = it.isLoading) }
         }.launchIn(scope)
-        customerStore.effect.withUnretained(this) { store, customerEffect ->
-            when (customerEffect) {
-                is CustomerEffect.Error -> store.setEffect(LoginUIEffect.Error(customerEffect.message))
-                is CustomerEffect.Successes -> store.setEffect(LoginUIEffect.Successes)
+        customerStore.effect.onEach {
+            when (it) {
+                is CustomerEffect.Error -> setEffect(LoginUIEffect.Error(it.message))
+                is CustomerEffect.Successes -> setEffect(LoginUIEffect.Successes)
                 else -> {}
             }
         }.launchIn(scope)

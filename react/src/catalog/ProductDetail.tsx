@@ -23,6 +23,10 @@ class ProductDetail extends Component<{ productId: string }> {
         this.store.onState(() => this.setState({}))
     }
 
+    componentWillUnmount() {
+        this.store.destroy()
+    }
+
     render() {
         let { productId } = this.props
         if (this.store.currentState.product?.id != productId) {

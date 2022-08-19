@@ -30,7 +30,6 @@ kotlin {
                 implementation(project(":CoffeeShopSDK"))
                 implementation(project(":Preferences"))
                 implementation(project(":MultiplatformAnnotations"))
-                implementation(project(":WeakRef"))
             }
         }
         val commonTest by getting {

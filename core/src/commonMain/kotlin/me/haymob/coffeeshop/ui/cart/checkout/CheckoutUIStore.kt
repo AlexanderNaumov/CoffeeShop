@@ -6,7 +6,6 @@ import me.haymob.coffeeshop.domain.cart.CartEffect
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.cart.actions.setAddress
 import me.haymob.coffeeshop.domain.customer.CustomerStore
-import me.haymob.coffeeshop.flow.withUnretained
 import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
@@ -16,33 +15,33 @@ class CheckoutUIStore(
     customerStore: CustomerStore
 ): Store<CheckoutUIState, CheckoutUIEffect>(CheckoutUIState()) {
     init {
-        cartStore.state.withUnretained(this) { store, cartState ->
-            store.setState {
+        cartStore.state.onEach {
+            setState {
                 copy(
-                    cart = cartState.cart,
-                    isLoading = cartState.isLoading
+                    cart = it.cart,
+                    isLoading = it.isLoading
                 )
             }
         }.launchIn(scope)
 
-        cartStore.effect.withUnretained(this) { store, cartEffect ->
-            when (cartEffect) {
-                is CartEffect.Error -> store.setEffect(CheckoutUIEffect.Error(cartEffect.message))
-                is CartEffect.OrderSuccess -> store.setEffect(CheckoutUIEffect.OrderSuccess(cartEffect.id))
+        cartStore.effect.onEach {
+            when (it) {
+                is CartEffect.Error -> setEffect(CheckoutUIEffect.Error(it.message))
+                is CartEffect.OrderSuccess -> setEffect(CheckoutUIEffect.OrderSuccess(it.id))
                 else -> {}
             }
         }.launchIn(scope)
 
-        customerStore.state.withUnretained(this) { store, customerState ->
-            store.setState {
+        customerStore.state.onEach {
+            setState {
                 copy(
-                    addresses = customerState.customer?.addresses ?: emptyList()
+                    addresses = it.customer?.addresses ?: emptyList()
                 )
             }
         }.launchIn(scope)
 
-        state.withUnretained(this) { store, _ ->
-            store.setState {
+        state.onEach {
+            setState {
                 copy(
                     isActiveOrderButton = paymentMethodId != null && shippingMethodId != null
                 )
