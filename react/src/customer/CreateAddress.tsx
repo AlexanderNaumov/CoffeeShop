@@ -7,16 +7,12 @@ import CreateAddressUIEffect = coffeeshop.ui.customer.address.create.CreateAddre
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import SComponent from "../SComponent"
 
-export default class CreateAddress extends Component {
-    private store = coffeeshop.createAddressUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-        
-    }
+export default class CreateAddress extends SComponent<CreateAddressUIStore> {
+    protected store = coffeeshop.createAddressUIStore()
     render() {
         return <CreateAddressView store={this.store} />
     }
@@ -28,16 +24,10 @@ function CreateAddressView(props: { store: CreateAddressUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    useEffect(() => {
-        let mount = true
-        store.didSetEffect = effect => {
-            if (effect instanceof CreateAddressUIEffect.Error) setError(effect.message)
-            if (effect == CreateAddressUIEffect.Successes) navigate("/addresses")
-        }
-        return () => {
-            store.didSetEffect = null
-        }
-    })
+    store.didSetEffect = effect => {
+        if (effect instanceof CreateAddressUIEffect.Error) setError(effect.message)
+        if (effect == CreateAddressUIEffect.Successes) navigate("/addresses")
+    }
 
     return <div>
         <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />

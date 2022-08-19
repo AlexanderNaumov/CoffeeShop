@@ -7,15 +7,12 @@ import SignupUIEffect = coffeeshop.ui.customer.signup.SignupUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import SComponent from "../SComponent"
 
-export default class Signup extends Component {
-    private store = coffeeshop.signupUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
+export default class Signup extends SComponent<SignupUIStore> {
+    protected store = coffeeshop.signupUIStore()
     render() {
         return <SignupView store={this.store} />
     }
@@ -27,14 +24,9 @@ function SignupView(props: { store: SignupUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    useEffect(() => {
-        store.didSetEffect = effect => {
-            if (effect instanceof SignupUIEffect.Error) setError(effect.message)
-            if (effect == SignupUIEffect.Successes) navigate("/")
-        }
-        return () => {
-            store.didSetEffect = null
-        }
+    store.onEffect(effect => {
+        if (effect instanceof SignupUIEffect.Error) setError(effect.message)
+        if (effect == SignupUIEffect.Successes) navigate("/")
     })
 
     return <div>

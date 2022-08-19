@@ -7,17 +7,17 @@ import EditAddressUIEffect = coffeeshop.ui.customer.address.edit.EditAddressUIEf
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import SComponent from "../SComponent"
 
 export default () => <EditAddres addressId={useParams().id as string} />
 
-class EditAddres extends Component<{ addressId: string }> {
-    private store: EditAddressUIStore
+class EditAddres extends SComponent<EditAddressUIStore, { addressId: string }> {
+    protected store: EditAddressUIStore
     constructor(props: { addressId: string }) {
         super(props)
         this.store = coffeeshop.editAddressUIStore(props.addressId)
-        this.store.onState(() => this.setState({}))
     }
     render() {
         return <EditAddresView store={this.store} />
@@ -30,15 +30,10 @@ function EditAddresView(props: { store: EditAddressUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    useEffect(() => {
-        store.didSetEffect = effect => {
-            if (effect instanceof EditAddressUIEffect.Error) setError(effect.message)
-            if (effect == EditAddressUIEffect.Successes) navigate("/addresses")
-        }
-        return () => {
-            store.didSetEffect = null
-        }
-    })
+    store.didSetEffect = effect => {
+        if (effect instanceof EditAddressUIEffect.Error) setError(effect.message)
+        if (effect == EditAddressUIEffect.Successes) navigate("/addresses")
+    }
 
     return <div>
         <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />

@@ -3,18 +3,14 @@ import "../core.extensions"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import WishlistUIStore = coffeeshop.ui.customer.wishlist.WishlistUIStore
-import { Component } from "react"
 import { useNavigate } from "react-router-dom"
 import ProductLoader from "../components/ProductLoader"
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import TrashIcon from "@rsuite/icons/Trash"
+import SComponent from "../SComponent"
 
-export default class Wishlist extends Component {
-    private store = coffeeshop.wishlistUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
+export default class Wishlist extends SComponent<WishlistUIStore> {
+    protected store = coffeeshop.wishlistUIStore()
     render() {
         return <WishlistView store={this.store} />
     }

@@ -7,15 +7,12 @@ import LoginUIEffect = coffeeshop.ui.customer.login.LoginUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import SComponent from "../SComponent"
 
-export default class Login extends Component {
-    private store = coffeeshop.loginUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
+export default class Login extends SComponent<LoginUIStore> {
+    protected store = coffeeshop.loginUIStore()
     render() {
         return <LoginView store={this.store} />
     }
@@ -27,14 +24,9 @@ function LoginView(props: { store: LoginUIStore }) {
     let navigate = useNavigate()
     let [error, setError] = useState<string>()
 
-    useEffect(() => {
-        store.didSetEffect = effect => {
-            if (effect instanceof LoginUIEffect.Error) setError(effect.message)
-            if (effect == LoginUIEffect.Successes) navigate("/")
-        }
-        return () => {
-            store.didSetEffect = null
-        }
+    store.onEffect(effect => {
+        if (effect instanceof LoginUIEffect.Error) setError(effect.message)
+        if (effect == LoginUIEffect.Successes) navigate("/")
     })
 
     return <div>

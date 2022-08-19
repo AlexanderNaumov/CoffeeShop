@@ -3,15 +3,11 @@ import "../core.extensions"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import OrderListUIStore = coffeeshop.ui.customer.order.OrderListUIStore
-import { Component } from "react"
 import { useNavigate } from "react-router-dom"
+import SComponent from "../SComponent"
 
-export default class OrderList extends Component {
-    private store = coffeeshop.orderListUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
+export default class OrderList extends SComponent<OrderListUIStore> {
+    protected store = coffeeshop.orderListUIStore()
     render() {
         return <OrderListView store={this.store} />
     }

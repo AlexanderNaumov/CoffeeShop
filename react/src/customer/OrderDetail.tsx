@@ -3,22 +3,21 @@ import "../core.extensions"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import OrderDetailUIStore = coffeeshop.ui.customer.order.detail.OrderDetailUIStore
-import { Component } from "react"
 import { useParams } from "react-router-dom"
 import FullScreenLoader from "../components/FullScreenLoader"
 import OrderDetailHeader from "../components/OrderDetailHeader"
 import OrderProductCell from "../components/OrderProductCell"
+import SComponent from "../SComponent"
 
 type OpenCart = () => void
 
 export default (props: { openCart: OpenCart }) => <OrderDetail orderId={useParams().id as string} openCart={props.openCart} />
 
-class OrderDetail extends Component<{ orderId: string, openCart: OpenCart }> {
-    private store: OrderDetailUIStore
+class OrderDetail extends SComponent<OrderDetailUIStore, { orderId: string, openCart: OpenCart }> {
+    protected store
     constructor(props: { orderId: string, openCart: OpenCart }) {
         super(props)
         this.store = coffeeshop.orderDetailUIStore(props.orderId)
-        this.store.onState(() => this.setState({}))
     }
     render() {
         return <OrderDetailView store={this.store} openCart={this.props.openCart} />

@@ -3,15 +3,11 @@ import "../core.extensions"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import AddressListUIStore = coffeeshop.ui.customer.address.list.AddressListUIStore
-import { Component } from "react"
 import { useNavigate } from "react-router-dom"
+import SComponent from "../SComponent"
 
-export default class AddressList extends Component {
-    private store = coffeeshop.addressListUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
+export default class AddressList extends SComponent<AddressListUIStore> {
+    protected store = coffeeshop.addressListUIStore()
     render() {
         return <AddressListView store={this.store} />
     }

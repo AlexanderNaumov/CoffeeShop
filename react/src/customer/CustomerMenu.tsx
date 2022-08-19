@@ -4,15 +4,10 @@ import { useNavigate } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import CustomerUIStore = coffeeshop.ui.customer.CustomerUIStore
+import SComponent from "../SComponent"
 
-export default class CustomerMenu extends Component {
-    private store = coffeeshop.customerUIStore()
-
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
-
+export default class CustomerMenu extends SComponent<CustomerUIStore> {
+    protected store = coffeeshop.customerUIStore()
     render() {
         return <CustomerMenuContent store={this.store} />
     }

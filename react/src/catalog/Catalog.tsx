@@ -8,15 +8,10 @@ import coffeeshop = core.me.haymob.coffeeshop
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import ProductLoader from "../components/ProductLoader"
+import SComponent from "../SComponent"
 
-export default class Catalog extends Component {
-    private store = coffeeshop.catalogUIStore()
-
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
-
+export default class Catalog extends SComponent<CatalogUIStore> {
+    protected store = coffeeshop.catalogUIStore()
     render() {
         return <CatalogView store={this.store} />
     }

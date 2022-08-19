@@ -7,14 +7,11 @@ import AccountUIEffect = coffeeshop.ui.customer.account.AccountUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
-import { Component, useState, useEffect } from "react"
+import { useState } from "react"
+import SComponent from "../SComponent"
 
-export default class Account extends Component {
-    private store = coffeeshop.accountUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
+export default class Account extends SComponent<AccountUIStore> {
+    protected store = coffeeshop.accountUIStore()
     render() {
         return <AccountView store={this.store} />
     }
@@ -25,13 +22,8 @@ function AccountView(props: { store: AccountUIStore }) {
     let state = store.currentState
     let [error, setError] = useState<string>()
 
-    useEffect(() => {
-        store.didSetEffect = effect => {
-            if (effect instanceof AccountUIEffect.Error) setError(effect.message)
-        }
-        return () => {
-            store.didSetEffect = null
-        }
+    store.onEffect(effect => {
+        if (effect instanceof AccountUIEffect.Error) setError(effect.message)
     })
 
     return <div>

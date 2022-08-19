@@ -1,5 +1,4 @@
 import { FlexboxGrid, Stack } from "rsuite"
-import { Component } from "react"
 import { useParams } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import "../core.extensions"
@@ -10,29 +9,29 @@ import Divider from "../components/Divider"
 import ProductLoader from "../components/ProductLoader"
 import favorite from "../resources/favorite.svg"
 import favoriteFill from "../resources/favoriteFill.svg"
+import SComponent from "../SComponent"
 
 export default () => <ProductDetail productId={useParams().id as string} />
 
-class ProductDetail extends Component<{ productId: string }> {
-    private store: ProductDetailUIStore
+class ProductDetail extends SComponent<ProductDetailUIStore, { productId: string }> {
+    protected store
 
     constructor(props: { productId: string }) {
         super(props)
-        let { productId } = props
-        this.store = coffeeshop.productDetailUIStore(productId)
-        this.store.onState(() => this.setState({}))
+        this.store = coffeeshop.productDetailUIStore(props.productId)
     }
 
-    componentWillUnmount() {
-        this.store.destroy()
-    }
-
-    render() {
+    updateStore() {
         let { productId } = this.props
         if (this.store.currentState.product?.id != productId) {
+            this.store.destroy()
             this.store = coffeeshop.productDetailUIStore(productId)
             this.store.onState(() => this.setState({}))
         }
+    }
+
+    render() {
+        this.updateStore()
         return <ProductDetailView store={this.store} />
     }
 }

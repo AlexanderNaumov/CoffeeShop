@@ -4,19 +4,16 @@ import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
 import CheckoutUIEffect = coffeeshop.ui.cart.checkout.CheckoutUIEffect
-import { Component, useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
 import OrderDetailHeader from "../components/OrderDetailHeader"
 import OrderProductCell from "../components/OrderProductCell"
+import SComponent from "../SComponent"
 
-export default class Checkout extends Component {
-    private store = coffeeshop.checkoutUIStore()
-    constructor(props: Object) {
-        super(props)
-        this.store.onState(() => this.setState({}))
-    }
+export default class Checkout extends SComponent<CheckoutUIStore> {
+    protected store = coffeeshop.checkoutUIStore()
     render() {
         return <CheckoutView store={this.store} />
     }
@@ -32,14 +29,9 @@ function CheckoutView(props: { store: CheckoutUIStore }) {
 
     let cart = state.cart
 
-    useEffect(() => {
-        store.didSetEffect = effect => {
-            if (effect instanceof CheckoutUIEffect.OrderSuccess) setSuccess(effect.id)
-            if (effect instanceof CheckoutUIEffect.Error) setError(effect.message)
-        }
-        return () => {
-            store.didSetEffect = null
-        }
+    store.onEffect(effect => {
+        if (effect instanceof CheckoutUIEffect.OrderSuccess) setSuccess(effect.id)
+        if (effect instanceof CheckoutUIEffect.Error) setError(effect.message)
     })
 
     let closeSuccess = () => setSuccess(undefined)
