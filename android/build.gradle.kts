@@ -11,6 +11,7 @@ android {
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         getByName("release") {
@@ -37,5 +38,4 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
 //    implementation("androidx.compose.foundation:foundation:1.2.1")
     implementation("androidx.navigation:navigation-compose:2.5.1")
-
 }
