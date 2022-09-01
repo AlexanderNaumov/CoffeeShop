@@ -2,13 +2,9 @@ import SwiftUI
 
 func ActionButtons(qty: Int32, width: CGFloat = 40, inc: @escaping () -> Void, dec: @escaping () -> Void) -> some View {
     HStack {
-        ActionButton(image: "minus", width: width) {
-            dec()
-        }
+        ActionButton(image: "minus", width: width, action: dec)
         Text("\(qty)")
-        ActionButton(image: "plus", width: width) {
-            inc()
-        }
+        ActionButton(image: "plus", width: width, action: inc)
     }
 }
 

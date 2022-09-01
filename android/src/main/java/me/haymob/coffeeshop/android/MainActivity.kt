@@ -6,12 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import me.haymob.coffeeshop.*
-import me.haymob.coffeeshop.domain.catalog.CatalogStore
+import me.haymob.coffeeshop.coreInit
+import me.haymob.coffeeshop.app
+import me.haymob.coffeeshop.domain.AppStore
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -33,7 +33,8 @@ class MainActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         coreInit()
-        val store = app.koin.get<CatalogStore>()
+        val store = app.koin.get<AppStore>()
+        store.load()
 
         setContent {
             MainScreen()
@@ -71,8 +72,7 @@ fun MainScreen() {
                     }
                 }
             }
-        },
-        backgroundColor = colorResource(R.color.white)
+        }
     )
 }
 
@@ -86,8 +86,8 @@ fun BottomNavigationBar(navController: NavController) {
     )
 
     BottomNavigation(
-        backgroundColor = colorResource(id = R.color.purple_700),
-        contentColor = Color.White
+        backgroundColor = Color.White,
+        contentColor = Color.Black
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -101,8 +101,8 @@ fun BottomNavigationBar(navController: NavController) {
             BottomNavigationItem(
                 icon = { Icon(painterResource(id = item.icon!!), contentDescription = item.title) },
                 label = { Text(text = item.title) },
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.White.copy(0.4f),
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = item.isSelected,
                 onClick = {

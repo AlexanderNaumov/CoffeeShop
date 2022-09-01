@@ -3,7 +3,7 @@ import core
 
 struct CatalogView: View {
     @EnvironmentObject private var router: Router
-    @Store  var store: CatalogUIStore
+    @Store var store: CatalogUIStore
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 2)
     

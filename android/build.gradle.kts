@@ -38,4 +38,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
 //    implementation("androidx.compose.foundation:foundation:1.2.1")
     implementation("androidx.navigation:navigation-compose:2.5.1")
+    implementation("io.coil-kt:coil-compose:2.2.0")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.25.1")
 }

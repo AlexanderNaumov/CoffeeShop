@@ -6,8 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import me.haymob.coffeeshop.android.R
+import androidx.compose.ui.graphics.Color
 import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.navigation.Navigator
 
@@ -22,6 +21,6 @@ fun ProductDetailScreen(productId: String, navigator: Navigator) {
                 }
             }
         },
-        backgroundColor = colorResource(id = R.color.purple_700)
+        backgroundColor = Color.Red
     )
 }
