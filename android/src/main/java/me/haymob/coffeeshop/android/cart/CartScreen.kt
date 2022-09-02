@@ -8,11 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import me.haymob.coffeeshop.android.components.TopBar
+import me.haymob.coffeeshop.android.components.TopBarType
 
 @Composable
 fun CartScreen() {
     Scaffold(
-        topBar = { TopBar(title = "Cart") },
+        topBar = { TopBar("Cart", TopBarType.None) },
         content = { padding ->
             Box(modifier = Modifier.padding(padding)) {
 

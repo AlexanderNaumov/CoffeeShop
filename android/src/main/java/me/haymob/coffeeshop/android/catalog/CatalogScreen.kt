@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -25,9 +24,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import me.haymob.coffeeshop.android.Gallery
 import me.haymob.coffeeshop.android.Porcelain
-import me.haymob.coffeeshop.android.components.ActionButton
-import me.haymob.coffeeshop.android.components.ActionButtons
-import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.extensions.string
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.app
@@ -36,14 +32,14 @@ import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.catalog.actions.decrementProduct
 import me.haymob.coffeeshop.ui.catalog.actions.incrementProduct
 import me.haymob.coffeeshop.android.R
-import me.haymob.coffeeshop.android.components.ProductLoader
+import me.haymob.coffeeshop.android.components.*
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.ui.catalog.actions.refreshCatalog
 
 @Composable
 fun CatalogScreen(navigator: Navigator, store: CatalogUIStore = app.koin.get()) {
     Scaffold(
-        topBar = { TopBar(title = "Coffee".uppercase()) },
+        topBar = { TopBar("Coffee".uppercase(), TopBarType.None) },
         content = { _ ->
 
             val state = store.state.collectAsState().value
@@ -98,7 +94,7 @@ private fun ProductItem(product: Product, onClick: () -> Unit, inc: () -> Unit, 
                     contentDescription = null,
                     modifier = Modifier
                         .padding(12.dp)
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .aspectRatio(1.0f)
                 )
             }

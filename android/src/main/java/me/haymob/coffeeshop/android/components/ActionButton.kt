@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +25,7 @@ fun ActionButtons(qty: Int, width: Dp = 40.dp, inc: () -> Unit, dec: () -> Unit)
             fontSize = 18.sp,
             modifier = Modifier.padding(0.dp, 8.dp)
         )
-        ActionButton( R.drawable.ic_plus, width, inc)
+        ActionButton(R.drawable.ic_plus, width, inc)
     }
 }
 
@@ -38,12 +39,9 @@ fun ActionButton(image: Int, width: Dp, onClick: () -> Unit) {
             .padding(10.dp)
             .size(width, 20.dp)
     ) {
-        Image(
+        Icon(
             painter = painterResource(image),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(2.dp)
-                .size(40.dp)
+            contentDescription = null
         )
     }
 }
