@@ -130,8 +130,3 @@ fun BottomNavigationBar(navController: NavController) {
         }
     }
 }
-
-@Composable
-fun <S: Store<*, *>>Screen(store: S, content: @Composable (S) -> Unit) {
-    content(store)
-}

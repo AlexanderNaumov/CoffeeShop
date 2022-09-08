@@ -11,6 +11,11 @@ import me.haymob.coffeeshop.android.components.TopBarNavigationType
 
 @Composable
 fun WishlistScreen() {
+    Wishlist()
+}
+
+@Composable
+private fun Wishlist() {
     Scaffold(
         topBar = { TopBar("Wishlist") },
         content = { padding ->

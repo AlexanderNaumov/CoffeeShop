@@ -68,14 +68,11 @@ private fun Login(navigator: Navigator, store: LoginUIStore) {
                         Text(text = "Login")
                     }
                 }
-                if (state.isLoading) {
-                    Loader(modifier = Modifier.matchParentSize())
-                }
+                if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
+
                 val errorMessage = error.value
-                if (errorMessage != null) {
-                    ErrorAlert(errorMessage) {
-                        error.value = null
-                    }
+                if (errorMessage != null) ErrorAlert(errorMessage) {
+                    error.value = null
                 }
             }
         },

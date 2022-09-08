@@ -11,6 +11,11 @@ import me.haymob.coffeeshop.android.components.TopBarNavigationType
 
 @Composable
 fun CartScreen() {
+    Cart()
+}
+
+@Composable
+private fun Cart() {
     Scaffold(
         topBar = { TopBar("Cart") },
         content = { padding ->

@@ -38,6 +38,11 @@ import me.haymob.coffeeshop.ui.catalog.actions.refreshCatalog
 
 @Composable
 fun CatalogScreen(navigator: Navigator, store: CatalogUIStore = app.koin.get()) {
+    Catalog(navigator, store)
+}
+
+@Composable
+private fun Catalog(navigator: Navigator, store: CatalogUIStore) {
     val state = store.state.collectAsState().value
     val products = state.categories.flatMap { it.products }
     Scaffold(

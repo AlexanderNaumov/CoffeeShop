@@ -4,4 +4,10 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun SignupScreen() {
+    Signup()
+}
+
+@Composable
+private fun Signup() {
+
 }

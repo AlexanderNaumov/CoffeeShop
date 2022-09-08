@@ -37,6 +37,14 @@ fun ProductDetailScreen(
         ParametersHolder(_values = mutableListOf(productId))
     }
 ) {
+    ProductDetail(navigator, store)
+}
+
+@Composable
+private fun ProductDetail(
+    navigator: Navigator,
+    store: ProductDetailUIStore
+) {
     val state = store.state.collectAsState().value
     val product = state.product ?: return
 

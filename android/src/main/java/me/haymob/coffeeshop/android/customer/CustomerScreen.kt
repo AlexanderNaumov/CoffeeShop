@@ -22,6 +22,11 @@ import me.haymob.coffeeshop.app
 
 @Composable
 fun CustomerScreen(navigator: Navigator, store: CustomerUIStore = app.koin.get()) {
+    Customer(navigator, store)
+}
+
+@Composable
+private fun Customer(navigator: Navigator, store: CustomerUIStore) {
     val state = store.state.collectAsState().value
     Scaffold(
         topBar = {
