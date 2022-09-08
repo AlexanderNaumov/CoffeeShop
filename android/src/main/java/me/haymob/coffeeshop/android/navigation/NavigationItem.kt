@@ -23,4 +23,10 @@ sealed class NavigationItem(
     object ProductDetail:  NavigationItem("product/{productId}", title = "ProductDetail") {
         fun route(productId: String) = "product/$productId"
     }
+    object Login: NavigationItem("login", title = "Login") {
+        val route = routePath
+    }
+    object Signup: NavigationItem("signup", title = "Signup") {
+        val route = routePath
+    }
 }

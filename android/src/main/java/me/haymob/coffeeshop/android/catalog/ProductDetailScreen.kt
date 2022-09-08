@@ -3,7 +3,6 @@ package me.haymob.coffeeshop.android.catalog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
@@ -42,7 +41,7 @@ fun ProductDetailScreen(
     val product = state.product ?: return
 
     Scaffold(
-        topBar = { TopBar(product.name.uppercase(), TopBarType.Back(onAction = navigator::back)) },
+        topBar = { TopBar(product.name.uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
         content = { _ ->
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Box(
@@ -56,7 +55,7 @@ fun ProductDetailScreen(
                             .padding(12.dp)
                             .fillMaxSize()
                     )
-                    if (product.isLoading) ProductLoader(modifier = Modifier.matchParentSize())
+                    if (product.isLoading) Loader(modifier = Modifier.matchParentSize())
                 }
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,

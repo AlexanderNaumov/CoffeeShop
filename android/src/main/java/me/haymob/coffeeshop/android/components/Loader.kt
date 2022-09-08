@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun ProductLoader(modifier: Modifier = Modifier) {
+fun Loader(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .background(Color.Black.copy(alpha = 0.1f)),

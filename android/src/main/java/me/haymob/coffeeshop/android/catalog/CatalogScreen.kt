@@ -38,13 +38,11 @@ import me.haymob.coffeeshop.ui.catalog.actions.refreshCatalog
 
 @Composable
 fun CatalogScreen(navigator: Navigator, store: CatalogUIStore = app.koin.get()) {
+    val state = store.state.collectAsState().value
+    val products = state.categories.flatMap { it.products }
     Scaffold(
-        topBar = { TopBar("Coffee".uppercase(), TopBarType.None) },
+        topBar = { TopBar("Coffee".uppercase()) },
         content = { _ ->
-
-            val state = store.state.collectAsState().value
-            val products = state.categories.flatMap { it.products }
-
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
                 onRefresh = { store.refreshCatalog() }) {
@@ -115,6 +113,6 @@ private fun ProductItem(product: Product, onClick: () -> Unit, inc: () -> Unit, 
                 ActionButtons(product.qty, inc = inc, dec = dec)
             }
         }
-        if (product.isLoading) ProductLoader(modifier = Modifier.matchParentSize())
+        if (product.isLoading) Loader(modifier = Modifier.matchParentSize())
     }
 }

@@ -15,6 +15,5 @@ fun LoginUIStore.login() {
 
     val email = fieldsService.valueOfType(currentState.fields, FieldType.Email) ?: return
     val password = fieldsService.valueOfType(currentState.fields, FieldType.Password) ?: return
-
     customerStore.login(email, password)
 }

@@ -23,9 +23,13 @@ import me.haymob.coffeeshop.android.cart.CartScreen
 import me.haymob.coffeeshop.android.catalog.CatalogScreen
 import me.haymob.coffeeshop.android.catalog.ProductDetailScreen
 import me.haymob.coffeeshop.android.customer.CustomerScreen
+import me.haymob.coffeeshop.android.customer.LoginScreen
+import me.haymob.coffeeshop.android.customer.SignupScreen
 import me.haymob.coffeeshop.android.wishlist.WishlistScreen
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
+import me.haymob.coffeeshop.store.Store
+import me.haymob.coffeeshop.ui.customer.CustomerUIStore
 
 class MainActivity: ComponentActivity() {
 
@@ -64,11 +68,17 @@ fun MainScreen() {
                         CartScreen()
                     }
                     composable(NavigationItem.Customer.routePath) {
-                        CustomerScreen()
+                        CustomerScreen(defaultNavigator)
                     }
                     composable(NavigationItem.ProductDetail.routePath) {
                         val productId = it.arguments?.getString("productId") ?: return@composable
                         ProductDetailScreen(productId, defaultNavigator)
+                    }
+                    composable(NavigationItem.Login.routePath) {
+                        LoginScreen(defaultNavigator)
+                    }
+                    composable(NavigationItem.Signup.routePath) {
+                        SignupScreen()
                     }
                 }
             }
@@ -119,4 +129,9 @@ fun BottomNavigationBar(navController: NavController) {
             )
         }
     }
+}
+
+@Composable
+fun <S: Store<*, *>>Screen(store: S, content: @Composable (S) -> Unit) {
+    content(store)
 }
