@@ -3,7 +3,6 @@ package me.haymob.coffeeshop.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import me.haymob.coffeeshop.coreInit
@@ -14,22 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.compose.runtime.getValue
+import androidx.navigation.compose.*
 import me.haymob.coffeeshop.android.cart.CartScreen
 import me.haymob.coffeeshop.android.catalog.CatalogScreen
 import me.haymob.coffeeshop.android.catalog.ProductDetailScreen
+import me.haymob.coffeeshop.android.components.ErrorAlert
 import me.haymob.coffeeshop.android.customer.CustomerScreen
 import me.haymob.coffeeshop.android.customer.LoginScreen
 import me.haymob.coffeeshop.android.customer.SignupScreen
+import me.haymob.coffeeshop.android.extensions.fromBase64String
 import me.haymob.coffeeshop.android.wishlist.WishlistScreen
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
-import me.haymob.coffeeshop.store.Store
-import me.haymob.coffeeshop.ui.customer.CustomerUIStore
 
 class MainActivity: ComponentActivity() {
 
@@ -53,33 +49,40 @@ fun MainScreen() {
         override fun navigate(route: String) { navController.navigate(route) }
         override fun back() { navController.popBackStack() }
     }
+
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) },
         content = { padding ->
-            Box(modifier = Modifier.padding(padding)) {
-                NavHost(navController, startDestination = NavigationItem.Catalog.route) {
-                    composable(NavigationItem.Catalog.routePath) {
-                        CatalogScreen(defaultNavigator)
-                    }
-                    composable(NavigationItem.Wishlist.routePath) {
-                        WishlistScreen()
-                    }
-                    composable(NavigationItem.Cart.routePath) {
-                        CartScreen()
-                    }
-                    composable(NavigationItem.Customer.routePath) {
-                        CustomerScreen(defaultNavigator)
-                    }
-                    composable(NavigationItem.ProductDetail.routePath) {
-                        val productId = it.arguments?.getString("productId") ?: return@composable
-                        ProductDetailScreen(productId, defaultNavigator)
-                    }
-                    composable(NavigationItem.Login.routePath) {
-                        LoginScreen(defaultNavigator)
-                    }
-                    composable(NavigationItem.Signup.routePath) {
-                        SignupScreen()
-                    }
+            NavHost(
+                navController,
+                startDestination = NavigationItem.Catalog.route,
+                modifier = Modifier.padding(padding),
+            ) {
+                composable(NavigationItem.Catalog.routePath) {
+                    CatalogScreen(defaultNavigator)
+                }
+                composable(NavigationItem.Wishlist.routePath) {
+                    WishlistScreen()
+                }
+                composable(NavigationItem.Cart.routePath) {
+                    CartScreen(defaultNavigator)
+                }
+                composable(NavigationItem.Customer.routePath) {
+                    CustomerScreen(defaultNavigator)
+                }
+                composable(NavigationItem.ProductDetail.routePath) {
+                    val productId = it.arguments?.getString("productId") ?: return@composable
+                    ProductDetailScreen(productId, defaultNavigator)
+                }
+                composable(NavigationItem.Login.routePath) {
+                    LoginScreen(defaultNavigator)
+                }
+                composable(NavigationItem.Signup.routePath) {
+                    SignupScreen()
+                }
+                dialog(NavigationItem.Error.routePath) {
+                    val message = it.arguments?.getString("message")?.fromBase64String() ?: return@dialog
+                    ErrorAlert(message, defaultNavigator)
                 }
             }
         }

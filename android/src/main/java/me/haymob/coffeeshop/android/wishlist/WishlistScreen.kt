@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import me.haymob.coffeeshop.android.components.TopBar
-import me.haymob.coffeeshop.android.components.TopBarNavigationType
 
 @Composable
 fun WishlistScreen() {

@@ -1,6 +1,7 @@
 package me.haymob.coffeeshop.android.navigation
 
 import me.haymob.coffeeshop.android.R
+import me.haymob.coffeeshop.android.extensions.toBase64String
 
 sealed class NavigationItem(
     val routePath: String,
@@ -20,7 +21,7 @@ sealed class NavigationItem(
     object Customer: NavigationItem("customer", R.drawable.ic_customer, "Customer") {
         val route = routePath
     }
-    object ProductDetail:  NavigationItem("product/{productId}", title = "ProductDetail") {
+    object ProductDetail: NavigationItem("product/{productId}", title = "ProductDetail") {
         fun route(productId: String) = "product/$productId"
     }
     object Login: NavigationItem("login", title = "Login") {
@@ -28,5 +29,8 @@ sealed class NavigationItem(
     }
     object Signup: NavigationItem("signup", title = "Signup") {
         val route = routePath
+    }
+    object Error: NavigationItem("error/{message}", title = "Error") {
+        fun route(message: String) = "error/${message.toBase64String()}"
     }
 }

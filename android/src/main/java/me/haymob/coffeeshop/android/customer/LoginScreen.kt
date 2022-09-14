@@ -14,6 +14,7 @@ import me.haymob.coffeeshop.android.components.ErrorAlert
 import me.haymob.coffeeshop.android.components.InputTextField
 import me.haymob.coffeeshop.android.components.Loader
 import me.haymob.coffeeshop.android.components.TopBar
+import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.ui.customer.login.LoginUIEffect
@@ -29,13 +30,12 @@ fun LoginScreen(navigator: Navigator, store: LoginUIStore = app.koin.get()) {
 @Composable
 private fun Login(navigator: Navigator, store: LoginUIStore) {
     val state = store.state.collectAsState().value
-    val error = remember { mutableStateOf<String?>(null)  }
 
     LaunchedEffect(key1 = Unit) {
         store.effect.collect {
             when (it) {
                 is LoginUIEffect.Successes -> navigator.back()
-                is LoginUIEffect.Error -> error.value = it.message
+                is LoginUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
             }
         }
     }
@@ -69,11 +69,6 @@ private fun Login(navigator: Navigator, store: LoginUIStore) {
                     }
                 }
                 if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
-
-                val errorMessage = error.value
-                if (errorMessage != null) ErrorAlert(errorMessage) {
-                    error.value = null
-                }
             }
         },
         backgroundColor = Color.Porcelain
