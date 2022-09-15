@@ -30,7 +30,7 @@ fun InputTextField(field: Field, onChange: (String) -> Unit) {
     val isError = field.error != null
 
     Column(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+        modifier = Modifier.padding(horizontal = 16.dp)
     ) {
         TextField(
             value = field.value,

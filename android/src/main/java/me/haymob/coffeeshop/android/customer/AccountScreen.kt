@@ -23,14 +23,11 @@ import me.haymob.coffeeshop.android.components.TopBarNavigationType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.app
-import me.haymob.coffeeshop.ui.catalog.actions.refreshCatalog
 import me.haymob.coffeeshop.ui.customer.account.AccountUIEffect
 import me.haymob.coffeeshop.ui.customer.account.AccountUIStore
 import me.haymob.coffeeshop.ui.customer.account.actions.refreshCustomer
 import me.haymob.coffeeshop.ui.customer.account.actions.updateCustomer
 import me.haymob.coffeeshop.ui.customer.account.actions.updateField
-import me.haymob.coffeeshop.ui.customer.login.actions.login
-import me.haymob.coffeeshop.ui.customer.login.actions.updateField
 
 @Composable
 fun AccountScreen(navigator: Navigator, store: AccountUIStore = app.koin.get()) {
@@ -73,7 +70,7 @@ private fun Account(navigator: Navigator, store: AccountUIStore) {
                             onClick = { store.updateCustomer() },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp)
+                                .padding(horizontal = 16.dp)
                         ) {
                             Text(text = "Update")
                         }

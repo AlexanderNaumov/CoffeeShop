@@ -36,4 +36,13 @@ sealed class NavigationItem(
     object Account: NavigationItem("account", title = "Account") {
         val route = routePath
     }
+    object AddressList: NavigationItem("address_list", title = "AddressList") {
+        val route = routePath
+    }
+    object CreateAddress: NavigationItem("create_address", title = "CreateAddress") {
+        val route = routePath
+    }
+    object EditAddress: NavigationItem("edit_address/{addressId}", title = "EditAddress") {
+        fun route(addressId: String) = "edit_address/$addressId"
+    }
 }

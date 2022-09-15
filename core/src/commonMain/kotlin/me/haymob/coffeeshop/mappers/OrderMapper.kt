@@ -1,6 +1,5 @@
 package me.haymob.coffeeshop.mappers
 
-import me.haymob.coffeeshop.entities.Address
 import me.haymob.coffeeshop.entities.Order
 import me.haymob.coffeeshopsdk.entities.Order as OrderDto
 

@@ -19,10 +19,7 @@ import me.haymob.coffeeshop.android.cart.CartScreen
 import me.haymob.coffeeshop.android.catalog.CatalogScreen
 import me.haymob.coffeeshop.android.catalog.ProductDetailScreen
 import me.haymob.coffeeshop.android.components.ErrorAlert
-import me.haymob.coffeeshop.android.customer.AccountScreen
-import me.haymob.coffeeshop.android.customer.CustomerScreen
-import me.haymob.coffeeshop.android.customer.LoginScreen
-import me.haymob.coffeeshop.android.customer.SignupScreen
+import me.haymob.coffeeshop.android.customer.*
 import me.haymob.coffeeshop.android.extensions.fromBase64String
 import me.haymob.coffeeshop.android.wishlist.WishlistScreen
 import me.haymob.coffeeshop.android.navigation.NavigationItem
@@ -87,6 +84,16 @@ fun MainScreen() {
                 }
                 composable(NavigationItem.Account.routePath) {
                     AccountScreen(defaultNavigator)
+                }
+                composable(NavigationItem.AddressList.routePath) {
+                    AddressListScreen(defaultNavigator)
+                }
+                composable(NavigationItem.CreateAddress.routePath) {
+                    CreateAddressScreen(defaultNavigator)
+                }
+                composable(NavigationItem.EditAddress.routePath) {
+                    val addressId = it.arguments?.getString("addressId") ?: return@composable
+                    EditAddressScreen(addressId, defaultNavigator)
                 }
             }
         }

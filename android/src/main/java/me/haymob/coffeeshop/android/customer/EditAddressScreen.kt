@@ -1,9 +1,8 @@
 package me.haymob.coffeeshop.android.customer
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,31 +19,42 @@ import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.app
-import me.haymob.coffeeshop.ui.customer.signup.SignupUIEffect
-import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
-import me.haymob.coffeeshop.ui.customer.signup.actions.signup
-import me.haymob.coffeeshop.ui.customer.signup.actions.updateField
+import me.haymob.coffeeshop.ui.customer.address.create.CreateAddressUIEffect
+import me.haymob.coffeeshop.ui.customer.address.create.actions.createAddress
+import me.haymob.coffeeshop.ui.customer.address.create.actions.updateField
+import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIEffect
+import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIStore
+import me.haymob.coffeeshop.ui.customer.address.edit.actions.removeAddress
+import me.haymob.coffeeshop.ui.customer.address.edit.actions.updateAddress
+import me.haymob.coffeeshop.ui.customer.address.edit.actions.updateField
+import org.koin.core.parameter.ParametersHolder
 
 @Composable
-fun SignupScreen(navigator: Navigator, store: SignupUIStore = app.koin.get()) {
-    Signup(navigator, store)
+fun EditAddressScreen(
+    addressId: String,
+    navigator: Navigator,
+    store: EditAddressUIStore = app.koin.get {
+        ParametersHolder(_values = mutableListOf(addressId))
+    }
+) {
+    EditAddress(navigator, store)
 }
 
 @Composable
-private fun Signup(navigator: Navigator, store: SignupUIStore) {
+private fun EditAddress(navigator: Navigator, store: EditAddressUIStore) {
     val state = store.state.collectAsState().value
 
     LaunchedEffect(key1 = Unit) {
         store.effect.collect {
             when (it) {
-                is SignupUIEffect.Successes -> navigator.back()
-                is SignupUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
+                is EditAddressUIEffect.Successes -> navigator.back()
+                is EditAddressUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
             }
         }
     }
 
     Scaffold(
-        topBar = { TopBar("Signup".uppercase()) },
+        topBar = { TopBar("Edit Address".uppercase()) },
         content = { padding ->
             Box(
                 modifier = Modifier
@@ -56,7 +66,6 @@ private fun Signup(navigator: Navigator, store: SignupUIStore) {
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
                 ) {
                     state.fields.map { field ->
                         InputTextField(field) {
@@ -64,12 +73,24 @@ private fun Signup(navigator: Navigator, store: SignupUIStore) {
                         }
                     }
                     Button(
-                        onClick = { store.signup() },
+                        onClick = { store.updateAddress() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                     ) {
-                        Text(text = "Signup")
+                        Text(text = "Update")
+                    }
+                    Button(
+                        onClick = { store.removeAddress() },
+                        colors = ButtonDefaults.buttonColors(
+                            contentColor = Color.White,
+                            backgroundColor = Color.Red
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    ) {
+                        Text(text = "Remove")
                     }
                 }
                 if (state.isLoading) Loader(modifier = Modifier.matchParentSize())

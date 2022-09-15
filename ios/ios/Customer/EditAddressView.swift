@@ -38,7 +38,7 @@ private struct EditAddresView: View {
                             store.updateField(type: field.type, value: value)
                         }
                     }
-                    Button("Updare") {
+                    Button("Update") {
                         store.updateAddress()
                     }.tint(.blue)
                     Button("Remove") {

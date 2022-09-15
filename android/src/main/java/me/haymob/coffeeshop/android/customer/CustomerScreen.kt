@@ -69,7 +69,7 @@ private fun Customer(navigator: Navigator, store: CustomerUIStore) {
                             navigator.navigate(NavigationItem.Account.route)
                         }
                         CustomerListCell("Addresses") {
-
+                            navigator.navigate(NavigationItem.AddressList.route)
                         }
                         CustomerListCell("Orders") {
 
@@ -105,10 +105,8 @@ private fun Customer(navigator: Navigator, store: CustomerUIStore) {
 
 @Composable
 private fun CustomerListCell(title: String, onClick: () -> Unit) {
-    Column(
-        modifier = Modifier.background(Color.White)
-    ) {
-        Button(
+    Column(modifier = Modifier.background(Color.White)) {
+        TextButton(
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.Black,
@@ -119,12 +117,13 @@ private fun CustomerListCell(title: String, onClick: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .height(60.dp)
+                    .height(50.dp)
                     .fillMaxWidth()
             ) {
                 Text(
                     text = title,
-                    fontSize = 17.sp
+                    fontSize = 17.sp,
+                    modifier = Modifier.padding(start = 8.dp)
                 )
                 Icon(
                     Icons.Filled.ArrowForwardIos,
