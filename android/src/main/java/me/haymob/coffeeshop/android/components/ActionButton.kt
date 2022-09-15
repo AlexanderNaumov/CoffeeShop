@@ -1,6 +1,5 @@
 package me.haymob.coffeeshop.android.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
@@ -23,7 +22,7 @@ fun ActionButtons(qty: Int, width: Dp = 40.dp, inc: () -> Unit, dec: () -> Unit)
         Text(
             "$qty",
             fontSize = 18.sp,
-            modifier = Modifier.padding(0.dp, 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp)
         )
         ActionButton(R.drawable.ic_plus, width, inc)
     }

@@ -33,4 +33,7 @@ sealed class NavigationItem(
     object Error: NavigationItem("error/{message}", title = "Error") {
         fun route(message: String) = "error/${message.toBase64String()}"
     }
+    object Account: NavigationItem("account", title = "Account") {
+        val route = routePath
+    }
 }

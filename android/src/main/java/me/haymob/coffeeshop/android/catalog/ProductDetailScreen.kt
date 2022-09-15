@@ -69,10 +69,10 @@ private fun ProductDetail(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .size(Dp.Infinity, 60.dp)
+                        .height(60.dp)
                         .fillMaxWidth()
                         .background(Color.White)
-                        .padding(15.dp, 0.dp)
+                        .padding(start = 15.dp)
                 ) {
                     Column {
                         Text(
@@ -109,7 +109,7 @@ private fun ProductDetail(
                     Text(
                         text = product.description,
                         fontSize = 18.sp,
-                        modifier = Modifier.padding(0.dp, 8.dp)
+                        modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
             }
@@ -124,7 +124,7 @@ private fun InfoBlock(title: String, content: String) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .size(Dp.Infinity, 50.dp)
+            .height(50.dp)
             .fillMaxWidth()
     ) {
         Text(

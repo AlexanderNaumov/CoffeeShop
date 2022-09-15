@@ -19,6 +19,7 @@ import me.haymob.coffeeshop.android.cart.CartScreen
 import me.haymob.coffeeshop.android.catalog.CatalogScreen
 import me.haymob.coffeeshop.android.catalog.ProductDetailScreen
 import me.haymob.coffeeshop.android.components.ErrorAlert
+import me.haymob.coffeeshop.android.customer.AccountScreen
 import me.haymob.coffeeshop.android.customer.CustomerScreen
 import me.haymob.coffeeshop.android.customer.LoginScreen
 import me.haymob.coffeeshop.android.customer.SignupScreen
@@ -78,11 +79,14 @@ fun MainScreen() {
                     LoginScreen(defaultNavigator)
                 }
                 composable(NavigationItem.Signup.routePath) {
-                    SignupScreen()
+                    SignupScreen(defaultNavigator)
                 }
                 dialog(NavigationItem.Error.routePath) {
                     val message = it.arguments?.getString("message")?.fromBase64String() ?: return@dialog
                     ErrorAlert(message, defaultNavigator)
+                }
+                composable(NavigationItem.Account.routePath) {
+                    AccountScreen(defaultNavigator)
                 }
             }
         }
