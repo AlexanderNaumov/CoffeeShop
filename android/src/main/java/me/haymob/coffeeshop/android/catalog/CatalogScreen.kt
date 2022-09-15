@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -55,8 +56,7 @@ private fun Catalog(navigator: Navigator, store: CatalogUIStore) {
                     columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(10.dp)
                 ) {
-                    items(products.size) { index ->
-                        val product = products[index]
+                    items(items = products, key = { it.id }) { product ->
                         ProductItem(
                             product,
                             onClick = { navigator.navigate(NavigationItem.ProductDetail.route(product.id)) },

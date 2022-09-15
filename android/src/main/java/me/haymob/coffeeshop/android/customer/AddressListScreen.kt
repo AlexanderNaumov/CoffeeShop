@@ -2,8 +2,8 @@ package me.haymob.coffeeshop.android.customer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
@@ -26,6 +26,7 @@ import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.ui.customer.address.list.AddressListUIStore
 import me.haymob.coffeeshop.app
+import me.haymob.coffeeshop.entities.Address
 import me.haymob.coffeeshop.ui.customer.address.list.actions.refreshAddresses
 
 @Composable
@@ -44,17 +45,15 @@ private fun AddressList(navigator: Navigator, store: AddressListUIStore) {
                 state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
                 onRefresh = { store.refreshAddresses() }) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        Row(modifier = Modifier.padding(start = 8.dp)) {
-                            TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route) }) {
-                                Text(text = "New Address".uppercase())
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        item {
+                            Row(modifier = Modifier.padding(start = 8.dp)) {
+                                TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route) }) {
+                                    Text(text = "New Address".uppercase())
+                                }
                             }
                         }
-                        state.addresses.map { address ->
+                        items(items = state.addresses, { it.id }) { address ->
                             Column(modifier = Modifier.background(Color.White)) {
                                 TextButton(
                                     onClick = { navigator.navigate(NavigationItem.EditAddress.route(address.id)) },

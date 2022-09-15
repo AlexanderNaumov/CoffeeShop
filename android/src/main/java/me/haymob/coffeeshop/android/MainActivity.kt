@@ -60,7 +60,7 @@ fun MainScreen() {
                     CatalogScreen(defaultNavigator)
                 }
                 composable(NavigationItem.Wishlist.routePath) {
-                    WishlistScreen()
+                    WishlistScreen(defaultNavigator)
                 }
                 composable(NavigationItem.Cart.routePath) {
                     CartScreen(defaultNavigator)

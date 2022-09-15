@@ -17,6 +17,11 @@ sealed class TopBarNavigationType {
     object None: TopBarNavigationType()
 }
 
+sealed class TopBarActionType {
+    class DropdownMenu(val items: List<TopBarActionItem>): TopBarActionType()
+    object None: TopBarActionType()
+}
+
 class TopBarActionItem(
     val title: String,
     val onAction: () -> Unit

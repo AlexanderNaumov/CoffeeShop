@@ -15,6 +15,7 @@ import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.components.InputTextField
 import me.haymob.coffeeshop.android.components.Loader
 import me.haymob.coffeeshop.android.components.TopBar
+import me.haymob.coffeeshop.android.components.TopBarNavigationType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.app
@@ -45,7 +46,7 @@ private fun CreateAddress(navigator: Navigator, store: CreateAddressUIStore) {
     }
 
     Scaffold(
-        topBar = { TopBar("New Address".uppercase()) },
+        topBar = { TopBar("New Address".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
         content = { padding ->
             Box(
                 modifier = Modifier

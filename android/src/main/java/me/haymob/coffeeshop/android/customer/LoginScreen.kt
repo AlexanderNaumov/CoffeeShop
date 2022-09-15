@@ -65,7 +65,7 @@ private fun Login(navigator: Navigator, store: LoginUIStore) {
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                     ) {
-                        Text(text = "Login")
+                        Text("Login")
                     }
                 }
                 if (state.isLoading) Loader(modifier = Modifier.matchParentSize())

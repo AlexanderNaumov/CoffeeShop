@@ -20,6 +20,7 @@ import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.components.Loader
 import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.components.TopBarActionItem
+import me.haymob.coffeeshop.android.components.TopBarActionType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.ui.customer.CustomerUIStore
