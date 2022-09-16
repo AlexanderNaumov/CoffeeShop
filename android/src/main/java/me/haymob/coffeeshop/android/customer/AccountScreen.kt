@@ -22,63 +22,62 @@ import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.components.TopBarNavigationType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
-import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.ui.customer.account.AccountUIEffect
 import me.haymob.coffeeshop.ui.customer.account.AccountUIStore
 import me.haymob.coffeeshop.ui.customer.account.actions.refreshCustomer
 import me.haymob.coffeeshop.ui.customer.account.actions.updateCustomer
 import me.haymob.coffeeshop.ui.customer.account.actions.updateField
 
-@Composable
-fun AccountScreen(navigator: Navigator, store: AccountUIStore = app.koin.get()) {
-    Account(navigator, store)
-}
+class AccountScreen(
+    val navigator: Navigator,
+    val store: AccountUIStore
+) {
+    @Composable
+    fun Body() {
+        val state = store.state.collectAsState().value
 
-@Composable
-private fun Account(navigator: Navigator, store: AccountUIStore) {
-    val state = store.state.collectAsState().value
-
-    LaunchedEffect(key1 = Unit) {
-        store.effect.collect {
-            when (it) {
-                is AccountUIEffect.Successes -> navigator.back()
-                is AccountUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
-            }
-        }
-    }
-
-    Scaffold(
-        topBar = { TopBar("Account".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
-        content = { _ ->
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                onRefresh = { store.refreshCustomer() }) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        state.fields.map { field ->
-                            InputTextField(field) {
-                                store.updateField(field.type, it)
-                            }
-                        }
-                        Button(
-                            onClick = { store.updateCustomer() },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                        ) {
-                            Text(text = "Update")
-                        }
-                    }
-                    if (state.isLoading && state.isRefreshing.not()) Loader(modifier = Modifier.matchParentSize())
+        LaunchedEffect(key1 = Unit) {
+            store.effect.collect {
+                when (it) {
+                    is AccountUIEffect.Successes -> navigator.back()
+                    is AccountUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
                 }
             }
-        },
-        backgroundColor = Color.Porcelain
-    )
+        }
+
+        Scaffold(
+            topBar = { TopBar("Account".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
+            content = { _ ->
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
+                    onRefresh = { store.refreshCustomer() }) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            state.fields.map { field ->
+                                InputTextField(field) {
+                                    store.updateField(field.type, it)
+                                }
+                            }
+                            Button(
+                                onClick = { store.updateCustomer() },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                            ) {
+                                Text(text = "Update")
+                            }
+                        }
+                        if (state.isLoading && state.isRefreshing.not()) Loader(modifier = Modifier.matchParentSize())
+                    }
+                }
+            },
+            backgroundColor = Color.Porcelain
+        )
+    }
 }

@@ -19,62 +19,61 @@ import me.haymob.coffeeshop.android.components.Loader
 import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
-import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.ui.customer.signup.SignupUIEffect
 import me.haymob.coffeeshop.ui.customer.signup.SignupUIStore
 import me.haymob.coffeeshop.ui.customer.signup.actions.signup
 import me.haymob.coffeeshop.ui.customer.signup.actions.updateField
 
-@Composable
-fun SignupScreen(navigator: Navigator, store: SignupUIStore = app.koin.get()) {
-    Signup(navigator, store)
-}
+class SignupScreen(
+    val navigator: Navigator,
+    val store: SignupUIStore
+) {
+    @Composable
+    fun Body() {
+        val state = store.state.collectAsState().value
 
-@Composable
-private fun Signup(navigator: Navigator, store: SignupUIStore) {
-    val state = store.state.collectAsState().value
-
-    LaunchedEffect(key1 = Unit) {
-        store.effect.collect {
-            when (it) {
-                is SignupUIEffect.Successes -> navigator.back()
-                is SignupUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
+        LaunchedEffect(key1 = Unit) {
+            store.effect.collect {
+                when (it) {
+                    is SignupUIEffect.Successes -> navigator.back()
+                    is SignupUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
+                }
             }
         }
-    }
 
-    Scaffold(
-        topBar = { TopBar("Signup".uppercase()) },
-        content = { padding ->
-            Box(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxSize()
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
+        Scaffold(
+            topBar = { TopBar("Signup".uppercase()) },
+            content = { padding ->
+                Box(
                     modifier = Modifier
+                        .padding(padding)
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
                 ) {
-                    state.fields.map { field ->
-                        InputTextField(field) {
-                            store.updateField(field.type, it)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        state.fields.map { field ->
+                            InputTextField(field) {
+                                store.updateField(field.type, it)
+                            }
+                        }
+                        Button(
+                            onClick = { store.signup() },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Text(text = "Signup")
                         }
                     }
-                    Button(
-                        onClick = { store.signup() },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Text(text = "Signup")
-                    }
+                    if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
                 }
-                if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
-            }
-        },
-        backgroundColor = Color.Porcelain
-    )
+            },
+            backgroundColor = Color.Porcelain
+        )
+    }
 }

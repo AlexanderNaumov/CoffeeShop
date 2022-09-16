@@ -27,7 +27,6 @@ import me.haymob.coffeeshop.android.Gallery
 import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.extensions.string
 import me.haymob.coffeeshop.android.navigation.Navigator
-import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.entities.Product
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.catalog.actions.decrementProduct
@@ -37,38 +36,38 @@ import me.haymob.coffeeshop.android.components.*
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.ui.catalog.actions.refreshCatalog
 
-@Composable
-fun CatalogScreen(navigator: Navigator, store: CatalogUIStore = app.koin.get()) {
-    Catalog(navigator, store)
-}
-
-@Composable
-private fun Catalog(navigator: Navigator, store: CatalogUIStore) {
-    val state = store.state.collectAsState().value
-    val products = state.categories.flatMap { it.products }
-    Scaffold(
-        topBar = { TopBar("Coffee".uppercase()) },
-        content = { _ ->
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                onRefresh = { store.refreshCatalog() }) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(10.dp)
-                ) {
-                    items(items = products, key = { it.id }) { product ->
-                        ProductItem(
-                            product,
-                            onClick = { navigator.navigate(NavigationItem.ProductDetail.route(product.id)) },
-                            inc = { store.incrementProduct(product) },
-                            dec = { store.decrementProduct(product) }
-                        )
+class CatalogScreen(
+    val navigator: Navigator,
+    val store: CatalogUIStore
+) {
+    @Composable
+    fun Body() {
+        val state = store.state.collectAsState().value
+        val products = state.categories.flatMap { it.products }
+        Scaffold(
+            topBar = { TopBar("Coffee".uppercase()) },
+            content = { _ ->
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
+                    onRefresh = { store.refreshCatalog() }) {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        contentPadding = PaddingValues(10.dp)
+                    ) {
+                        items(items = products, key = { it.id }) { product ->
+                            ProductItem(
+                                product,
+                                onClick = { navigator.navigate(NavigationItem.ProductDetail.route(product.id)) },
+                                inc = { store.incrementProduct(product) },
+                                dec = { store.decrementProduct(product) }
+                            )
+                        }
                     }
                 }
-            }
-        },
-        backgroundColor = Color.Porcelain
-    )
+            },
+            backgroundColor = Color.Porcelain
+        )
+    }
 }
 
 @Composable

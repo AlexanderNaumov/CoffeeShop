@@ -24,6 +24,7 @@ import me.haymob.coffeeshop.android.extensions.fromBase64String
 import me.haymob.coffeeshop.android.wishlist.WishlistScreen
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
+import org.koin.core.parameter.ParametersHolder
 
 class MainActivity: ComponentActivity() {
 
@@ -57,43 +58,51 @@ fun MainScreen() {
                 modifier = Modifier.padding(padding),
             ) {
                 composable(NavigationItem.Catalog.routePath) {
-                    CatalogScreen(defaultNavigator)
+                    CatalogScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.Wishlist.routePath) {
-                    WishlistScreen(defaultNavigator)
+                    WishlistScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.Cart.routePath) {
-                    CartScreen(defaultNavigator)
+                    CartScreen(defaultNavigator).Body()
                 }
                 composable(NavigationItem.Customer.routePath) {
-                    CustomerScreen(defaultNavigator)
+                    CustomerScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.ProductDetail.routePath) {
                     val productId = it.arguments?.getString("productId") ?: return@composable
-                    ProductDetailScreen(productId, defaultNavigator)
+                    ProductDetailScreen(
+                        defaultNavigator,
+                        app.koin.get {
+                            ParametersHolder(_values = mutableListOf(productId))
+                        }
+                    ).Body()
                 }
                 composable(NavigationItem.Login.routePath) {
-                    LoginScreen(defaultNavigator)
+                    LoginScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.Signup.routePath) {
-                    SignupScreen(defaultNavigator)
+                    SignupScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 dialog(NavigationItem.Error.routePath) {
                     val message = it.arguments?.getString("message")?.fromBase64String() ?: return@dialog
                     ErrorAlert(message, defaultNavigator)
                 }
                 composable(NavigationItem.Account.routePath) {
-                    AccountScreen(defaultNavigator)
+                    AccountScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.AddressList.routePath) {
-                    AddressListScreen(defaultNavigator)
+                    AddressListScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.CreateAddress.routePath) {
-                    CreateAddressScreen(defaultNavigator)
+                    CreateAddressScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.EditAddress.routePath) {
                     val addressId = it.arguments?.getString("addressId") ?: return@composable
-                    EditAddressScreen(addressId, defaultNavigator)
+                    EditAddressScreen(
+                        defaultNavigator,
+                        app.koin.get { ParametersHolder(_values = mutableListOf(addressId)) }
+                    ).Body()
                 }
             }
         }

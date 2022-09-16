@@ -19,81 +19,73 @@ import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.components.TopBarNavigationType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
-import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIEffect
 import me.haymob.coffeeshop.ui.customer.address.edit.EditAddressUIStore
 import me.haymob.coffeeshop.ui.customer.address.edit.actions.removeAddress
 import me.haymob.coffeeshop.ui.customer.address.edit.actions.updateAddress
 import me.haymob.coffeeshop.ui.customer.address.edit.actions.updateField
-import org.koin.core.parameter.ParametersHolder
 
-@Composable
-fun EditAddressScreen(
-    addressId: String,
-    navigator: Navigator,
-    store: EditAddressUIStore = app.koin.get {
-        ParametersHolder(_values = mutableListOf(addressId))
-    }
+class EditAddressScreen(
+    val navigator: Navigator,
+    val store: EditAddressUIStore
 ) {
-    EditAddress(navigator, store)
-}
+    @Composable
+    fun Body() {
+        val state = store.state.collectAsState().value
 
-@Composable
-private fun EditAddress(navigator: Navigator, store: EditAddressUIStore) {
-    val state = store.state.collectAsState().value
-
-    LaunchedEffect(key1 = Unit) {
-        store.effect.collect {
-            when (it) {
-                is EditAddressUIEffect.Successes -> navigator.back()
-                is EditAddressUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
+        LaunchedEffect(key1 = Unit) {
+            store.effect.collect {
+                when (it) {
+                    is EditAddressUIEffect.Successes -> navigator.back()
+                    is EditAddressUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
+                }
             }
         }
-    }
 
-    Scaffold(
-        topBar = { TopBar("Edit Address".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
-        content = { padding ->
-            Box(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxSize()
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
+        Scaffold(
+            topBar = { TopBar("Edit Address".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
+            content = { padding ->
+                Box(
                     modifier = Modifier
+                        .padding(padding)
                         .fillMaxSize()
                 ) {
-                    state.fields.map { field ->
-                        InputTextField(field) {
-                            store.updateField(field.type, it)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        state.fields.map { field ->
+                            InputTextField(field) {
+                                store.updateField(field.type, it)
+                            }
+                        }
+                        Button(
+                            onClick = { store.updateAddress() },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Text(text = "Update")
+                        }
+                        Button(
+                            onClick = { store.removeAddress() },
+                            colors = ButtonDefaults.buttonColors(
+                                contentColor = Color.White,
+                                backgroundColor = Color.Red
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Text(text = "Remove")
                         }
                     }
-                    Button(
-                        onClick = { store.updateAddress() },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Text(text = "Update")
-                    }
-                    Button(
-                        onClick = { store.removeAddress() },
-                        colors = ButtonDefaults.buttonColors(
-                            contentColor = Color.White,
-                            backgroundColor = Color.Red
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Text(text = "Remove")
-                    }
+                    if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
                 }
-                if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
-            }
-        },
-        backgroundColor = Color.Porcelain
-    )
+            },
+            backgroundColor = Color.Porcelain
+        )
+    }
 }

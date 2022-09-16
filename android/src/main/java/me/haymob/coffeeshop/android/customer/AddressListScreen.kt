@@ -18,76 +18,72 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import me.haymob.coffeeshop.android.Porcelain
-import me.haymob.coffeeshop.android.components.InputTextField
-import me.haymob.coffeeshop.android.components.Loader
 import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.components.TopBarNavigationType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.ui.customer.address.list.AddressListUIStore
-import me.haymob.coffeeshop.app
-import me.haymob.coffeeshop.entities.Address
 import me.haymob.coffeeshop.ui.customer.address.list.actions.refreshAddresses
 
-@Composable
-fun AddressListScreen(navigator: Navigator, store: AddressListUIStore = app.koin.get()) {
-    AddressList(navigator, store)
-}
+class AddressListScreen(
+    val navigator: Navigator,
+    val store: AddressListUIStore
+) {
+    @Composable
+    fun Body() {
+        val state = store.state.collectAsState().value
 
-@Composable
-private fun AddressList(navigator: Navigator, store: AddressListUIStore) {
-    val state = store.state.collectAsState().value
-
-    Scaffold(
-        topBar = { TopBar("Addresses".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
-        content = { _ ->
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                onRefresh = { store.refreshAddresses() }) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        item {
-                            Row(modifier = Modifier.padding(start = 8.dp)) {
-                                TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route) }) {
-                                    Text(text = "New Address".uppercase())
-                                }
-                            }
-                        }
-                        items(items = state.addresses, { it.id }) { address ->
-                            Column(modifier = Modifier.background(Color.White)) {
-                                TextButton(
-                                    onClick = { navigator.navigate(NavigationItem.EditAddress.route(address.id)) },
-                                    colors = ButtonDefaults.buttonColors(
-                                        contentColor = Color.Black,
-                                        backgroundColor = Color.White
-                                    )
-                                ) {
-                                    Row(
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        modifier = Modifier
-                                            .height(60.dp)
-                                            .fillMaxWidth()
-                                    ) {
-                                        Text(
-                                            text = "${address.firstName} ${address.lastName}\n${address.city}, ${address.street}, ${address.postcode}",
-                                            fontSize = 17.sp,
-                                            fontWeight = FontWeight.Normal,
-                                            modifier = Modifier.padding(start = 8.dp)
-                                        )
-                                        Icon(
-                                            Icons.Filled.ArrowForwardIos,
-                                            contentDescription = null
-                                        )
+        Scaffold(
+            topBar = { TopBar("Addresses".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
+            content = { _ ->
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
+                    onRefresh = { store.refreshAddresses() }) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            item {
+                                Row(modifier = Modifier.padding(start = 8.dp)) {
+                                    TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route) }) {
+                                        Text(text = "New Address".uppercase())
                                     }
                                 }
-                                Divider()
+                            }
+                            items(items = state.addresses, { it.id }) { address ->
+                                Column(modifier = Modifier.background(Color.White)) {
+                                    TextButton(
+                                        onClick = { navigator.navigate(NavigationItem.EditAddress.route(address.id)) },
+                                        colors = ButtonDefaults.buttonColors(
+                                            contentColor = Color.Black,
+                                            backgroundColor = Color.White
+                                        )
+                                    ) {
+                                        Row(
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            modifier = Modifier
+                                                .height(60.dp)
+                                                .fillMaxWidth()
+                                        ) {
+                                            Text(
+                                                text = "${address.firstName} ${address.lastName}\n${address.city}, ${address.street}, ${address.postcode}",
+                                                fontSize = 17.sp,
+                                                fontWeight = FontWeight.Normal,
+                                                modifier = Modifier.padding(start = 8.dp)
+                                            )
+                                            Icon(
+                                                Icons.Filled.ArrowForwardIos,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    }
+                                    Divider()
+                                }
                             }
                         }
                     }
                 }
-            }
-        },
-        backgroundColor = Color.Porcelain
-    )
+            },
+            backgroundColor = Color.Porcelain
+        )
+    }
 }

@@ -20,88 +20,86 @@ import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.components.Loader
 import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.components.TopBarActionItem
-import me.haymob.coffeeshop.android.components.TopBarActionType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.ui.customer.CustomerUIStore
-import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.ui.customer.actions.logout
 
-@Composable
-fun CustomerScreen(navigator: Navigator, store: CustomerUIStore = app.koin.get()) {
-    Customer(navigator, store)
-}
-
-@Composable
-private fun Customer(navigator: Navigator, store: CustomerUIStore) {
-    val state = store.state.collectAsState().value
-    val openLogoutDialog = remember { mutableStateOf(false)  }
-    Scaffold(
-        topBar = {
-            TopBar(
-                "Customer".uppercase(),
-                if (state.isLoggedIn) {
-                    listOf(TopBarActionItem("Logout") { openLogoutDialog.value = true })
-                } else {
-                    emptyList()
-                }
-            )
-        },
-        content = { _ ->
-            if (openLogoutDialog.value) {
-                LogoutAlert(
-                    onLogout = {
-                        openLogoutDialog.value = false
-                        store.logout()
-                    },
-                    onCancel = {
-                        openLogoutDialog.value = false
+class CustomerScreen(
+    val navigator: Navigator,
+    val store: CustomerUIStore
+) {
+    @Composable
+    fun Body() {
+        val state = store.state.collectAsState().value
+        val openLogoutDialog = remember { mutableStateOf(false)  }
+        Scaffold(
+            topBar = {
+                TopBar(
+                    "Customer".uppercase(),
+                    if (state.isLoggedIn) {
+                        listOf(TopBarActionItem("Logout") { openLogoutDialog.value = true })
+                    } else {
+                        emptyList()
                     }
                 )
-            }
-            if (state.isLoggedIn) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        CustomerListCell("Account") {
-                            navigator.navigate(NavigationItem.Account.route)
+            },
+            content = { _ ->
+                if (openLogoutDialog.value) {
+                    LogoutAlert(
+                        onLogout = {
+                            openLogoutDialog.value = false
+                            store.logout()
+                        },
+                        onCancel = {
+                            openLogoutDialog.value = false
                         }
-                        CustomerListCell("Addresses") {
-                            navigator.navigate(NavigationItem.AddressList.route)
-                        }
-                        CustomerListCell("Orders") {
+                    )
+                }
+                if (state.isLoggedIn) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            CustomerListCell("Account") {
+                                navigator.navigate(NavigationItem.Account.route)
+                            }
+                            CustomerListCell("Addresses") {
+                                navigator.navigate(NavigationItem.AddressList.route)
+                            }
+                            CustomerListCell("Orders") {
 
+                            }
+                        }
+                        if (state.isLoading) {
+                            Loader(modifier = Modifier.matchParentSize())
                         }
                     }
-                    if (state.isLoading) {
-                        Loader(modifier = Modifier.matchParentSize())
-                    }
-                }
-            } else {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    TextButton(onClick = {
-                        navigator.navigate("login")
-                    }) {
-                        Text(text = "Login")
-                    }
-                    TextButton(
-                        onClick = { navigator.navigate("signup") },
-                        modifier = Modifier.padding(top = 10.dp)
+                } else {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        Text(text = "Register")
+                        TextButton(onClick = {
+                            navigator.navigate("login")
+                        }) {
+                            Text(text = "Login")
+                        }
+                        TextButton(
+                            onClick = { navigator.navigate("signup") },
+                            modifier = Modifier.padding(top = 10.dp)
+                        ) {
+                            Text(text = "Register")
+                        }
                     }
                 }
-            }
-        },
-        backgroundColor = Color.Porcelain
-    )
+            },
+            backgroundColor = Color.Porcelain
+        )
+    }
 }
 
 @Composable

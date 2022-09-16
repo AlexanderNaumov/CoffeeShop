@@ -18,64 +18,60 @@ import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.components.TopBarNavigationType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
-import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.ui.customer.address.create.CreateAddressUIEffect
 import me.haymob.coffeeshop.ui.customer.address.create.CreateAddressUIStore
 import me.haymob.coffeeshop.ui.customer.address.create.actions.createAddress
 import me.haymob.coffeeshop.ui.customer.address.create.actions.updateField
-import me.haymob.coffeeshop.ui.customer.login.LoginUIEffect
-import me.haymob.coffeeshop.ui.customer.login.actions.login
-import me.haymob.coffeeshop.ui.customer.login.actions.updateField
 
-@Composable
-fun CreateAddressScreen(navigator: Navigator, store: CreateAddressUIStore = app.koin.get()) {
-    CreateAddress(navigator, store)
-}
+class CreateAddressScreen(
+    val navigator: Navigator,
+    val store: CreateAddressUIStore
+) {
+    @Composable
+    fun Body() {
+        val state = store.state.collectAsState().value
 
-@Composable
-private fun CreateAddress(navigator: Navigator, store: CreateAddressUIStore) {
-    val state = store.state.collectAsState().value
-
-    LaunchedEffect(key1 = Unit) {
-        store.effect.collect {
-            when (it) {
-                is CreateAddressUIEffect.Successes -> navigator.back()
-                is CreateAddressUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
+        LaunchedEffect(key1 = Unit) {
+            store.effect.collect {
+                when (it) {
+                    is CreateAddressUIEffect.Successes -> navigator.back()
+                    is CreateAddressUIEffect.Error -> navigator.navigate(NavigationItem.Error.route(it.message))
+                }
             }
         }
-    }
 
-    Scaffold(
-        topBar = { TopBar("New Address".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
-        content = { padding ->
-            Box(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxSize()
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
+        Scaffold(
+            topBar = { TopBar("New Address".uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
+            content = { padding ->
+                Box(
                     modifier = Modifier
+                        .padding(padding)
                         .fillMaxSize()
                 ) {
-                    state.fields.map { field ->
-                        InputTextField(field) {
-                            store.updateField(field.type, it)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        state.fields.map { field ->
+                            InputTextField(field) {
+                                store.updateField(field.type, it)
+                            }
+                        }
+                        Button(
+                            onClick = { store.createAddress() },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Text(text = "Create")
                         }
                     }
-                    Button(
-                        onClick = { store.createAddress() },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Text(text = "Create")
-                    }
+                    if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
                 }
-                if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
-            }
-        },
-        backgroundColor = Color.Porcelain
-    )
+            },
+            backgroundColor = Color.Porcelain
+        )
+    }
 }
