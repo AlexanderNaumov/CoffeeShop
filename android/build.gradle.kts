@@ -4,6 +4,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/alexander/Developer/CoffeeShop/android/android.jks")
+            storePassword = "123456"
+            keyAlias = "key0"
+            keyPassword = "123456"
+        }
+
+    }
     compileSdk = 33
     defaultConfig {
         applicationId = "me.haymob.coffeeshop.android"
@@ -16,6 +25,9 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+        }
+        release {
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     buildFeatures {
@@ -35,7 +47,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.2.1")
     implementation("androidx.compose.ui:ui-tooling-preview:1.2.1")
 //    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
+    implementation("androidx.activity:activity-compose:1.6.0")
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
 //    implementation("androidx.compose.foundation:foundation:1.2.1")
     implementation("androidx.navigation:navigation-compose:2.5.2")

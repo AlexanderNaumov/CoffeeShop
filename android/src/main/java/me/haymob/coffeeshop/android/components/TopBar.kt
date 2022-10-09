@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.sp
 
 sealed class TopBarNavigationType {
@@ -19,6 +20,7 @@ sealed class TopBarNavigationType {
 
 sealed class TopBarActionType {
     class DropdownMenu(val items: List<TopBarActionItem>): TopBarActionType()
+    class Button(val image: ImageVector, val onAction: () -> Unit): TopBarActionType()
     object None: TopBarActionType()
 }
 
@@ -27,17 +29,17 @@ class TopBarActionItem(
     val onAction: () -> Unit
 )
 
-@Composable
-fun TopBar(title: String, actions: List<TopBarActionItem> = emptyList()) {
-    TopBar(title, TopBarNavigationType.None, actions)
-}
 
 @Composable
-fun TopBar(title: String, navigationType: TopBarNavigationType, actions: List<TopBarActionItem> = emptyList()) {
+fun TopBar(
+    title: String,
+    navigationType: TopBarNavigationType = TopBarNavigationType.None,
+    actionType: TopBarActionType = TopBarActionType.None
+) {
     var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
         title = { Text(text = title, fontSize = 18.sp) },
-        navigationIcon =  when (navigationType) {
+        navigationIcon = when (navigationType) {
             is TopBarNavigationType.Back -> {
                 {
                     IconButton(onClick = navigationType.onAction) {
@@ -51,23 +53,37 @@ fun TopBar(title: String, navigationType: TopBarNavigationType, actions: List<To
             else -> null
         },
         actions = {
-            if (actions.isEmpty()) return@TopAppBar
-            IconButton(onClick = { showMenu = !showMenu }) {
-                Icon(
-                    Icons.Default.MoreVert,
-                    contentDescription = null
-                )
-            }
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false }
-            ) {
-                actions.map {
-                    DropdownMenuItem(onClick = it.onAction) {
-                        Text(text = it.title)
+            when (actionType) {
+                is TopBarActionType.DropdownMenu -> {
+                    IconButton(onClick = { showMenu = !showMenu }) {
+                        Icon(
+                            Icons.Default.MoreVert,
+                            contentDescription = null
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false }
+                    ) {
+                        actionType.items.map {
+                            DropdownMenuItem(onClick = {
+                                it.onAction()
+                                showMenu = false
+                            }) {
+                                Text(text = it.title)
+                            }
+                        }
                     }
                 }
-
+                is TopBarActionType.Button -> {
+                    IconButton(onClick = actionType.onAction) {
+                        Icon(
+                            actionType.image,
+                            contentDescription = null
+                        )
+                    }
+                }
+                is TopBarActionType.None -> Unit
             }
         },
         backgroundColor = Color.White,

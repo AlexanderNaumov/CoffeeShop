@@ -26,14 +26,19 @@ import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import org.koin.core.parameter.ParametersHolder
 
+private var isCreate = false
+
 class MainActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (isCreate.not()) {
+            isCreate = true
 
-        coreInit()
-        val store = app.koin.get<AppStore>()
-        store.load()
+            coreInit()
+            val store = app.koin.get<AppStore>()
+            store.load()
+        }
 
         setContent {
             MainScreen()
@@ -50,54 +55,52 @@ fun MainScreen() {
     }
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) },
+        bottomBar = { BottomNavigationBar(navController).Body() },
         content = { padding ->
             NavHost(
                 navController,
-                startDestination = NavigationItem.Catalog.route,
+                startDestination = NavigationItem.Catalog.route(),
                 modifier = Modifier.padding(padding),
             ) {
-                composable(NavigationItem.Catalog.routePath) {
+                composable(NavigationItem.Catalog.route()) {
                     CatalogScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                composable(NavigationItem.Wishlist.routePath) {
+                composable(NavigationItem.Wishlist.route()) {
                     WishlistScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                composable(NavigationItem.Cart.routePath) {
+                composable(NavigationItem.Cart.route()) {
                     CartScreen(defaultNavigator).Body()
                 }
-                composable(NavigationItem.Customer.routePath) {
+                composable(NavigationItem.Customer.route()) {
                     CustomerScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                composable(NavigationItem.ProductDetail.routePath) {
+                composable(NavigationItem.ProductDetail.route()) {
                     val productId = it.arguments?.getString("productId") ?: return@composable
                     ProductDetailScreen(
                         defaultNavigator,
-                        app.koin.get {
-                            ParametersHolder(_values = mutableListOf(productId))
-                        }
+                        app.koin.get { ParametersHolder(_values = mutableListOf(productId)) }
                     ).Body()
                 }
-                composable(NavigationItem.Login.routePath) {
+                composable(NavigationItem.Login.route()) {
                     LoginScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                composable(NavigationItem.Signup.routePath) {
+                composable(NavigationItem.Signup.route()) {
                     SignupScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                dialog(NavigationItem.Error.routePath) {
+                dialog(NavigationItem.Error.route()) {
                     val message = it.arguments?.getString("message")?.fromBase64String() ?: return@dialog
                     ErrorAlert(message, defaultNavigator)
                 }
-                composable(NavigationItem.Account.routePath) {
+                composable(NavigationItem.Account.route()) {
                     AccountScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                composable(NavigationItem.AddressList.routePath) {
+                composable(NavigationItem.AddressList.route()) {
                     AddressListScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                composable(NavigationItem.CreateAddress.routePath) {
+                composable(NavigationItem.CreateAddress.route()) {
                     CreateAddressScreen(defaultNavigator, app.koin.get()).Body()
                 }
-                composable(NavigationItem.EditAddress.routePath) {
+                composable(NavigationItem.EditAddress.route()) {
                     val addressId = it.arguments?.getString("addressId") ?: return@composable
                     EditAddressScreen(
                         defaultNavigator,
@@ -109,47 +112,55 @@ fun MainScreen() {
     )
 }
 
-@Composable
-fun BottomNavigationBar(navController: NavController) {
-    val items = listOf(
+class BottomNavigationBar(private val navController: NavController) {
+
+    private var currentTab: String? = null
+    private val items = listOf(
         NavigationItem.Catalog,
         NavigationItem.Wishlist,
         NavigationItem.Cart,
         NavigationItem.Customer
     )
 
-    BottomNavigation(
-        backgroundColor = Color.White,
-        contentColor = Color.Black
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+    @Composable
+    fun Body() {
+        BottomNavigation(
+            backgroundColor = Color.White,
+            contentColor = Color.Black
+        ) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
 
-        val currentItem = items.find { it.routePath == currentRoute }
-        if (currentItem != null) items.forEach {
-            it.isSelected = it == currentItem
-        }
+            if (items.any { it.route() == currentRoute } && currentTab != currentRoute) {
+                currentTab = currentRoute
+            }
 
-        items.forEach { item ->
-            BottomNavigationItem(
-                icon = { Icon(painterResource(id = item.icon!!), contentDescription = item.title) },
-                label = { Text(text = item.title) },
-                selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Black.copy(0.4f),
-                alwaysShowLabel = true,
-                selected = item.isSelected,
-                onClick = {
-                    navController.navigate(item.routePath) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
+            items.forEach { item ->
+                BottomNavigationItem(
+                    icon = { Icon(painterResource(id = item.icon!!), contentDescription = item.title) },
+                    label = { Text(text = item.title) },
+                    selectedContentColor = Color.Black,
+                    unselectedContentColor = Color.Black.copy(0.4f),
+                    alwaysShowLabel = true,
+                    selected = currentTab == item.route(),
+                    onClick = {
+                        if (currentTab == item.route()) {
+                            navController.popBackStack(currentTab!!, inclusive = false, saveState = false)
+                            return@BottomNavigationItem
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                        currentTab = item.route()
+                        navController.navigate(item.route()) {
+                            navController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route) {
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }

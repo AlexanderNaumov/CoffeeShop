@@ -43,7 +43,7 @@ class AddressListScreen(
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
                             item {
                                 Row(modifier = Modifier.padding(start = 8.dp)) {
-                                    TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route) }) {
+                                    TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route()) }) {
                                         Text(text = "New Address".uppercase())
                                     }
                                 }

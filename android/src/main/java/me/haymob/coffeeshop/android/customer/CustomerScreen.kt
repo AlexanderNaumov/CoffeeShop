@@ -20,6 +20,7 @@ import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.components.Loader
 import me.haymob.coffeeshop.android.components.TopBar
 import me.haymob.coffeeshop.android.components.TopBarActionItem
+import me.haymob.coffeeshop.android.components.TopBarActionType
 import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.ui.customer.CustomerUIStore
@@ -37,10 +38,10 @@ class CustomerScreen(
             topBar = {
                 TopBar(
                     "Customer".uppercase(),
-                    if (state.isLoggedIn) {
-                        listOf(TopBarActionItem("Logout") { openLogoutDialog.value = true })
+                    actionType =  if (state.isLoggedIn) {
+                        TopBarActionType.DropdownMenu(listOf(TopBarActionItem("Logout") { openLogoutDialog.value = true }))
                     } else {
-                        emptyList()
+                        TopBarActionType.None
                     }
                 )
             },
@@ -64,10 +65,10 @@ class CustomerScreen(
                                 .verticalScroll(rememberScrollState())
                         ) {
                             CustomerListCell("Account") {
-                                navigator.navigate(NavigationItem.Account.route)
+                                navigator.navigate(NavigationItem.Account.route())
                             }
                             CustomerListCell("Addresses") {
-                                navigator.navigate(NavigationItem.AddressList.route)
+                                navigator.navigate(NavigationItem.AddressList.route())
                             }
                             CustomerListCell("Orders") {
 

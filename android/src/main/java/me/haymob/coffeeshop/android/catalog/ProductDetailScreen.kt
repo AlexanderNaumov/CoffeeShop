@@ -8,23 +8,32 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.R
 import me.haymob.coffeeshop.android.components.*
 import me.haymob.coffeeshop.android.extensions.string
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.ui.productDetail.ProductDetailUIStore
+import me.haymob.coffeeshop.ui.productDetail.actions.addProductToWishlist
 import me.haymob.coffeeshop.ui.productDetail.actions.decrementProduct
 import me.haymob.coffeeshop.ui.productDetail.actions.incrementProduct
+import me.haymob.coffeeshop.ui.productDetail.actions.removeProductFromWishlist
 
 class ProductDetailScreen(
     val navigator: Navigator,
@@ -36,17 +45,32 @@ class ProductDetailScreen(
         val product = state.product ?: return
 
         Scaffold(
-            topBar = { TopBar(product.name.uppercase(), TopBarNavigationType.Back(onAction = navigator::back)) },
+            topBar = {
+                TopBar(
+                    product.name.uppercase(),
+                    TopBarNavigationType.Back(onAction = navigator::back),
+                    if (product.isOnWishlist) {
+                        TopBarActionType.Button(
+                            Icons.Filled.Favorite,
+                            onAction = { store.removeProductFromWishlist() }
+                        )
+                    } else {
+                        TopBarActionType.Button(
+                            Icons.Filled.FavoriteBorder,
+                            onAction = { store.addProductToWishlist() }
+                        )
+                    }
+                )
+            },
             content = { _ ->
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     Box(
                         modifier = Modifier
                             .aspectRatio(320f / 240)
                     ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(product.thumbnail),
-                            contentDescription = null,
-                            modifier = Modifier
+                        ProductImage(
+                            product.thumbnail,
+                            Modifier
                                 .padding(12.dp)
                                 .fillMaxSize()
                         )

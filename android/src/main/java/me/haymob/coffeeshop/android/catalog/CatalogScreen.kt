@@ -91,10 +91,9 @@ private fun ProductItem(product: Product, onClick: () -> Unit, inc: () -> Unit, 
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color.Gallery)
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(product.thumbnail),
-                    contentDescription = null,
-                    modifier = Modifier
+                ProductImage(
+                    product.thumbnail,
+                    Modifier
                         .padding(12.dp)
                         .fillMaxWidth()
                         .aspectRatio(1.0f)
