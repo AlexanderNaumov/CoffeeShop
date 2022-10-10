@@ -10,13 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun Loader(modifier: Modifier = Modifier) {
+fun Loader(modifier: Modifier = Modifier, color: Color = Color.White, backgroundColor: Color = Color.Black.copy(alpha = 0.1f)) {
     Column(
-        modifier = modifier
-            .background(Color.Black.copy(alpha = 0.1f)),
+        modifier = modifier.background(backgroundColor),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CircularProgressIndicator(color = Color.White)
+        CircularProgressIndicator(color = color)
     }
 }

@@ -49,7 +49,8 @@ class CatalogScreen(
             content = { _ ->
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                    onRefresh = { store.refreshCatalog() }) {
+                    onRefresh = { store.refreshCatalog() }
+                ) {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         contentPadding = PaddingValues(10.dp)

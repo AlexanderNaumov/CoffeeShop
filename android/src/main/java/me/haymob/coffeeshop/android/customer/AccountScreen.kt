@@ -50,7 +50,8 @@ class AccountScreen(
             content = { _ ->
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                    onRefresh = { store.refreshCustomer() }) {
+                    onRefresh = { store.refreshCustomer() }
+                ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,

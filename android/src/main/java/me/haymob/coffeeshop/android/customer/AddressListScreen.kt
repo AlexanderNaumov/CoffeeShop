@@ -38,7 +38,8 @@ class AddressListScreen(
             content = { _ ->
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                    onRefresh = { store.refreshAddresses() }) {
+                    onRefresh = { store.refreshAddresses() }
+                ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
                             item {

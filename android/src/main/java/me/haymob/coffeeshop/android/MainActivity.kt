@@ -29,7 +29,6 @@ import org.koin.core.parameter.ParametersHolder
 private var isCreate = false
 
 class MainActivity: ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (isCreate.not()) {

@@ -76,38 +76,11 @@ class ProductDetailScreen(
                         )
                         if (product.isLoading) Loader(modifier = Modifier.matchParentSize())
                     }
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .height(60.dp)
-                            .fillMaxWidth()
-                            .background(Color.White)
-                            .padding(start = 15.dp)
-                    ) {
-                        Column {
-                            Text(
-                                text = product.name,
-                                fontSize = 18.sp
-                            )
-                            Text(
-                                text = product.price.string,
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        if (product.qty == 0) {
-                            ActionButton(R.drawable.ic_plus, 60.dp, onClick = {
-                                store.incrementProduct()
-                            })
-                        } else {
-                            ActionButtons(
-                                product.qty,
-                                inc = { store.incrementProduct() },
-                                dec = { store.decrementProduct() }
-                            )
-                        }
-                    }
+                    ProductInfoCell(
+                        product,
+                        inc = { store.incrementProduct() },
+                        dec = { store.decrementProduct() }
+                    )
                     Divider()
                     Column(
                         modifier = Modifier
