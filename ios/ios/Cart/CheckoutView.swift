@@ -20,7 +20,7 @@ private struct CheckoutView: View {
             case let success as CheckoutUIEffect.OrderSuccess:
                 router?.open(AlertRoute(alert: Alert(
                     title: "Success",
-                    message: "Oredr ID: \(success.id)",
+                    message: "Order ID: \(success.id)",
                     dismissButton: .cancel("Ok", action: {
                         router?.close()
                     })
@@ -44,7 +44,7 @@ private struct CheckoutView: View {
                                 header: Text("Payment Methods"),
                                 content: {
                                     ForEach(cart.paymentMethods) { method in
-                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.equalPaymentMethod(method: method)) {
+                                        CheckoutCell(title: method.title, checkmarkFilled: store.currentState.equalPaymentMethod(method: method)) {
                                             store.selectPayment(method: method)
                                         }
                                     }
@@ -54,7 +54,7 @@ private struct CheckoutView: View {
                                 header:  Text("Shipping Methods"),
                                 content: {
                                     ForEach(cart.shippingMethods) { method in
-                                        CheckoutCell(title: method.title, chckmarkFilled: store.currentState.equalShippingMethod(method: method)) {
+                                        CheckoutCell(title: method.title, checkmarkFilled: store.currentState.equalShippingMethod(method: method)) {
                                             store.selectShipping(method: method)
                                         }
                                     }
@@ -66,7 +66,7 @@ private struct CheckoutView: View {
                                     ForEach(addresses) { address in
                                         CheckoutCell(
                                             title: "\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)",
-                                            chckmarkFilled: store.currentState.equalAddress(address: address)
+                                            checkmarkFilled: store.currentState.equalAddress(address: address)
                                         ) {
                                             store.setAddress(address: address)
                                         }
@@ -101,7 +101,7 @@ private struct CheckoutView: View {
                             )
                         }
                         WidewButton(
-                            title: "Create Oreder",
+                            title: "Create Order",
                             color: store.currentState.isActiveOrderButton ? .green : .black
                         ) {
                             guard store.currentState.isActiveOrderButton else { return }
@@ -121,7 +121,7 @@ private struct CheckoutView: View {
     }
 }
 
-private func CheckoutCell(title: String, chckmarkFilled: Bool, action: @escaping () -> Void) -> some View {
+private func CheckoutCell(title: String, checkmarkFilled: Bool, action: @escaping () -> Void) -> some View {
     Button(action: action) {
         HStack {
             CheckmarkImage(chckmarkFilled)

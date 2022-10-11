@@ -65,7 +65,7 @@ class LoginScreen(
                             Text("Login")
                         }
                     }
-                    if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
+                    if (state.isLoading) Loader(Modifier.matchParentSize())
                 }
             },
             backgroundColor = Color.Porcelain

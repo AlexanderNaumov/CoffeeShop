@@ -58,7 +58,7 @@ class CustomerScreen(
                     )
                 }
                 if (state.isLoggedIn) {
-                    Box(modifier = Modifier.fillMaxSize()) {
+                    Box(Modifier.fillMaxSize()) {
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -74,9 +74,7 @@ class CustomerScreen(
 
                             }
                         }
-                        if (state.isLoading) {
-                            Loader(modifier = Modifier.matchParentSize())
-                        }
+                        if (state.isLoading) Loader(Modifier.matchParentSize())
                     }
                 } else {
                     Column(
@@ -105,7 +103,7 @@ class CustomerScreen(
 
 @Composable
 private fun CustomerListCell(title: String, onClick: () -> Unit) {
-    Column(modifier = Modifier.background(Color.White)) {
+    Column(Modifier.background(Color.White)) {
         TextButton(
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(

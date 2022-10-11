@@ -1,6 +1,6 @@
 import SwiftUI
 
-func WidewButton(title: String, color: Color, action: @escaping () -> Void) -> some View {
+func LargeButton(title: String, color: Color, action: @escaping () -> Void) -> some View {
     Button(action: action) {
         Text(title.uppercased())
             .frame(maxWidth: .infinity, maxHeight: .infinity)

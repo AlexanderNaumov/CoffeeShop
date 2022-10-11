@@ -70,7 +70,7 @@ class SignupScreen(
                             Text("Signup")
                         }
                     }
-                    if (state.isLoading) Loader(modifier = Modifier.matchParentSize())
+                    if (state.isLoading) Loader(Modifier.matchParentSize())
                 }
             },
             backgroundColor = Color.Porcelain

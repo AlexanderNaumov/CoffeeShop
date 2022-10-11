@@ -76,7 +76,7 @@ struct CartView: View {
                         .background(Color.porcelain)
                     }
                     if store.currentState.isShowCheckoutButton {
-                        WidewButton(
+                        LargeButton(
                             title: "Checkout",
                             color: store.currentState.isActiveCheckoutButton ? .green : .black
                         ) {

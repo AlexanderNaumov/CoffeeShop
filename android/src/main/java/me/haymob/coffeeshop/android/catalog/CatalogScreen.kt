@@ -117,6 +117,6 @@ private fun ProductItem(product: Product, onClick: () -> Unit, inc: () -> Unit, 
                 ActionButtons(product.qty, inc = inc, dec = dec)
             }
         }
-        if (product.isLoading) Loader(modifier = Modifier.matchParentSize())
+        if (product.isLoading) Loader(Modifier.matchParentSize())
     }
 }

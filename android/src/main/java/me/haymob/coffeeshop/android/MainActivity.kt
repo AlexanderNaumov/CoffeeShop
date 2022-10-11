@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.*
 import me.haymob.coffeeshop.android.cart.CartScreen
+import me.haymob.coffeeshop.android.cart.CheckoutScreen
 import me.haymob.coffeeshop.android.catalog.CatalogScreen
 import me.haymob.coffeeshop.android.catalog.ProductDetailScreen
 import me.haymob.coffeeshop.android.components.ErrorAlert
@@ -107,6 +108,9 @@ fun MainScreen() {
                         defaultNavigator,
                         app.koin.get { ParametersHolder(_values = mutableListOf(addressId)) }
                     ).Body()
+                }
+                composable(NavigationItem.Checkout.route()) {
+                    CheckoutScreen(defaultNavigator, app.koin.get()).Body()
                 }
             }
         }

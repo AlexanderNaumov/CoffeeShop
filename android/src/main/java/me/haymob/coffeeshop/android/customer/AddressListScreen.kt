@@ -40,17 +40,17 @@ class AddressListScreen(
                     state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
                     onRefresh = { store.refreshAddresses() }
                 ) {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    Box(Modifier.fillMaxSize()) {
+                        LazyColumn(Modifier.fillMaxSize()) {
                             item {
-                                Row(modifier = Modifier.padding(start = 8.dp)) {
+                                Row(Modifier.padding(start = 8.dp)) {
                                     TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route()) }) {
                                         Text("New Address".uppercase())
                                     }
                                 }
                             }
                             items(items = state.addresses, { it.id }) { address ->
-                                Column(modifier = Modifier.background(Color.White)) {
+                                Column(Modifier.background(Color.White)) {
                                     TextButton(
                                         onClick = { navigator.navigate(NavigationItem.EditAddress.route(address.id)) },
                                         colors = ButtonDefaults.buttonColors(

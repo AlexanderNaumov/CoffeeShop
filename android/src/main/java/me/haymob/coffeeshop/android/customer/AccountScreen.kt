@@ -52,7 +52,7 @@ class AccountScreen(
                     state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
                     onRefresh = { store.refreshCustomer() }
                 ) {
-                    Box(modifier = Modifier.fillMaxSize()) {
+                    Box(Modifier.fillMaxSize()) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
@@ -74,7 +74,7 @@ class AccountScreen(
                                 Text("Update")
                             }
                         }
-                        if (state.isLoading && state.isRefreshing.not()) Loader(modifier = Modifier.matchParentSize())
+                        if (state.isLoading && state.isRefreshing.not()) Loader(Modifier.matchParentSize())
                     }
                 }
             },

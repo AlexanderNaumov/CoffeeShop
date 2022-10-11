@@ -63,18 +63,15 @@ class ProductDetailScreen(
                 )
             },
             content = { _ ->
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Box(
-                        modifier = Modifier
-                            .aspectRatio(320f / 240)
-                    ) {
+                Column(Modifier.verticalScroll(rememberScrollState())) {
+                    Box(Modifier.aspectRatio(320f / 240)) {
                         ProductImage(
                             product.thumbnail,
                             Modifier
                                 .padding(12.dp)
                                 .fillMaxSize()
                         )
-                        if (product.isLoading) Loader(modifier = Modifier.matchParentSize())
+                        if (product.isLoading) Loader(Modifier.matchParentSize())
                     }
                     ProductInfoCell(
                         product,

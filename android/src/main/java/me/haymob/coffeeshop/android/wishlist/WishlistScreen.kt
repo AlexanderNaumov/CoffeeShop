@@ -35,16 +35,16 @@ class WishlistScreen(
         val state = store.state.collectAsState().value
 
         Scaffold(
-            topBar = { TopBar("Wishlist") },
+            topBar = { TopBar("Wishlist".uppercase()) },
             content = { _ ->
                 if (state.wishlist.isNotEmpty()) {
                     SwipeRefresh(
                         state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
                         onRefresh = { store.refreshWishlist() }
                     ) {
-                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(Modifier.fillMaxSize()) {
                             items(items = state.wishlist, { it.id }) { product ->
-                                Box(modifier = Modifier.fillMaxSize()) {
+                                Box(Modifier.fillMaxSize()) {
                                     SwipeToDelete(onDelete = { store.removeProductFromWishlist(product) }) {
                                         Row(
                                             verticalAlignment = Alignment.CenterVertically,
@@ -65,7 +65,7 @@ class WishlistScreen(
                                         }
                                     }
 
-                                    if (product.isLoading) Loader(modifier = Modifier.matchParentSize())
+                                    if (product.isLoading) Loader(Modifier.matchParentSize())
                                 }
                                 Divider()
                             }

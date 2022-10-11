@@ -46,6 +46,9 @@ sealed class NavigationItem(
         override fun route() = "edit_address/{addressId}"
         fun route(addressId: String) = "edit_address/$addressId"
     }
+    object Checkout: NavigationItem(title = "Checkout") {
+        override fun route() = "checkout"
+    }
 
     open fun route(): String = ""
 }

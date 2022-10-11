@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,20 +37,17 @@ class CartScreen(
         val state = store.state.collectAsState().value
 
         Scaffold(
-            topBar = { TopBar("Cart") },
+            topBar = { TopBar("Cart".uppercase()) },
             content = { _ ->
-                SwipeRefresh(
-                    state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                    onRefresh = { store.refresh() }
-                ) {
-                    val cart = state.cart
-                    if (cart != null && cart.items.isNotEmpty()) {
-                        Column(Modifier.fillMaxSize()) {
-                            LazyColumn(
-                                Modifier
-                                    .fillMaxSize()
-                                    .weight(1.0f)
-                            ) {
+                val cart = state.cart
+                if (cart != null && cart.items.isNotEmpty()) {
+                    Column(Modifier.fillMaxSize()) {
+                        SwipeRefresh(
+                            state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
+                            onRefresh = { store.refresh() },
+                            modifier = Modifier.weight(1.0f)
+                        ) {
+                            LazyColumn(Modifier.fillMaxSize()) {
                                 item {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
@@ -86,7 +84,7 @@ class CartScreen(
                                 }
                                 items(items = cart.items, { it.id }) { item ->
                                     val product = item.product
-                                    Box(modifier = Modifier.fillMaxSize()) {
+                                    Box(Modifier.fillMaxSize()) {
                                         Row(
                                             verticalAlignment = Alignment.CenterVertically,
                                             modifier = Modifier
@@ -117,57 +115,46 @@ class CartScreen(
                                                 dec = { store.decrementProduct(product) }
                                             )
                                         }
-                                        if (product.isLoading) Loader(modifier = Modifier.matchParentSize())
+                                        if (product.isLoading) Loader(Modifier.matchParentSize())
                                     }
                                     Divider()
                                 }
                             }
-                            val total = cart.totalPrice
-                            if (total != null) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(60.dp)
-                                        .padding(horizontal = 20.dp)
-                                ) {
-                                    Text(
-                                        "Total",
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                    Text(
-                                        total.string,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                }
-                            }
-                            if (state.isShowCheckoutButton) {
-                                Button(
-                                    onClick = {
-                                        if (state.isActiveCheckoutButton.not()) return@Button
-                                        navigator.navigate("")
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        contentColor = Color.White,
-                                        backgroundColor = if (state.isActiveCheckoutButton) Color.Green else Color.Black
-                                    ),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
-                                ) {
-                                    Text(
-                                        "Checkout",
-                                        fontSize = 18.sp
-                                    )
-                                }
+                        }
+                        val total = cart.totalPrice
+                        if (total != null) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(60.dp)
+                                    .padding(horizontal = 20.dp)
+                            ) {
+                                Text(
+                                    "Total",
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    total.string,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
                             }
                         }
-                    } else {
-                        EmptyList("Empty Cart")
+                        if (state.isShowCheckoutButton) {
+                            LargeButton(
+                                "Checkout",
+                                if (state.isActiveCheckoutButton) Color.Green else Color.Black
+                            ) {
+                                if (state.isActiveCheckoutButton.not()) return@LargeButton
+                                navigator.navigate(NavigationItem.Checkout.route())
+                            }
+                        }
                     }
+                } else {
+                    EmptyList("Empty Cart")
                 }
             },
             backgroundColor = Color.Porcelain

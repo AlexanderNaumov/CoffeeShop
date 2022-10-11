@@ -50,7 +50,7 @@ private struct OrderDetailView: View {
                         }
                     )
                 }
-                WidewButton(
+                LargeButton(
                     title: "Reorder",
                     color: .green
                 ) {
