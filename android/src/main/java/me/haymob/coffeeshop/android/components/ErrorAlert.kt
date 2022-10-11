@@ -10,7 +10,7 @@ import me.haymob.coffeeshop.android.navigation.Navigator
 fun ErrorAlert(message: String, navigator: Navigator) {
     AlertDialog(
         onDismissRequest = { navigator.back() },
-        title = { Text(text = "Error") },
+        title = { Text("Error") },
         text = { Text(message) },
         confirmButton = {
             Button(onClick = { navigator.back() }) {

@@ -71,7 +71,7 @@ class AccountScreen(
                                     .fillMaxWidth()
                                     .padding(horizontal = 16.dp)
                             ) {
-                                Text(text = "Update")
+                                Text("Update")
                             }
                         }
                         if (state.isLoading && state.isRefreshing.not()) Loader(modifier = Modifier.matchParentSize())

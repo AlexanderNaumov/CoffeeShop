@@ -38,7 +38,7 @@ fun TopBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
-        title = { Text(text = title, fontSize = 18.sp) },
+        title = { Text(title, fontSize = 18.sp) },
         navigationIcon = when (navigationType) {
             is TopBarNavigationType.Back -> {
                 {
@@ -70,7 +70,7 @@ fun TopBar(
                                 it.onAction()
                                 showMenu = false
                             }) {
-                                Text(text = it.title)
+                                Text(it.title)
                             }
                         }
                     }

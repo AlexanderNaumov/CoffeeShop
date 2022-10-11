@@ -29,11 +29,11 @@ fun ProductInfoCell(product: Product, inc: () -> Unit, dec: () -> Unit) {
     ) {
         Column {
             Text(
-                text = product.name,
+                product.name,
                 fontSize = 18.sp
             )
             Text(
-                text = product.price.string,
+                product.price.string,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )

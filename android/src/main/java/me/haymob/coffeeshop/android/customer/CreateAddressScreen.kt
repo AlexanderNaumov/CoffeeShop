@@ -65,7 +65,7 @@ class CreateAddressScreen(
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
                         ) {
-                            Text(text = "Create")
+                            Text("Create")
                         }
                     }
                     if (state.isLoading) Loader(modifier = Modifier.matchParentSize())

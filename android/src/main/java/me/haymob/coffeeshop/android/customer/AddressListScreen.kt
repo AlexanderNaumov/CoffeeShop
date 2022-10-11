@@ -45,7 +45,7 @@ class AddressListScreen(
                             item {
                                 Row(modifier = Modifier.padding(start = 8.dp)) {
                                     TextButton(onClick = { navigator.navigate(NavigationItem.CreateAddress.route()) }) {
-                                        Text(text = "New Address".uppercase())
+                                        Text("New Address".uppercase())
                                     }
                                 }
                             }

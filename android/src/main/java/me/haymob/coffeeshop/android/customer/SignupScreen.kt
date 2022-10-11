@@ -67,7 +67,7 @@ class SignupScreen(
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
                         ) {
-                            Text(text = "Signup")
+                            Text("Signup")
                         }
                     }
                     if (state.isLoading) Loader(modifier = Modifier.matchParentSize())

@@ -28,6 +28,7 @@ import org.koin.core.parameter.ParametersHolder
 
 private var isCreate = false
 
+@ExperimentalMaterialApi
 class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,7 @@ class MainActivity: ComponentActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -68,7 +70,7 @@ fun MainScreen() {
                     WishlistScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.Cart.route()) {
-                    CartScreen(defaultNavigator).Body()
+                    CartScreen(defaultNavigator, app.koin.get()).Body()
                 }
                 composable(NavigationItem.Customer.route()) {
                     CustomerScreen(defaultNavigator, app.koin.get()).Body()
@@ -137,7 +139,7 @@ class BottomNavigationBar(private val navController: NavController) {
             items.forEach { item ->
                 BottomNavigationItem(
                     icon = { Icon(painterResource(id = item.icon!!), contentDescription = item.title) },
-                    label = { Text(text = item.title) },
+                    label = { Text(item.title) },
                     selectedContentColor = Color.Black,
                     unselectedContentColor = Color.Black.copy(0.4f),
                     alwaysShowLabel = true,

@@ -1,6 +1,7 @@
 package me.haymob.coffeeshop.android.wishlist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,6 +17,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.components.*
+import me.haymob.coffeeshop.android.navigation.NavigationItem
 import me.haymob.coffeeshop.android.navigation.Navigator
 import me.haymob.coffeeshop.ui.customer.wishlist.WishlistUIStore
 import me.haymob.coffeeshop.ui.customer.wishlist.actions.decrementProduct
@@ -49,6 +51,7 @@ class WishlistScreen(
                                             modifier = Modifier
                                                 .background(Color.White)
                                                 .padding(start = 15.dp)
+                                                .clickable { navigator.navigate(NavigationItem.ProductDetail.route(product.id)) }
                                         ) {
                                             ProductImage(
                                                 product.thumbnail,

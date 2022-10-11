@@ -67,7 +67,7 @@ class EditAddressScreen(
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
                         ) {
-                            Text(text = "Update")
+                            Text("Update")
                         }
                         Button(
                             onClick = { store.removeAddress() },
@@ -79,7 +79,7 @@ class EditAddressScreen(
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
                         ) {
-                            Text(text = "Remove")
+                            Text("Remove")
                         }
                     }
                     if (state.isLoading) Loader(modifier = Modifier.matchParentSize())

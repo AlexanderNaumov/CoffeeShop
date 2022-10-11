@@ -87,13 +87,13 @@ class CustomerScreen(
                         TextButton(onClick = {
                             navigator.navigate("login")
                         }) {
-                            Text(text = "Login")
+                            Text("Login")
                         }
                         TextButton(
                             onClick = { navigator.navigate("signup") },
                             modifier = Modifier.padding(top = 10.dp)
                         ) {
-                            Text(text = "Register")
+                            Text("Register")
                         }
                     }
                 }
@@ -139,7 +139,7 @@ private fun CustomerListCell(title: String, onClick: () -> Unit) {
 private fun LogoutAlert(onLogout: () -> Unit, onCancel: () -> Unit) {
     AlertDialog(
         onDismissRequest = onCancel,
-        title = { Text(text = "Logout") },
+        title = { Text("Logout") },
         text = { Text("Do you want to leave?") },
         confirmButton = {
             Button(onClick = onLogout) {
