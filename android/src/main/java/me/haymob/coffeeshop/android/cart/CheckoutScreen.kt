@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.runtime.*
@@ -69,19 +68,19 @@ class CheckoutScreen(
                                 .fillMaxSize()
                                 .weight(1.0f)
                         ) {
-                            item { CheckoutSection("Payment Methods") }
+                            item { OrderSectionTitle("Payment Methods") }
                             items(items = cart.paymentMethods, { it.id }) { method ->
                                 CheckoutCell(method.title, state.equalPaymentMethod(method)) {
                                     store.selectPayment(method)
                                 }
                             }
-                            item { CheckoutSection("Shipping Methods") }
+                            item { OrderSectionTitle("Shipping Methods") }
                             items(items = cart.shippingMethods, { it.id }) { method ->
                                 CheckoutCell(method.title, state.equalShippingMethod(method)) {
                                     store.selectShipping(method)
                                 }
                             }
-                            item { CheckoutSection("Address") }
+                            item { OrderSectionTitle("Address") }
                             items(items = state.addresses, { it.id }) { address ->
                                 CheckoutCell(
                                     "${address.firstName} ${address.lastName}\n${address.city}, ${address.street}, ${address.postcode}",
@@ -90,59 +89,14 @@ class CheckoutScreen(
                                     store.setAddress(address)
                                 }
                             }
-                            item { CheckoutSection("Items") }
+                            item { OrderSectionTitle("Items") }
                             items(items = cart.items, { it.id }) { item ->
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier
-                                        .background(Color.White)
-                                        .padding(end = 15.dp)
-                                        .height(70.dp)
-                                ) {
-                                    ProductImage(
-                                        item.product.thumbnail,
-                                        Modifier.size(50.dp, 50.dp)
-                                    )
-                                    Column {
-                                        Text(
-                                            item.product.name,
-                                            fontSize = 18.sp
-                                        )
-                                        Text(
-                                            item.product.price.string,
-                                            fontSize = 18.sp,
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                    }
-                                    Spacer(Modifier.weight(1.0f))
-                                    Text(
-                                        "${item.product.qty}x",
-                                        fontSize = 18.sp
-                                    )
-                                }
-                                Divider()
+                                OrderItemCell(item.product)
                             }
                             val totalPrice = cart.totalPrice
                             if (totalPrice != null) {
                                 item {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(60.dp)
-                                            .background(Color.White)
-                                            .padding(horizontal = 10.dp),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            "Total",
-                                            fontSize = 20.sp
-                                        )
-                                        Text(
-                                            totalPrice.string,
-                                            fontSize = 20.sp
-                                        )
-                                    }
+                                    OrderTotalCell(totalPrice)
                                 }
                             }
                         }
@@ -158,21 +112,6 @@ class CheckoutScreen(
                 }
             },
             backgroundColor = Color.Porcelain
-        )
-    }
-}
-
-@Composable
-private fun CheckoutSection(text: String) {
-    Row(
-        verticalAlignment = Alignment.Bottom,
-        modifier = Modifier
-            .padding(10.dp)
-            .height(30.dp)
-    ) {
-        Text(
-            text,
-            fontSize = 17.sp
         )
     }
 }

@@ -21,7 +21,7 @@ sealed class NavigationItem(
     }
     object ProductDetail: NavigationItem(title = "ProductDetail") {
         override fun route() = "product/{productId}"
-        fun route(productId: String ) = "product/$productId"
+        fun route(productId: String) = "product/$productId"
     }
     object Login: NavigationItem(title = "Login") {
         override fun route() = "login"
@@ -48,6 +48,15 @@ sealed class NavigationItem(
     }
     object Checkout: NavigationItem(title = "Checkout") {
         override fun route() = "checkout"
+    }
+
+    object OrderList: NavigationItem(title = "OrderList") {
+        override fun route() = "order_list"
+    }
+
+    object OrderDetail: NavigationItem(title = "OrderList") {
+        override fun route() = "order/{orderId}"
+        fun route(orderId: String) = "order/$orderId"
     }
 
     open fun route(): String = ""

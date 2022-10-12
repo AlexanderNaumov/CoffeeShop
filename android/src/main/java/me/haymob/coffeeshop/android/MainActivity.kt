@@ -112,6 +112,16 @@ fun MainScreen() {
                 composable(NavigationItem.Checkout.route()) {
                     CheckoutScreen(defaultNavigator, app.koin.get()).Body()
                 }
+                composable(NavigationItem.OrderList.route()) {
+                    OrderListScreen(defaultNavigator, app.koin.get()).Body()
+                }
+                composable(NavigationItem.OrderDetail.route()) {
+                    val orderId = it.arguments?.getString("orderId") ?: return@composable
+                    OrderDetailScreen(
+                        defaultNavigator,
+                        app.koin.get { ParametersHolder(_values = mutableListOf(orderId)) }
+                    ).Body()
+                }
             }
         }
     )

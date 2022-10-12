@@ -71,7 +71,7 @@ class CustomerScreen(
                                 navigator.navigate(NavigationItem.AddressList.route())
                             }
                             CustomerListCell("Orders") {
-
+                                navigator.navigate(NavigationItem.OrderList.route())
                             }
                         }
                         if (state.isLoading) Loader(Modifier.matchParentSize())
