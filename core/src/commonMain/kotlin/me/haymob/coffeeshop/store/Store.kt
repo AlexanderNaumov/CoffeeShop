@@ -7,7 +7,7 @@ import me.haymob.multiplatformannotations._JsExport
 @_JsExport
 abstract class Store<StoreState: State, StoreEffect>(initialState: StoreState) {
 
-    internal val scope = CoroutineScope(Dispatchers.Unconfined + Job())
+    internal val scope = CoroutineScope(Dispatchers.Default + Job())
 
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()

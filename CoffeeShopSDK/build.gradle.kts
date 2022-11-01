@@ -3,7 +3,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.20"
 }
 
 kotlin {
@@ -44,7 +44,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.squareup.okhttp3:okhttp:4.9.3")
+                implementation("com.squareup.okhttp3:okhttp:4.10.0")
                 implementation("androidx.startup:startup-runtime:1.1.1")
             }
         }

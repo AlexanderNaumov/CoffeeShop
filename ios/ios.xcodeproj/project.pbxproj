@@ -23,7 +23,7 @@
 		119D5A4B286A3D4D0030D3A8 /* FullScreenLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A4A286A3D4D0030D3A8 /* FullScreenLoader.swift */; };
 		119D5A4D286A406F0030D3A8 /* ProductLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A4C286A406F0030D3A8 /* ProductLoader.swift */; };
 		119D5A4F286A43640030D3A8 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A4E286A43640030D3A8 /* Order.swift */; };
-		119D5A51286B28420030D3A8 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A50286B28420030D3A8 /* WideButton.swift */; };
+		119D5A51286B28420030D3A8 /* LargeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A50286B28420030D3A8 /* LargeButton.swift */; };
 		119D5A53286B34D80030D3A8 /* CheckmarkImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A52286B34D80030D3A8 /* CheckmarkImage.swift */; };
 		119D5A55286B39470030D3A8 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A54286B39470030D3A8 /* EmptyView.swift */; };
 		119D5A58286B8C8F0030D3A8 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119D5A57286B8C8F0030D3A8 /* Font.swift */; };
@@ -79,7 +79,7 @@
 		119D5A4A286A3D4D0030D3A8 /* FullScreenLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenLoader.swift; sourceTree = "<group>"; };
 		119D5A4C286A406F0030D3A8 /* ProductLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLoader.swift; sourceTree = "<group>"; };
 		119D5A4E286A43640030D3A8 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
-		119D5A50286B28420030D3A8 /* WideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideButton.swift; sourceTree = "<group>"; };
+		119D5A50286B28420030D3A8 /* LargeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButton.swift; sourceTree = "<group>"; };
 		119D5A52286B34D80030D3A8 /* CheckmarkImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkImage.swift; sourceTree = "<group>"; };
 		119D5A54286B39470030D3A8 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		119D5A57286B8C8F0030D3A8 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 				11B55874285913F8000C2959 /* Alert.swift */,
 				119D5A4A286A3D4D0030D3A8 /* FullScreenLoader.swift */,
 				119D5A4C286A406F0030D3A8 /* ProductLoader.swift */,
-				119D5A50286B28420030D3A8 /* WideButton.swift */,
+				119D5A50286B28420030D3A8 /* LargeButton.swift */,
 				119D5A52286B34D80030D3A8 /* CheckmarkImage.swift */,
 				119D5A54286B39470030D3A8 /* EmptyView.swift */,
 			);
@@ -377,7 +377,7 @@
 				115CA719285E5EE5008AF68B /* WishlistView.swift in Sources */,
 				111967462862010100812879 /* UIViewController+Router.swift in Sources */,
 				11EDDEEF286885480033E2B6 /* OrderListView.swift in Sources */,
-				119D5A51286B28420030D3A8 /* WideButton.swift in Sources */,
+				119D5A51286B28420030D3A8 /* LargeButton.swift in Sources */,
 				119D5A55286B39470030D3A8 /* EmptyView.swift in Sources */,
 				11DDDA2628142E050098389D /* Color.swift in Sources */,
 				119D5A53286B34D80030D3A8 /* CheckmarkImage.swift in Sources */,

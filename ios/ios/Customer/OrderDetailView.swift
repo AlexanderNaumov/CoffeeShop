@@ -74,31 +74,31 @@ private func OrderDetailSection(title: String, content: String) -> some View {
     )
 }
 
-func OrderItems(products: [Product]) -> some View {
-    Section(
-        header: Text("Items"),
-        content: {
-            ForEach(order.products) { product in
-                HStack {
-                    ProductImage(image: product.thumbnail)
-                        .frame(width: 50, height: 50)
-                    VStack(alignment: .leading) {
-                        Text(product.name)
-                            .font(.appRegular)
-                        Text("\(product.price)")
-                            .font(.appSemibold)
-                    }
-                    Spacer()
-                    Text("\(product.qty)x")
-                }
-            }
-            if let total = order.totalPrice {
-                HStack {
-                    Text("Total")
-                    Spacer()
-                    Text("\(total)")
-                }
-            }
-        }
-    )
-}
+//func OrderItems(products: [Product]) -> some View {
+//    Section(
+//        header: Text("Items"),
+//        content: {
+//            ForEach(order.products) { product in
+//                HStack {
+//                    ProductImage(image: product.thumbnail)
+//                        .frame(width: 50, height: 50)
+//                    VStack(alignment: .leading) {
+//                        Text(product.name)
+//                            .font(.appRegular)
+//                        Text("\(product.price)")
+//                            .font(.appSemibold)
+//                    }
+//                    Spacer()
+//                    Text("\(product.qty)x")
+//                }
+//            }
+//            if let total = order.totalPrice {
+//                HStack {
+//                    Text("Total")
+//                    Spacer()
+//                    Text("\(total)")
+//                }
+//            }
+//        }
+//    )
+//}

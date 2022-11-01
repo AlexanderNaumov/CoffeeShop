@@ -100,7 +100,7 @@ private struct CheckoutView: View {
                                 }
                             )
                         }
-                        WidewButton(
+                        LargeButton(
                             title: "Create Order",
                             color: store.currentState.isActiveOrderButton ? .green : .black
                         ) {
@@ -124,7 +124,7 @@ private struct CheckoutView: View {
 private func CheckoutCell(title: String, checkmarkFilled: Bool, action: @escaping () -> Void) -> some View {
     Button(action: action) {
         HStack {
-            CheckmarkImage(chckmarkFilled)
+            CheckmarkImage(checkmarkFilled)
             Text(title)
                 .font(.appRegular)
         }
