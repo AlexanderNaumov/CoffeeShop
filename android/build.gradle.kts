@@ -36,6 +36,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.2"
     }
+    namespace = "me.haymob.coffeeshop.android"
 }
 
 val composeVersion = "1.3.0"

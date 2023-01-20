@@ -89,4 +89,5 @@ android {
         minSdk = 21
         targetSdk = 33
     }
+    namespace = "me.haymob.coffeeshopsdk"
 }
