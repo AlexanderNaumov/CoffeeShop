@@ -3,7 +3,7 @@ package me.haymob.coffeeshop.domain.customer.actions
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.entities.Product
 
-fun CustomerStore.productsQtyUpdate(products: List<Product>) {
+internal fun CustomerStore.productsQtyUpdate(products: List<Product>) {
     setState {
         copy(
             customer = customer?.run {

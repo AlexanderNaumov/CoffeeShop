@@ -9,9 +9,8 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class WishlistUIStore(
+class WishlistUIStore internal constructor(
     internal val customerStore: CustomerStore,
-    internal val catalogStore: CatalogStore,
     internal val cartStore: CartStore
 ): Store<WishlistUIState, Unit>(WishlistUIState()) {
     init {

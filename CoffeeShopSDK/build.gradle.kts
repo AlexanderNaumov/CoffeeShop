@@ -3,7 +3,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version "1.7.20"
+    kotlin("plugin.serialization") version "1.8.0"
 }
 
 kotlin {
@@ -33,6 +33,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
+                implementation("io.insert-koin:koin-core:3.2.0")
                 implementation(project(":MultiplatformAnnotations"))
             }
         }
@@ -50,12 +51,12 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-                implementation("androidx.test:core:1.4.0")
-                implementation("androidx.test:runner:1.4.0")
-                implementation("org.mockito.kotlin:mockito-kotlin:2.2.10")
-                implementation("org.robolectric:robolectric:4.5.1")
+//                implementation(kotlin("test-junit"))
+//                implementation("junit:junit:4.13.2")
+//                implementation("androidx.test:core:1.4.0")
+//                implementation("androidx.test:runner:1.4.0")
+//                implementation("org.mockito.kotlin:mockito-kotlin:2.2.10")
+//                implementation("org.robolectric:robolectric:4.5.1")
             }
         }
 

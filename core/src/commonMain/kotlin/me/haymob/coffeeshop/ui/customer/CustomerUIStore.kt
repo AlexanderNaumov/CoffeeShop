@@ -7,7 +7,7 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class CustomerUIStore(
+class CustomerUIStore internal constructor(
     internal val customerStore: CustomerStore
 ): Store<CustomerUIState, Unit>(CustomerUIState()) {
     init {

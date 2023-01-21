@@ -5,7 +5,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.take
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -22,7 +21,6 @@ private data class Req(
     val url: String,
     val body: String?
 )
-
 internal actual fun http(
     type: HTTPType,
     url: String,
@@ -47,7 +45,7 @@ internal actual fun http(
         }
 
         val req = when (type) {
-            is GraphQL -> {
+            is HTTPType.GraphQL -> {
                 if (isLoggingEnabled) println("request: ${type.gql.queryString()}")
                 Req(
                     "POST",
@@ -55,7 +53,7 @@ internal actual fun http(
                     type.gql.jsonString()
                 )
             }
-            is Rest -> {
+            is HTTPType.Rest -> {
                 if (isLoggingEnabled) println("request: $path")
                 Req(
                     "${type.method}".uppercase(),

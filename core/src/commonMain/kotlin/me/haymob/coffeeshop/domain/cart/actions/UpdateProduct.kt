@@ -9,28 +9,28 @@ import me.haymob.coffeeshop.mappers.CartMapper
 
 internal fun CartStore.updateProduct(product: Product) {
     setState { copy(isLoading = true) }
-    setEffect(CartEffect.ProductSetLoading(product,  true))
+    productSetLoading(product,  true)
 
     val isLoggedIn = storage.customerToken() != null
 
     (currentState.cart?.let { cart ->
         val item = cart.items.find { it.product.id == product.id }
         when {
-            item != null && product.qty > 0 -> shopService.updateItem(item.id, product.qty)
-            item != null && product.qty == 0 -> shopService.removeItem(item.id)
-            item == null && product.qty > 0 -> shopService.addProduct(cart.id, product.id, product.qty)
+            item != null && product.qty > 0 -> cartService.updateItem(item.id, product.qty)
+            item != null && product.qty == 0 -> cartService.removeItem(item.id)
+            item == null && product.qty > 0 -> cartService.addProduct(cart.id, product.id, product.qty)
             else -> throw Exception("unknown operation")
         }
-    } ?: shopService.createCart().flatMapMerge {
+    } ?: cartService.createCart().flatMapMerge {
         if (isLoggedIn) {
-            shopService.setCustomerCart(it.objectId)
+            cartService.setCustomerCart(it.objectId)
         } else {
             flowOf(it)
         }
     }.onEach {
         if (!isLoggedIn) storage.setCartId(it.objectId)
     }.flatMapMerge {
-        shopService.addProduct(it.objectId, product.id, product.qty)
+        cartService.addProduct(it.objectId, product.id, product.qty)
     }).onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
@@ -39,8 +39,8 @@ internal fun CartStore.updateProduct(product: Product) {
                 isLoading = false
             )
         }
-        setEffect(CartEffect.ProductSetLoading(product, false))
+        productSetLoading(product, false)
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        sharedDataService.cartDidLoad(products)
     }.launchIn(scope)
 }

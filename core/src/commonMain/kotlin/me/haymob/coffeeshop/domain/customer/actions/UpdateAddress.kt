@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.launchIn
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.flow.onResult
 
-fun CustomerStore.updateAddress(addressId: String, firstName: String, lastName: String, city: String, street: String, postcode: String) {
+internal fun CustomerStore.updateAddress(addressId: String, firstName: String, lastName: String, city: String, street: String, postcode: String) {
     setState { copy(isLoading = true) }
-    shopService.updateAddress(
+    customerService.updateAddress(
         addressId,
         firstName,
         lastName,

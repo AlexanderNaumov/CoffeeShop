@@ -8,7 +8,7 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class OrderDetailUIStore(
+class OrderDetailUIStore internal constructor(
     internal val cartStore: CartStore,
     customerStore: CustomerStore,
     orderId: String

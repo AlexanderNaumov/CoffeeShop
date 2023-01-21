@@ -10,7 +10,7 @@ internal fun CartStore.loadCart() {
     val cartId = currentState.cart?.id ?: storage.cartId() ?: return
 
     setState { copy(isLoading = true) }
-    shopService.loadCart(cartId).onResult { result ->
+    cartService.loadCart(cartId).onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(
@@ -19,7 +19,7 @@ internal fun CartStore.loadCart() {
             )
         }
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        sharedDataService.cartDidLoad(products)
         if (result.isFailure) {
             storage.removeCartId()
         }

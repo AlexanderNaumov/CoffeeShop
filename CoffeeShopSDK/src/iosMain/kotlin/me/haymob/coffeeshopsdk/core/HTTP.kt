@@ -5,14 +5,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 
-private fun newSessionConfig() = NSURLSessionConfiguration.defaultSessionConfiguration.apply {
+private val sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration.apply {
     setHTTPShouldSetCookies(false)
     val version = NSBundle.mainBundle.infoDictionary?.get("CFBundleShortVersionString") ?: "undefined"
     HTTPAdditionalHeaders = mapOf("User-Agent" to "NespressoApp (iOS/$version)")
 }
-
-private val sessionConfig = newSessionConfig()
-
 internal actual fun http(
     type: HTTPType,
     url: String,
@@ -22,10 +19,11 @@ internal actual fun http(
     path: String,
     body: String?,
     isLoggingEnabled: Boolean
-) = _http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled)
+): Flow<String> {
+    return http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled)
+}
 
-
-private fun _http(
+private fun http(
     type: HTTPType,
     url: String,
     appId: String,
@@ -46,14 +44,14 @@ private fun _http(
     )
 
     val request = when (type) {
-        is GraphQL -> {
+        is HTTPType.GraphQL -> {
             if (isLoggingEnabled) println("request: ${type.gql.queryString()}")
             URLRequest("$_url/graphql/").apply {
                 HTTPMethod = "POST"
                 HTTPBody = NSString.create(string = type.gql.jsonString()).dataUsingEncoding(NSUTF8StringEncoding)
             }
         }
-        is Rest -> {
+        is HTTPType.Rest -> {
             if (isLoggingEnabled) println("request: $path")
             URLRequest("$_url/$path").apply {
                 HTTPMethod = "${type.method}".uppercase()
@@ -80,7 +78,7 @@ private fun _http(
                     if (listOf(53, -1003, -1005, -1009, -9805, -999).contains(error.code.toInt())) {
                         if (numberOfConnection < 5) {
                             launch {
-                                _http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled,numberOfConnection + 1).collect(::trySend)
+                                http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled,numberOfConnection + 1).collect(::trySend)
                             }
                         } else {
                             close(Exception("connection_failed"))

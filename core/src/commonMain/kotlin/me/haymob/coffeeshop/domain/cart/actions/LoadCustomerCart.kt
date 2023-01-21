@@ -6,9 +6,9 @@ import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
 
-fun CartStore.loadCustomerCart() {
+internal fun CartStore.loadCustomerCart() {
     setState { copy(isLoading = true) }
-    shopService.loadCustomerCart().onResult { result ->
+    cartService.loadCustomerCart().onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
             copy(
@@ -17,6 +17,6 @@ fun CartStore.loadCustomerCart() {
             )
         }
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        sharedDataService.cartDidLoad(products)
     }.launchIn(scope)
 }

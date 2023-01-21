@@ -4,7 +4,7 @@ import me.haymob.coffeeshop.domain.services.*
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
-import me.haymob.coffeeshop.domain.AppStore
+import me.haymob.coffeeshop.domain.App
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.cart.checkout.CheckoutUIStore
@@ -24,13 +24,17 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.*
 
 val coreModule = module {
-    singleOf(::ShopService)
+    singleOf(::SDKService)
     singleOf(::AppStorage)
     singleOf(::CatalogStore)
     singleOf(::CartStore)
-    singleOf(::AppStore)
+    singleOf(::App)
     singleOf(::CustomerStore)
     singleOf(::FieldsService)
+    singleOf(::SharedDataService)
+    singleOf(::CatalogService)
+    singleOf(::CustomerService)
+    singleOf(::CartService)
     factoryOf(::CatalogUIStore)
     factoryOf(::CartUIStore)
     factoryOf(::ProductDetailUIStore)

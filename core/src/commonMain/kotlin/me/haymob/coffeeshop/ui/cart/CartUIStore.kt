@@ -8,7 +8,7 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class CartUIStore(
+class CartUIStore internal constructor(
     internal val cartStore: CartStore,
     customerStore: CustomerStore
 ): Store<CartUIState, Unit>(CartUIState()) {

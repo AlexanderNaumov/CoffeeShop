@@ -1,18 +1,21 @@
-@file:JvmName("HttpAndroid")
-
 package me.haymob.coffeeshopsdk.core
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.take
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.internal.EMPTY_REQUEST
-import java.io.*
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 internal actual fun http(
@@ -40,25 +43,25 @@ internal actual fun http(
 
     return callbackFlow {
         val request = when (type) {
-            is GraphQL -> {
+            is HTTPType.GraphQL -> {
                 if (isLoggingEnabled) println("request: ${type.gql.queryString()}")
                 requestBuilder
                     .url("$_url/graphql/")
                     .post(type.gql.jsonString().toRequestBody(mediaType))
             }
-            is Rest -> {
+            is HTTPType.Rest -> {
                 if (isLoggingEnabled) println("request: $path")
                 requestBuilder
                     .url("$_url/$path")
                     .apply {
-                    val requestBody = body?.toRequestBody(mediaType) ?: EMPTY_REQUEST
-                    when (type.method) {
-                        HTTPMethod.Get -> Unit
-                        HTTPMethod.Post -> post(requestBody)
-                        HTTPMethod.Put -> put(requestBody)
-                        HTTPMethod.Delete -> delete(requestBody)
+                        val requestBody = body?.toRequestBody(mediaType) ?: EMPTY_REQUEST
+                        when (type.method) {
+                            HTTPMethod.Get -> Unit
+                            HTTPMethod.Post -> post(requestBody)
+                            HTTPMethod.Put -> put(requestBody)
+                            HTTPMethod.Delete -> delete(requestBody)
+                        }
                     }
-                }
             }
         }.build()
 

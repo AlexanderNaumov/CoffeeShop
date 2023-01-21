@@ -5,9 +5,9 @@ import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.flow.onResult
 
-fun CustomerStore.logout() {
+internal fun CustomerStore.logout() {
     setState { copy(isLoading = true) }
-    shopService.logout().onResult {
+    customerService.logout().onResult {
         setState {
             copy(
                 customer = null,
@@ -16,8 +16,8 @@ fun CustomerStore.logout() {
             )
         }
         storage.removeCustomerToken()
-        shopService.removeSessionToken()
-        setEffect(CustomerEffect.LoggedOut)
-        setEffect(CustomerEffect.DidLoadWishlist(emptyList()))
+        sdkService.removeSessionToken()
+        sharedDataService.customerAuth(false)
+        sharedDataService.wishlistDidLoad(emptyList())
     }.launchIn(scope)
 }

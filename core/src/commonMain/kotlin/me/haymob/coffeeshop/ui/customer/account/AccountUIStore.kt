@@ -10,7 +10,7 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class AccountUIStore(
+class AccountUIStore internal constructor(
     internal val customerStore: CustomerStore,
     internal val fieldsService: FieldsService
 ): Store<AccountUIState, AccountUIEffect>(AccountUIState()) {

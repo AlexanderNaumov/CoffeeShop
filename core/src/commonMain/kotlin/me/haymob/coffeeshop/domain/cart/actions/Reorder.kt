@@ -8,10 +8,10 @@ import me.haymob.coffeeshop.entities.Order
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CartMapper
 
-fun CartStore.reorder(order: Order) {
+internal fun CartStore.reorder(order: Order) {
     setState { copy(isLoading = true) }
-    shopService.reorder(order.id).flatMapMerge {
-        shopService.loadCustomerCart()
+    cartService.reorder(order.id).flatMapMerge {
+        cartService.loadCustomerCart()
     }.onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
@@ -21,6 +21,6 @@ fun CartStore.reorder(order: Order) {
             )
         }
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        sharedDataService.cartDidLoad(products)
     }.launchIn(scope)
 }

@@ -10,7 +10,7 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class CheckoutUIStore(
+class CheckoutUIStore internal constructor(
     internal val cartStore: CartStore,
     customerStore: CustomerStore
 ): Store<CheckoutUIState, CheckoutUIEffect>(CheckoutUIState()) {

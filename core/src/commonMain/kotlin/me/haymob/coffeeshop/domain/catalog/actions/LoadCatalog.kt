@@ -1,16 +1,15 @@
 package me.haymob.coffeeshop.domain.catalog.actions
 
 import kotlinx.coroutines.flow.*
-import me.haymob.coffeeshop.domain.catalog.CatalogEffect
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.flow.onResult
 import me.haymob.coffeeshop.mappers.CategoryMapper
 import me.haymob.coffeeshop.mappers.ProductMapper
 
-fun CatalogStore.loadCatalog() {
+internal fun CatalogStore.loadCatalog() {
     setState { copy(isLoading = true) }
-    shopService.categories().flatMapMerge { categories ->
-        shopService.products(categories.map { it.objectId }).map { products ->
+    catalogService.categories().flatMapMerge { categories ->
+        catalogService.products(categories.map { it.objectId }).map { products ->
             categories.map { category ->
                 CategoryMapper.categoryFromDto(category).copy(
                     products = products.filter { product ->
@@ -26,6 +25,6 @@ fun CatalogStore.loadCatalog() {
                 isLoading = false
             )
         }
-        setEffect(CatalogEffect.DidLoad)
+        sharedDataService.catalogDidLoad()
     }.launchIn(scope)
 }

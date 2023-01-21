@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import me.haymob.coffeeshop.coreInit
 import me.haymob.coffeeshop.app
-import me.haymob.coffeeshop.domain.AppStore
+import me.haymob.coffeeshop.domain.App
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,8 +37,8 @@ class MainActivity: ComponentActivity() {
             isCreate = true
 
             coreInit()
-            val store = app.koin.get<AppStore>()
-            store.load()
+            val app = app.koin.get<App>()
+            app.load()
         }
 
         setContent {

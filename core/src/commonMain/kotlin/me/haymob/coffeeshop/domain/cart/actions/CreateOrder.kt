@@ -6,17 +6,21 @@ import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.customer.CustomerEffect
 import me.haymob.coffeeshop.flow.onResult
 
-fun CartStore.createOrder(paymentMethodId: String, shippingMethodId: String) {
+internal fun CartStore.createOrder(paymentMethodId: String, shippingMethodId: String) {
     val cartId = currentState.cart?.id ?: return
 
     setState { copy(isLoading = true) }
 
-    shopService.createOrder(cartId, paymentMethodId, shippingMethodId).onResult { result ->
+    cartService.createOrder(cartId, paymentMethodId, shippingMethodId).onResult { result ->
         setState { copy(isLoading = false) }
 
         when {
             result.isFailure -> setEffect(CartEffect.Error(result.exceptionOrNull()?.message ?: "unknown error"))
-            result.isSuccess -> setEffect(CartEffect.OrderSuccess(result.getOrNull() ?: "null"))
+            result.isSuccess -> {
+                loadCustomerCart()
+                sharedDataService.orderSuccess()
+                setEffect(CartEffect.OrderSuccess(result.getOrNull() ?: "null"))
+            }
         }
 
     }.launchIn(scope)

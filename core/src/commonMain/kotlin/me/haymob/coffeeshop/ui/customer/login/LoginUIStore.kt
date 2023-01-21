@@ -9,7 +9,7 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class LoginUIStore(
+class LoginUIStore internal constructor(
     internal val customerStore: CustomerStore,
     internal val fieldsService: FieldsService
 ): Store<LoginUIState, LoginUIEffect>(LoginUIState()) {

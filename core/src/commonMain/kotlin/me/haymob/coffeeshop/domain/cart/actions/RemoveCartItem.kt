@@ -13,11 +13,11 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
     }
 
     items.forEach {
-        setEffect(CartEffect.ProductSetLoading(it.product, true))
+        productSetLoading(it.product, true)
     }
 
     items.asFlow().flatMapMerge {
-        shopService.removeItem(it.id)
+        cartService.removeItem(it.id)
     }.onResult { result ->
         val newCart = result.getOrNull()?.let(CartMapper::cartFromDto)
         setState {
@@ -28,10 +28,10 @@ internal fun CartStore.removeCartItems(items: List<Cart.Item>) {
         }
 
         items.forEach {
-            setEffect(CartEffect.ProductSetLoading(it.product, false))
+            productSetLoading(it.product, false)
         }
 
         val products = newCart?.items?.map { it.product } ?: emptyList()
-        setEffect(CartEffect.DidLoad(products))
+        sharedDataService.cartDidLoad(products)
     }.launchIn(scope)
 }

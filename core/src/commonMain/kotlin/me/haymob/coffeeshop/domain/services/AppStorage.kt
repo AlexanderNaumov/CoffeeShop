@@ -5,7 +5,7 @@ import me.haymob.preferences.Preferences
 private const val CART_ID_KEY = "cart_id"
 private const val CUSTOMER_TOKEN_KEY = "customer_token"
 
-class AppStorage {
+internal class AppStorage {
 
     fun setCartId(id: String) {
         Preferences.setString(CART_ID_KEY, id)

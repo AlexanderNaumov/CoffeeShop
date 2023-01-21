@@ -10,7 +10,7 @@ import me.haymob.coffeeshop.store.Store
 import me.haymob.multiplatformannotations._JsExport
 
 @_JsExport
-class EditAddressUIStore(
+class EditAddressUIStore internal constructor(
     internal val customerStore: CustomerStore,
     internal val fieldsService: FieldsService,
     internal val addressId: String

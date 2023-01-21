@@ -3,7 +3,7 @@ package me.haymob.coffeeshop.domain.services
 import me.haymob.coffeeshop.entities.Field
 import me.haymob.coffeeshop.entities.FieldType
 
-class FieldsService {
+internal class FieldsService {
     fun validateFields(fields: List<Field>) = fields.map { field ->
         val error = when {
             field.type != FieldType.NewPassword
