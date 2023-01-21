@@ -24,7 +24,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.*
 
 val coreModule = module {
-    singleOf(::SDKService)
+    singleOf(::SessionTokenService)
     singleOf(::AppStorage)
     singleOf(::CatalogStore)
     singleOf(::CartStore)

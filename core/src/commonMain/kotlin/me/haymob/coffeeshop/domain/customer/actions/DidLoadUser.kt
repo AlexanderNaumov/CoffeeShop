@@ -48,7 +48,7 @@ internal fun CustomerStore.didLoadUserViewer(result: Result<UserViewer>) {
         val token = viewer!!.sessionToken
         if (token.isNotEmpty()) {
             storage.setCustomerToken(token)
-            sdkService.setSessionToken(token)
+            sessionTokenService.setSessionToken(token)
         }
     }
     if (result.isFailure) {

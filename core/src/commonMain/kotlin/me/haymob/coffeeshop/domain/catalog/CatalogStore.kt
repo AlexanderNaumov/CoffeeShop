@@ -8,7 +8,6 @@ import me.haymob.coffeeshop.domain.catalog.actions.productsQtyUpdate
 import me.haymob.coffeeshop.domain.services.CatalogService
 import me.haymob.coffeeshop.domain.services.SharedDataEffect
 import me.haymob.coffeeshop.domain.services.SharedDataService
-import me.haymob.coffeeshop.domain.services.SDKService
 import me.haymob.coffeeshop.store.Store
 
 internal class CatalogStore(

@@ -6,7 +6,6 @@ import me.haymob.coffeeshop.domain.cart.actions.removeCart
 import me.haymob.coffeeshop.domain.cart.actions.setCustomerCart
 import me.haymob.coffeeshop.domain.services.*
 import me.haymob.coffeeshop.domain.services.AppStorage
-import me.haymob.coffeeshop.domain.services.SDKService
 import me.haymob.coffeeshop.domain.services.SharedDataEffect
 import me.haymob.coffeeshop.domain.services.SharedDataService
 import me.haymob.coffeeshop.store.Store

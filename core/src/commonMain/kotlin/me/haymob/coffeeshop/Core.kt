@@ -5,7 +5,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import me.haymob.coffeeshopsdk.di.sdkModule
 import me.haymob.coffeeshop.di.coreModule
-import me.haymob.coffeeshopsdk.ConfigController
+import me.haymob.coffeeshopsdk.CoffeeShopSDK
 import me.haymob.coffeeshopsdk.services.ConfigState
 
 lateinit var app: KoinApplication
@@ -19,9 +19,9 @@ fun coreInit() {
     }
 
     val storage = app.koin.get<AppStorage>()
-    val config = app.koin.get<ConfigController>()
+    val sdk = app.koin.get<CoffeeShopSDK>()
 
-    config.config(ConfigState(
+    sdk.config(ConfigState(
         "http://vm71618.haymob.serv-dns.ru:1337/graphql",
         "lrfQ9bQKJDpFFVffvfZN",
         "2MQDMG5ett10fdzOvDWUp46hHRhd5w",

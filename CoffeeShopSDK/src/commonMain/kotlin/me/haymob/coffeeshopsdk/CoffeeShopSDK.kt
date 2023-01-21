@@ -3,7 +3,7 @@ package me.haymob.coffeeshopsdk
 import me.haymob.coffeeshopsdk.services.ConfigService
 import me.haymob.coffeeshopsdk.services.ConfigState
 
-class ConfigController internal constructor(
+class CoffeeShopSDK internal constructor(
     private val config: ConfigService
 ) {
     fun config(state: ConfigState) {
