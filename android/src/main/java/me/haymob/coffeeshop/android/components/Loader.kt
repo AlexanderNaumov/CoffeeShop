@@ -10,7 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun Loader(modifier: Modifier = Modifier, color: Color = Color.White, backgroundColor: Color = Color.Black.copy(alpha = 0.1f)) {
+fun Loader(
+    modifier: Modifier = Modifier,
+    color: Color = Color.White,
+    backgroundColor: Color = Color.Black.copy(alpha = 0.1f)
+) {
     Column(
         modifier = modifier.background(backgroundColor),
         verticalArrangement = Arrangement.Center,

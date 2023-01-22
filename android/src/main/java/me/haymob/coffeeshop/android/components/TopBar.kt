@@ -14,21 +14,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.sp
 
 sealed class TopBarNavigationType {
-    class Back(val onAction: () -> Unit): TopBarNavigationType()
-    object None: TopBarNavigationType()
+    class Back(val onAction: () -> Unit) : TopBarNavigationType()
+    object None : TopBarNavigationType()
 }
 
 sealed class TopBarActionType {
-    class DropdownMenu(val items: List<TopBarActionItem>): TopBarActionType()
-    class Button(val image: ImageVector, val onAction: () -> Unit): TopBarActionType()
-    object None: TopBarActionType()
+    class DropdownMenu(val items: List<TopBarActionItem>) : TopBarActionType()
+    class Button(val image: ImageVector, val onAction: () -> Unit) : TopBarActionType()
+    object None : TopBarActionType()
 }
 
 class TopBarActionItem(
     val title: String,
     val onAction: () -> Unit
 )
-
 
 @Composable
 fun TopBar(

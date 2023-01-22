@@ -4,16 +4,15 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 
 @Composable
-fun ErrorAlert(navController: NavHostController, message: String) {
+fun CheckoutSuccessAlert(orderId: String, onAction: () -> Unit) {
     AlertDialog(
-        onDismissRequest = { navController.popBackStack() },
-        title = { Text("Error") },
-        text = { Text(message) },
+        onDismissRequest = onAction,
+        title = { Text("Success") },
+        text = { Text("Order ID: $orderId)") },
         confirmButton = {
-            Button(onClick = { navController.popBackStack() }) {
+            Button(onClick = onAction) {
                 Text("OK")
             }
         }

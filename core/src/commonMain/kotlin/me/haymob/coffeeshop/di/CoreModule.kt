@@ -4,7 +4,6 @@ import me.haymob.coffeeshop.domain.services.*
 import me.haymob.coffeeshop.domain.catalog.CatalogStore
 import me.haymob.coffeeshop.domain.cart.CartStore
 import me.haymob.coffeeshop.domain.customer.CustomerStore
-import me.haymob.coffeeshop.domain.App
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore
 import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.cart.checkout.CheckoutUIStore
@@ -28,7 +27,6 @@ val coreModule = module {
     singleOf(::AppStorage)
     singleOf(::CatalogStore)
     singleOf(::CartStore)
-    singleOf(::App)
     singleOf(::CustomerStore)
     singleOf(::FieldsService)
     singleOf(::SharedDataService)

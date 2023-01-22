@@ -5,6 +5,13 @@ import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import me.haymob.coffeeshopsdk.di.sdkModule
 import me.haymob.coffeeshop.di.coreModule
+import me.haymob.coffeeshop.domain.cart.CartStore
+import me.haymob.coffeeshop.domain.cart.actions.loadCart
+import me.haymob.coffeeshop.domain.cart.actions.loadCustomerCart
+import me.haymob.coffeeshop.domain.catalog.CatalogStore
+import me.haymob.coffeeshop.domain.catalog.actions.loadCatalog
+import me.haymob.coffeeshop.domain.customer.CustomerStore
+import me.haymob.coffeeshop.domain.customer.actions.loadCustomer
 import me.haymob.coffeeshopsdk.CoffeeShopSDK
 import me.haymob.coffeeshopsdk.services.ConfigState
 
@@ -28,4 +35,18 @@ fun coreInit() {
         storage.customerToken(),
         false
     ))
+}
+
+fun startApp() {
+    val cartStore = app.koin.get<CartStore>()
+    val catalogStore = app.koin.get<CatalogStore>()
+    val customerStore = app.koin.get<CustomerStore>()
+
+    catalogStore.loadCatalog()
+    if (customerStore.currentState.isLoggedIn) {
+        cartStore.loadCustomerCart()
+    } else {
+        cartStore.loadCart()
+    }
+    customerStore.loadCustomer()
 }

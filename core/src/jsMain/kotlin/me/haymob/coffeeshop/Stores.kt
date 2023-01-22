@@ -1,6 +1,5 @@
 package me.haymob.coffeeshop
 
-import me.haymob.coffeeshop.domain.App
 import me.haymob.coffeeshop.ui.cart.CartUIStore
 import me.haymob.coffeeshop.ui.cart.checkout.CheckoutUIStore
 import me.haymob.coffeeshop.ui.catalog.CatalogUIStore

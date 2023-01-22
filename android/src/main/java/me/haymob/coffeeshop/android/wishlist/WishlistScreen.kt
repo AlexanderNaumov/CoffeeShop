@@ -12,70 +12,71 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import me.haymob.coffeeshop.android.Porcelain
 import me.haymob.coffeeshop.android.components.*
 import me.haymob.coffeeshop.android.navigation.NavigationItem
-import me.haymob.coffeeshop.android.navigation.Navigator
+import me.haymob.coffeeshop.app
 import me.haymob.coffeeshop.ui.customer.wishlist.WishlistUIStore
 import me.haymob.coffeeshop.ui.customer.wishlist.actions.decrementProduct
 import me.haymob.coffeeshop.ui.customer.wishlist.actions.incrementProduct
 import me.haymob.coffeeshop.ui.customer.wishlist.actions.refreshWishlist
 import me.haymob.coffeeshop.ui.customer.wishlist.actions.removeProductFromWishlist
 
-class WishlistScreen(
-    val navigator: Navigator,
-    val store: WishlistUIStore
-) {
-    @ExperimentalMaterialApi
-    @Composable
-    fun Body() {
-        val state = store.state.collectAsState().value
-
-        Scaffold(
-            topBar = { TopBar("Wishlist".uppercase()) },
-            content = { _ ->
-                if (state.wishlist.isNotEmpty()) {
-                    SwipeRefresh(
-                        state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-                        onRefresh = { store.refreshWishlist() }
-                    ) {
-                        LazyColumn(Modifier.fillMaxSize()) {
-                            items(items = state.wishlist, { it.id }) { product ->
-                                Box(Modifier.fillMaxSize()) {
-                                    SwipeToDelete(onDelete = { store.removeProductFromWishlist(product) }) {
-                                        Row(
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            modifier = Modifier
-                                                .background(Color.White)
-                                                .padding(start = 15.dp)
-                                                .clickable { navigator.navigate(NavigationItem.ProductDetail.route(product.id)) }
-                                        ) {
-                                            ProductImage(
-                                                product.thumbnail,
-                                                Modifier.size(50.dp, 50.dp)
-                                            )
-                                            ProductInfoCell(
-                                                product,
-                                                inc = { store.incrementProduct(product) },
-                                                dec = { store.decrementProduct(product) }
+@ExperimentalMaterialApi
+fun wishlistScreen(
+    navController: NavHostController,
+    store: WishlistUIStore = app.koin.get()
+): @Composable () -> Unit = {
+    val state = store.state.collectAsState().value
+    Scaffold(
+        topBar = { TopBar("Wishlist".uppercase()) },
+        backgroundColor = Color.Porcelain
+    ) { _ ->
+        if (state.wishlist.isNotEmpty()) {
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
+                onRefresh = { store.refreshWishlist() }
+            ) {
+                LazyColumn(Modifier.fillMaxSize()) {
+                    items(items = state.wishlist, { it.id }) { product ->
+                        Box(Modifier.fillMaxSize()) {
+                            SwipeToDelete(onDelete = { store.removeProductFromWishlist(product) }) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .background(Color.White)
+                                        .padding(start = 15.dp)
+                                        .clickable {
+                                            navController.navigate(
+                                                NavigationItem.ProductDetail.route(
+                                                    product.id
+                                                )
                                             )
                                         }
-                                    }
-
-                                    if (product.isLoading) Loader(Modifier.matchParentSize())
+                                ) {
+                                    ProductImage(
+                                        product.thumbnail,
+                                        Modifier.size(50.dp, 50.dp)
+                                    )
+                                    ProductInfoCell(
+                                        product,
+                                        inc = { store.incrementProduct(product) },
+                                        dec = { store.decrementProduct(product) }
+                                    )
                                 }
-                                Divider()
                             }
+
+                            if (product.isLoading) Loader(Modifier.matchParentSize())
                         }
+                        Divider()
                     }
-                } else {
-                    EmptyList("Empty Wishlist")
                 }
-            },
-            backgroundColor = Color.Porcelain
-        )
+            }
+        } else {
+            EmptyList("Empty Wishlist")
+        }
     }
 }
