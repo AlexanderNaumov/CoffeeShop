@@ -1,28 +1,26 @@
 import SwiftUI
+import Router
 import core
 
-struct OrderListRoute: SwiftUIRoute {
-    var body: some View {
-        OrderListView()
+struct OrderListView: View {
+    @EnvironmentObject private var navigator: Navigator
+    private let store: OrderListUIStore
+    @UIState private var state: OrderListUIState
+    
+    init(store: OrderListUIStore = getStore()) {
+        self.store = store
+        state = store.currentState
     }
-    var title: String? {
-        "Orders".uppercased()
-    }
-}
-
-private struct OrderListView: View {
-    @Store private var store: OrderListUIStore
-    @EnvironmentObject private var router: Router
     
     var body: some View {
-        let orders = store.currentState.orders.sorted {
+        let orders = state.orders.sorted {
             guard let date1 = $0.date, let date2 = $1.date else { return false }
             return date1 > date2
         }
         return List(orders) { order in
             HStack {
                 Button {
-                    router.open(OrderDetailRoute(orderId: order.id))
+                    navigator.navigate("\(order.id)")
                 } label: {
                     HStack {
                         Text("#")
@@ -40,9 +38,11 @@ private struct OrderListView: View {
                 Image("next")
             }
         }
-        .pullToRefresh(isShowing: store.currentState.isRefreshing) {
+        .pullToRefresh(isShowing: state.isRefreshing) {
             store.refreshOrders()
         }
         .listStyle(.insetGrouped)
+        .navigationTitle("Orders".uppercased())
+        .bind(store, state: $state)
     }
 }

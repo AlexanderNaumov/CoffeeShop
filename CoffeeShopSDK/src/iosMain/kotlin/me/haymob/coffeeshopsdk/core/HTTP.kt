@@ -19,11 +19,9 @@ internal actual fun http(
     path: String,
     body: String?,
     isLoggingEnabled: Boolean
-): Flow<String> {
-    return http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled)
-}
+) = _http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled)
 
-private fun http(
+private fun _http(
     type: HTTPType,
     url: String,
     appId: String,
@@ -78,7 +76,7 @@ private fun http(
                     if (listOf(53, -1003, -1005, -1009, -9805, -999).contains(error.code.toInt())) {
                         if (numberOfConnection < 5) {
                             launch {
-                                http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled,numberOfConnection + 1).collect(::trySend)
+                                _http(type, url, appId, masterKey, sessionToken, path, body, isLoggingEnabled,numberOfConnection + 1).collect(::trySend)
                             }
                         } else {
                             close(Exception("connection_failed"))

@@ -8,6 +8,15 @@
         "revision" : "f2616860a41f9d9932da412a8978fec79c06fe24",
         "version" : "0.1.4"
       }
+    },
+    {
+      "identity" : "swiftuirouter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AlexanderNaumov/SwiftUIRouter",
+      "state" : {
+        "revision" : "9ce01c0337fbed2e99d68b3abda001b6bbaacff1",
+        "version" : "0.0.3"
+      }
     }
   ],
   "version" : 2

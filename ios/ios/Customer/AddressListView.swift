@@ -1,30 +1,28 @@
 import SwiftUI
+import Router
 import core
 
-struct AddressListRoute: SwiftUIRoute {
-    var body: some View {
-        AddressListView()
+struct AddressListView: View {
+    @EnvironmentObject private var navigator: Navigator
+    private let store: AddressListUIStore
+    @UIState private var state: AddressListUIState
+    
+    init(store: AddressListUIStore = getStore()) {
+        self.store = store
+        state = store.currentState
     }
-    var title: String? {
-        "Address List".uppercased()
-    }
-}
-
-private struct AddressListView: View {
-    @Store private var store: AddressListUIStore
-    @EnvironmentObject private var router: Router
     
     var body: some View {
         List {
             Section(header: HStack {
                 Button("New Address") {
-                    router.open(CreateAddressRoute())
+                    navigator.navigate("create")
                 }.tint(.blue)
             }, content: {
-                ForEach(store.currentState.addresses) { address in
+                ForEach(state.addresses) { address in
                     HStack {
                         Button {
-                            router.open(EditAddresRoute(addressId: address.id))
+                            navigator.navigate("edit/\(address.id)")
                         } label: {
                             Text("\(address.firstName) \(address.lastName)\n\(address.city), \(address.street), \(address.postcode)")
                                 .font(.appRegular)
@@ -35,9 +33,11 @@ private struct AddressListView: View {
                 }
             })
         }
-        .pullToRefresh(isShowing: store.currentState.isRefreshing) {
+        .pullToRefresh(isShowing: state.isRefreshing) {
             store.refreshAddresses()
         }
+        .navigationBarTitle("Address List".uppercased())
         .listStyle(.insetGrouped)
+        .bind(store, state: $state)
     }
 }

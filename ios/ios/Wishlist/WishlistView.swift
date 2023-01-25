@@ -1,18 +1,25 @@
 import SwiftUI
+import Router
 import core
 
 struct WishlistView: View {
-    @EnvironmentObject private var router: Router
-    @Store private var store: WishlistUIStore
+    @EnvironmentObject private var navigator: Navigator
+    private let store: WishlistUIStore
+    @UIState private var state: WishlistUIState
+    
+    init(store: WishlistUIStore = getStore()) {
+        self.store = store
+        state = store.currentState
+    }
     
     var body: some View {
         Group {
-            if !store.currentState.wishlist.isEmpty {
+            if !state.wishlist.isEmpty {
                 List {
-                    ForEach(store.currentState.wishlist) { product in
+                    ForEach(state.wishlist) { product in
                         ZStack {
                             Button {
-                                router.open(ProductDetailRoute(productId: product.id))
+                                navigator.navigate("products/\(product.id)")
                             } label: {
                                 HStack {
                                     ProductImage(image: product.thumbnail)
@@ -38,17 +45,20 @@ struct WishlistView: View {
                         }
                     }.onDelete { index in
                         Array(index).forEach { i in
-                            let wishlist = store.currentState.wishlist
+                            let wishlist = state.wishlist
                             guard i < wishlist.count else { return }
                             store.removeProductFromWishlist(product: wishlist[i])
                         }
                     }
-                }.pullToRefresh(isShowing: store.currentState.isRefreshing) {
+                }
+                .pullToRefresh(isShowing: state.isRefreshing) {
                     store.refreshWishlist()
                 }
             } else {
                 EmptyView(text: "Empty Wishlist")
             }
-        }.navigationTitle("Wishlist".uppercased())
+        }
+        .navigationTitle("Wishlist".uppercased())
+        .bind(store, state: $state)
     }
 }

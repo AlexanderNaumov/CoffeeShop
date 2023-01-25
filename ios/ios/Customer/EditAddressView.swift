@@ -1,31 +1,15 @@
 import SwiftUI
+import Router
 import core
 
-struct EditAddresRoute: SwiftUIRoute {
-    let addressId: String
-    var body: some View {
-        EditAddresView(store: Store(wrappedValue: ios.inject(params: [addressId])))
-    }
-    var title: String? {
-        "Edit Address".uppercased()
-    }
-}
-
-private struct EditAddresView: View {
-    @Store var store: EditAddressUIStore
-    @EnvironmentObject private var router: Router
+struct EditAddresView: View {
+    @EnvironmentObject private var navigator: Navigator
+    private let store: EditAddressUIStore
+    @UIState private var state: EditAddressUIState
     
-    private func setEffect() {
-        store.onEffect { [weak router] effect in
-            switch effect {
-            case let error as EditAddressUIEffect.Error:
-                router?.open(AlertRoute(alert: Alert(title: "Error", message: error.message)))
-            case is EditAddressUIEffect.Successes:
-                router?.close()
-            default:
-                break
-            }
-        }
+    init(addressId: String) {
+        store = getStore(params: [addressId])
+        state = store.currentState
     }
     
     var body: some View {
@@ -33,7 +17,7 @@ private struct EditAddresView: View {
             ScrollView {
                 Spacer(minLength: 100)
                 VStack(spacing: 18) {
-                    ForEach(store.currentState.fields) { field in
+                    ForEach(state.fields) { field in
                         InputTextField(field: field) { value in
                             store.updateField(type: field.type, value: value)
                         }
@@ -47,12 +31,21 @@ private struct EditAddresView: View {
                 }
             }
             .background(Color.porcelain)
-            if store.currentState.isLoading {
+            if state.isLoading {
                 FullScreenLoader()
             }
         }
-        .onAppear {
-            setEffect()
+        .navigationTitle("Edit Address".uppercased())
+        .bind(store, state: $state)
+        .onEffect(store) { effect in
+            switch effect {
+            case let error as EditAddressUIEffect.Error:
+                navigator.navigate("/customer/error/\(error.message.toBase64())")
+            case is EditAddressUIEffect.Successes:
+                navigator.back()
+            default:
+                break
+            }
         }
     }
 }

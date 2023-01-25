@@ -30,12 +30,12 @@ private struct PullToRefresh<Target: UIView>: ViewModifier {
 }
 
 extension ScrollView {
-    func pullToRefresh(isShowing: Bool, onRefresh: @escaping () -> Void) -> some View {
+    @ViewBuilder func pullToRefresh(isShowing: Bool, onRefresh: @escaping () -> Void) -> some View {
         modifier(PullToRefresh<UIScrollView>(isShowing: isShowing, onRefresh: onRefresh))
     }
 }
 extension List {
-    func pullToRefresh(isShowing: Bool, onRefresh: @escaping () -> Void) -> some View {
+    @ViewBuilder func pullToRefresh(isShowing: Bool, onRefresh: @escaping () -> Void) -> some View {
         modifier(PullToRefresh<UITableView>(isShowing: isShowing, onRefresh: onRefresh))
     }
 }

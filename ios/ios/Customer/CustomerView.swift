@@ -1,38 +1,50 @@
 import SwiftUI
+import Router
 import core
 
 struct CustomerView: View {
-    @EnvironmentObject private var router: Router
-    @Store private var store: CustomerUIStore
+    @EnvironmentObject private var navigator: Navigator
+    private let store: CustomerUIStore
+    @UIState private var state: CustomerUIState
+    @UIState private var isPresentedLogoutAlert = false
+    
+    init(store: CustomerUIStore = getStore()) {
+        self.store = store
+        state = store.currentState
+    }
     
     var body: some View {
         Group {
-            if store.currentState.isLoggedIn {
+            if state.isLoggedIn {
                 ZStack {
                     List {
                         CustomerListCell("Account") {
-                            router.open(AccountRoute())
+                            navigator.navigate("account")
                         }
                         CustomerListCell("Addresses") {
-                            router.open(AddressListRoute())
+                            navigator.navigate("addresses")
                         }
                         CustomerListCell("Orders") {
-                            router.open(OrderListRoute())
+                            navigator.navigate("orders")
                         }
                     }
-                    if store.currentState.isLoading {
+                    if state.isLoading {
                         FullScreenLoader()
+                    }
+                }
+                .alert(isPresented: $isPresentedLogoutAlert) {
+                    LogoutAlert {
+                        store.logout()
                     }
                 }
             } else {
                 VStack(spacing: 20) {
                     Button("Login") {
-                        router.open(LoginRoute())
+                        navigator.navigate("login")
                     }
                     .tint(.blue)
-                    
                     Button("Register") {
-                        router.open(SignupRoute())
+                        navigator.navigate("signup")
                     }
                     .tint(.blue)
                 }
@@ -43,32 +55,12 @@ struct CustomerView: View {
         .tint(.blue)
         .navigationTitle("Customer".uppercased())
         .navigationBarItems(
-            leading: store.currentState.isLoggedIn ? AnyView(Button("Logout") {
-                router.open(AlertRoute(alert: logoutAlert {
-                    store.logout()
-                }))
-            }) : AnyView(EmptyView())
+            leading: state.isLoggedIn
+            ? AnyView(Button("Logout") {
+                isPresentedLogoutAlert = true
+            })
+            : AnyView(EmptyView())
         )
+        .bind(store, state: $state)
     }
-}
-
-private func CustomerListCell(_ title: String, tap: @escaping () -> Void) -> some View {
-    HStack {
-        Button {
-            tap()
-        } label: {
-            Text(title)
-        }.tint(.black)
-        Spacer()
-        Image("next")
-    }
-}
-
-private func logoutAlert(action: @escaping () -> Void) -> Alert {
-    Alert(
-        title: "Logout",
-        message: "Do you want to leave?",
-        primaryButton: .cancel(),
-        secondaryButton: .default("Logout", action: action)
-    )
 }

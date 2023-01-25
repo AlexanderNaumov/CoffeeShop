@@ -1,13 +1,20 @@
 import SwiftUI
+import Router
 import core
 
 struct CartView: View {
-    @EnvironmentObject private var router: Router
-    @Store private var store: CartUIStore
+    @EnvironmentObject private var navigator: Navigator
+    private let store: CartUIStore
+    @UIState private var state: CartUIState
+    
+    init(store: CartUIStore = getStore()) {
+        self.store = store
+        state = store.currentState
+    }
     
     var body: some View {
-        return Group {
-            if let cart = store.currentState.cart, !cart.items.isEmpty {
+        Group {
+            if let cart = state.cart, !cart.items.isEmpty {
                 VStack(spacing: 0) {
                     List {
                         Section(
@@ -15,7 +22,7 @@ struct CartView: View {
                                 Button {
                                     store.selectAllItems()
                                 } label: {
-                                    CheckmarkImage(store.currentState.isSelectedAllItems)
+                                    CheckmarkImage(state.isSelectedAllItems)
                                     Text("Select all")
                                 }
                                 Spacer()
@@ -27,13 +34,13 @@ struct CartView: View {
                                 ForEach(cart.items) { item in
                                     ZStack {
                                         Button {
-                                            router.open(ProductDetailRoute(productId: item.product.id))
+                                            navigator.navigate("products/\(item.product.id)")
                                         } label: {
                                             HStack {
                                                 Button {
                                                     store.selectCartItem(item: item)
                                                 } label: {
-                                                    CheckmarkImage(store.currentState.itemSelected(item: item))
+                                                    CheckmarkImage(state.itemSelected(item: item))
                                                 }
                                                 
                                                 ProductImage(image: item.product.thumbnail)
@@ -60,7 +67,7 @@ struct CartView: View {
                                 }
                             })
                     }
-                    .pullToRefresh(isShowing: store.currentState.isRefreshing) {
+                    .pullToRefresh(isShowing: state.isRefreshing) {
                         store.refresh()
                     }
                     .navigationTitle("Cart".uppercased())
@@ -75,20 +82,20 @@ struct CartView: View {
                         .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
                         .background(Color.porcelain)
                     }
-                    if store.currentState.isShowCheckoutButton {
+                    if state.isShowCheckoutButton {
                         LargeButton(
                             title: "Checkout",
-                            color: store.currentState.isActiveCheckoutButton ? .green : .black
+                            color: state.isActiveCheckoutButton ? .green : .black
                         ) {
-                            guard store.currentState.isActiveCheckoutButton else { return }
-                            router.open(CheckoutRoute())
+                            guard state.isActiveCheckoutButton else { return }
+                            navigator.navigate("checkout")
                         }
                     }
                 }
-                
             } else {
                 EmptyView(text: "Empty Cart")
             }
         }
+        .bind(store, state: $state)
     }
 }
