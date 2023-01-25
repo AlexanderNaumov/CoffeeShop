@@ -7,27 +7,23 @@ import { useParams } from "react-router-dom"
 import FullScreenLoader from "../components/FullScreenLoader"
 import OrderDetailHeader from "../components/OrderDetailHeader"
 import OrderProductCell from "../components/OrderProductCell"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
 
 type OpenCart = () => void
 
-export default (props: { openCart: OpenCart }) => <OrderDetail orderId={useParams().id as string} openCart={props.openCart} />
-
-class OrderDetail extends SComponent<OrderDetailUIStore, { orderId: string, openCart: OpenCart }> {
-    protected store
-    constructor(props: { orderId: string, openCart: OpenCart }) {
-        super(props)
-        this.store = coffeeshop.orderDetailUIStore(props.orderId)
-    }
-    render() {
-        return <OrderDetailView store={this.store} openCart={this.props.openCart} />
-    }
+export default (props: { openCart: OpenCart }) => {
+    const orderId = useParams().id as string
+    return <OrderDetail store={coffeeshop.orderDetailUIStore(orderId)} openCart={props.openCart} />
 }
 
-function OrderDetailView(props: { store: OrderDetailUIStore, openCart: OpenCart }) {
-    let { store, openCart } = props
-    let state = store.currentState
-    let order = state.order
+interface OrderDetailProps {
+    store: OrderDetailUIStore
+    openCart: OpenCart
+}
+
+function OrderDetail({ store, openCart }: OrderDetailProps) {
+    const state = useStoreState(store)
+    const order = state.order
 
     if (order == null) return <div></div>
 

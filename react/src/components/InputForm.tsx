@@ -3,9 +3,13 @@ import core from "../coffee-shop-core/CoffeeShop-core"
 import Field = core.me.haymob.coffeeshop.entities.Field
 import FieldType = core.me.haymob.coffeeshop.entities.FieldType
 
-export default function InputForm(props: {field: Field, onChange: (value: string) => void}) {
-    let { field, onChange } = props
-    let isPassword = field.type == FieldType.Password || field.type == FieldType.NewPassword
+interface InputFormProps {
+    field: Field
+    onChange: (value: string) => void
+}
+
+export default function InputForm({ field, onChange }: InputFormProps) {
+    const isPassword = field.type == FieldType.Password || field.type == FieldType.NewPassword
     return <Form.Group id={field.type.name}>
         <Form.ControlLabel>{field.type.name}</Form.ControlLabel>
         {

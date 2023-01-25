@@ -21,21 +21,27 @@ import Checkout from "./cart/Checkout"
 import OrderList from "./customer/OrderList"
 import OrderDetail from "./customer/OrderDetail"
 import Wishlist from "./customer/Wishlist"
-import NeedLogin from "./NeedLogin"
+import NeedLogin from "./components/NeedLogin"
+import useStoreState from "./hooks/use_store_state"
 
-export default function App() {
-    let navigate = useNavigate()
-    let [isOpenCart, setOpenCart] = useState(false)
-    let appStore = coffeeshop.appStore()
-    let isLoggedIn = appStore.loggedIn()
+export default () => <App store={coffeeshop.customerUIStore()} />
+
+interface AppProps {
+    store: coffeeshop.ui.customer.CustomerUIStore
+}
+
+function App({ store }: AppProps) {
+    const navigate = useNavigate()
+    const [isOpenCart, setOpenCart] = useState(false)
+    const state = useStoreState(store)
 
     useEffect(() => {
-        appStore.load()
+        coffeeshop.startApp()
     }, [])
 
 
-    let closeCart = () => setOpenCart(false)
-    let openCart = () => setOpenCart(true)
+    const closeCart = () => setOpenCart(false)
+    const openCart = () => setOpenCart(true)
 
     return <div>
         <Container>
@@ -57,34 +63,34 @@ export default function App() {
                     <Route path="/" element={<Catalog />} />
                     <Route path="/product/:id" element={<ProductDetail />} />
                     <Route path="/login" element={
-                        isLoggedIn ? <Navigate to="/" /> : <Login />
+                        state.isLoggedIn ? <Navigate to="/" /> : <Login />
                     } />
                     <Route path="/signup" element={
-                        isLoggedIn ? <Navigate to="/" /> : <Signup />
+                        state.isLoggedIn ? <Navigate to="/" /> : <Signup />
                     } />
                     <Route path="/account" element={
-                        isLoggedIn ? <Account /> : <NeedLogin />
+                        state.isLoggedIn ? <Account /> : <NeedLogin />
                     } />
                     <Route path="/addresses" element={
-                        isLoggedIn ? <AddressList /> : <NeedLogin />
+                        state.isLoggedIn ? <AddressList /> : <NeedLogin />
                     } />
                     <Route path="/addresses/create" element={
-                        isLoggedIn ? <CreateAddress /> : <NeedLogin />
+                        state.isLoggedIn ? <CreateAddress /> : <NeedLogin />
                     } />
                     <Route path="/addresses/:id" element={
-                        isLoggedIn ? <EditAddres /> : <NeedLogin />
+                        state.isLoggedIn ? <EditAddres /> : <NeedLogin />
                     } />
                     <Route path="/checkout" element={
-                        isLoggedIn ? <Checkout /> : <NeedLogin />
+                        state.isLoggedIn ? <Checkout /> : <NeedLogin />
                     } />
                     <Route path="/orders" element={
-                        isLoggedIn ? <OrderList /> : <NeedLogin />
+                        state.isLoggedIn ? <OrderList /> : <NeedLogin />
                     } />
                     <Route path="/orders/:id" element={
-                        isLoggedIn ? < OrderDetail openCart={openCart} /> : <NeedLogin />
+                        state.isLoggedIn ? < OrderDetail openCart={openCart} /> : <NeedLogin />
                     } />
                     <Route path="/wishlist" element={
-                        isLoggedIn ? <Wishlist /> : <NeedLogin />
+                        state.isLoggedIn ? <Wishlist /> : <NeedLogin />
                     } />
                 </Routes>
             </Content>

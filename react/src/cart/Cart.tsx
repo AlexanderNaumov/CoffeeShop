@@ -6,23 +6,22 @@ import { useNavigate } from "react-router-dom"
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import ProductLoader from "../components/ProductLoader"
 import Colors from "../Colors"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
 
 type CloseCart = () => void
 
-export default class Cart extends SComponent<CartUIStore, { closeCart: CloseCart }> {
-    protected store = coffeeshop.cartUIStore()
-    render() {
-        return <CartContent store={this.store} closeCart={this.props.closeCart} />
-    }
+export default (props: { closeCart: CloseCart }) => <Cart store={coffeeshop.cartUIStore()} closeCart={props.closeCart} />
+
+interface CartProps {
+    store: CartUIStore
+    closeCart: CloseCart
 }
 
-function CartContent(props: { store: CartUIStore, closeCart: CloseCart }) {
-    let { store, closeCart } = props
-    let state = store.currentState
-    let navigate = useNavigate()
+function Cart({ store, closeCart }: CartProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
 
-    let cart = store.currentState.cart
+    const cart = state.cart
 
     if (cart == null || cart.getItems().length == 0) return <div style={{ marginLeft: 50, marginTop: 8 }}>is empty</div>
 

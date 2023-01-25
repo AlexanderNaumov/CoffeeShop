@@ -14,6 +14,7 @@ import me.haymob.coffeeshop.domain.customer.CustomerStore
 import me.haymob.coffeeshop.domain.customer.actions.loadCustomer
 import me.haymob.coffeeshopsdk.CoffeeShopSDK
 import me.haymob.coffeeshopsdk.services.ConfigState
+import me.haymob.multiplatformannotations._JsExport
 
 lateinit var app: KoinApplication
 
@@ -37,6 +38,7 @@ fun coreInit() {
     ))
 }
 
+@_JsExport
 fun startApp() {
     val cartStore = app.koin.get<CartStore>()
     val catalogStore = app.koin.get<CatalogStore>()

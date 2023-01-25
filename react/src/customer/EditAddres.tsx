@@ -9,28 +9,25 @@ import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
+import useStoreEffect from "../hooks/use_store_effect"
 
-export default () => <EditAddres addressId={useParams().id as string} />
 
-class EditAddres extends SComponent<EditAddressUIStore, { addressId: string }> {
-    protected store
-    constructor(props: { addressId: string }) {
-        super(props)
-        this.store = coffeeshop.editAddressUIStore(props.addressId)
-    }
-    render() {
-        return <EditAddresView store={this.store} />
-    }
+export default () => {
+    const addressId = useParams().id as string
+    return < EditAddres store={coffeeshop.editAddressUIStore(addressId)} />
 }
 
-function EditAddresView(props: { store: EditAddressUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
-    let [error, setError] = useState<string>()
+interface EditAddresProps {
+    store: EditAddressUIStore
+}
 
-    store.onEffect(effect => {
+function EditAddres({ store }: EditAddresProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
+    const [error, setError] = useState<string>()
+
+    useStoreEffect(store, effect => {
         if (effect instanceof EditAddressUIEffect.Error) setError(effect.message)
         if (effect == EditAddressUIEffect.Successes) navigate("/addresses")
     })

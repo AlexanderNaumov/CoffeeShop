@@ -4,22 +4,20 @@ import { useNavigate } from "react-router-dom"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import CustomerUIStore = coffeeshop.ui.customer.CustomerUIStore
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
 
-export default class CustomerMenu extends SComponent<CustomerUIStore> {
-    protected store = coffeeshop.customerUIStore()
-    render() {
-        return <CustomerMenuContent store={this.store} />
-    }
+export default () => <CustomerMenu store={coffeeshop.customerUIStore()} />
+
+interface CustomerMenuProps {
+    store: CustomerUIStore
 }
 
-function CustomerMenuContent(props: { store: CustomerUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
-    let [logout, setLogout] = useState(false)
+function CustomerMenu({ store }: CustomerMenuProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
+    const [logout, setLogout] = useState(false)
 
-    let closeLogout = () => {
+    const closeLogout = () => {
         setLogout(false)
     }
     return state.isLoggedIn ?

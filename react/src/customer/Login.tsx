@@ -9,22 +9,21 @@ import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
+import useStoreEffect from "../hooks/use_store_effect"
 
-export default class Login extends SComponent<LoginUIStore> {
-    protected store = coffeeshop.loginUIStore()
-    render() {
-        return <LoginView store={this.store} />
-    }
+export default () => <Login store={coffeeshop.loginUIStore()} />
+
+interface LoginProps {
+    store: LoginUIStore
 }
 
-function LoginView(props: { store: LoginUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
-    let [error, setError] = useState<string>()
+function Login({ store }: LoginProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
+    const [error, setError] = useState<string>()
 
-    store.onEffect(effect => {
+    useStoreEffect(store, effect => {
         if (effect instanceof LoginUIEffect.Error) setError(effect.message)
         if (effect == LoginUIEffect.Successes) navigate("/")
     })

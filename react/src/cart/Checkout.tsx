@@ -1,4 +1,4 @@
-import { FlexboxGrid, List, Panel, Button, ButtonToolbar, Stack, Checkbox, Modal } from "rsuite"
+import { FlexboxGrid, List, Panel, Button, ButtonToolbar, Stack, Modal } from "rsuite"
 import "../core.extensions"
 import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
@@ -10,31 +10,31 @@ import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
 import OrderDetailHeader from "../components/OrderDetailHeader"
 import OrderProductCell from "../components/OrderProductCell"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
+import useStoreEffect from "../hooks/use_store_effect"
+import CheckoutCell from "../components/CheckoutCell"
 
-export default class Checkout extends SComponent<CheckoutUIStore> {
-    protected store = coffeeshop.checkoutUIStore()
-    render() {
-        return <CheckoutView store={this.store} />
-    }
+export default () => <Checkout store={coffeeshop.checkoutUIStore()} />
+
+interface CheckoutProps {
+    store: CheckoutUIStore
 }
 
-function CheckoutView(props: { store: CheckoutUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
+function Checkout({ store }: CheckoutProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
 
-    let [error, setError] = useState<string>()
-    let [success, setSuccess] = useState<string>()
+    const [error, setError] = useState<string>()
+    const [success, setSuccess] = useState<string>()
 
-    let cart = state.cart
+    const cart = state.cart
 
-    store.onEffect(effect => {
+    useStoreEffect(store, effect => {
         if (effect instanceof CheckoutUIEffect.OrderSuccess) setSuccess(effect.id)
         if (effect instanceof CheckoutUIEffect.Error) setError(effect.message)
     })
 
-    let closeSuccess = () => setSuccess(undefined)
+    const closeSuccess = () => setSuccess(undefined)
     return <div>
         <ErrorModal error={error} open={error != undefined} onClose={() => setError(undefined)} />
         <Modal open={success != undefined} onClose={closeSuccess}>
@@ -119,11 +119,4 @@ function CheckoutView(props: { store: CheckoutUIStore }) {
             </div> : <div></div>
         }
     </div>
-}
-
-function CheckoutCell(props: { title: string, checked: boolean, action: () => void }) {
-    let { title, checked, action } = props
-    return <List.Item>
-        <Checkbox checked={checked} onClick={action}>{title}</Checkbox>
-    </List.Item>
 }

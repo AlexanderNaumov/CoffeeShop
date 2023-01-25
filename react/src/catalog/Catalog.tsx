@@ -7,19 +7,17 @@ import coffeeshop = core.me.haymob.coffeeshop
 import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import ProductLoader from "../components/ProductLoader"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
 
-export default class Catalog extends SComponent<CatalogUIStore> {
-    protected store = coffeeshop.catalogUIStore()
-    render() {
-        return <CatalogView store={this.store} />
-    }
+export default () => <Catalog store={coffeeshop.catalogUIStore()} />
+
+interface CatalogProps {
+    store: CatalogUIStore
 }
 
-function CatalogView(props: { store: CatalogUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
+function Catalog({ store }: CatalogProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
 
     return <FlexboxGrid justify="center">
         <FlexboxGrid.Item style={{ width: 700 }}>

@@ -4,20 +4,18 @@ import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import OrderListUIStore = coffeeshop.ui.customer.order.OrderListUIStore
 import { useNavigate } from "react-router-dom"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
 
-export default class OrderList extends SComponent<OrderListUIStore> {
-    protected store = coffeeshop.orderListUIStore()
-    render() {
-        return <OrderListView store={this.store} />
-    }
+export default () => <OrderList store={coffeeshop.orderListUIStore()} />
+
+interface OrderListProps {
+    store: OrderListUIStore
 }
 
-function OrderListView(props: { store: OrderListUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
-    let orders = state.getOrders()
+function OrderList({ store }: OrderListProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
+    const orders = state.getOrders()
 
     return <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
         <FlexboxGrid.Item style={{ width: 500 }}>

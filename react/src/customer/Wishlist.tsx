@@ -7,20 +7,18 @@ import { useNavigate } from "react-router-dom"
 import ProductLoader from "../components/ProductLoader"
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import TrashIcon from "@rsuite/icons/Trash"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
 
-export default class Wishlist extends SComponent<WishlistUIStore> {
-    protected store = coffeeshop.wishlistUIStore()
-    render() {
-        return <WishlistView store={this.store} />
-    }
+export default () => <Wishlist store={coffeeshop.wishlistUIStore()} />
+
+interface WishlistProps {
+    store: WishlistUIStore
 }
 
-function WishlistView(props: { store: WishlistUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
-    let wishlist = state.getWishlist()
+function Wishlist({ store }: WishlistProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
+    const wishlist = state.getWishlist()
 
     return <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
         <FlexboxGrid.Item style={{ width: 500 }}>

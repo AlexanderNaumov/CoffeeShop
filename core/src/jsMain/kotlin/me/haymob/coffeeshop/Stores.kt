@@ -21,9 +21,6 @@ import org.koin.core.parameter.ParametersHolder
 fun catalogUIStore() = app.koin.get<CatalogUIStore>()
 
 @_JsExport
-fun appStore() = app.koin.get<App>()
-
-@_JsExport
 fun productDetailUIStore(productId: String) = app.koin.get<ProductDetailUIStore> {
     ParametersHolder(_values = mutableListOf(productId))
 }

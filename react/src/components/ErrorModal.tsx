@@ -1,7 +1,12 @@
 import { Modal } from "rsuite"
 
-export default function ErrorModal(props: { error: string | undefined, open: boolean, onClose: () => void }) {
-    let { error, open, onClose } = props
+interface ErrorModalProps {
+    error: string | undefined
+    open: boolean
+    onClose: () => void
+}
+
+export default function ErrorModal({ error, open, onClose }: ErrorModalProps) {
     return <Modal open={open} onClose={onClose}>
         <Modal.Header>
             <Modal.Title>Error</Modal.Title>

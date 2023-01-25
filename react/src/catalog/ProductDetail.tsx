@@ -9,38 +9,22 @@ import Divider from "../components/Divider"
 import ProductLoader from "../components/ProductLoader"
 import favorite from "../resources/favorite.svg"
 import favoriteFill from "../resources/favoriteFill.svg"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
+import ProductDetailInfoBlock from "../components/ProductDetailInfoBlock"
 
-export default () => <ProductDetail productId={useParams().id as string} />
-
-class ProductDetail extends SComponent<ProductDetailUIStore, { productId: string }> {
-    protected store
-
-    constructor(props: { productId: string }) {
-        super(props)
-        this.store = coffeeshop.productDetailUIStore(props.productId)
-    }
-
-    updateStore() {
-        let { productId } = this.props
-        if (this.store.currentState.product?.id != productId) {
-            this.store.destroy()
-            this.store = coffeeshop.productDetailUIStore(productId)
-            this.store.onState(() => this.setState({}))
-        }
-    }
-
-    render() {
-        this.updateStore()
-        return <ProductDetailView store={this.store} />
-    }
+export default () => {
+    const productId = useParams().id as string
+    return <ProductDetail store={coffeeshop.productDetailUIStore(productId)} />
 }
 
-function ProductDetailView(props: { store: ProductDetailUIStore }) {
-    let { store } = props
-    let state = store.currentState
+interface ProductDetailProps {
+    store: ProductDetailUIStore
+}
 
-    let product = state.product
+function ProductDetail({ store }: ProductDetailProps) {
+    const state = useStoreState(store)
+
+    const product = state.product
 
     if (product == null) return <div></div>
 
@@ -72,23 +56,13 @@ function ProductDetailView(props: { store: ProductDetailUIStore }) {
                 <ProductQtyButtons qty={product.qty} inc={() => store.incrementProduct()} dec={() => store.decrementProduct()} />
             </Stack>
             <Divider />
-            <InfoBlock title="Body" content={product.body.toString()} />
-            <InfoBlock title="Roast" content={product.roast.toString()} />
-            <InfoBlock title="Acidity" content={product.acidity.toString()} />
+            <ProductDetailInfoBlock title="Body" content={product.body.toString()} />
+            <ProductDetailInfoBlock title="Roast" content={product.roast.toString()} />
+            <ProductDetailInfoBlock title="Acidity" content={product.acidity.toString()} />
             <div style={{ background: "white", padding: 16, fontSize: 16 }}>{product.description}</div>
             {
                 product.isLoading && <ProductLoader />
             }
         </FlexboxGrid.Item>
     </FlexboxGrid>
-}
-
-function InfoBlock(props: { title: string, content: string }) {
-    return <div>
-        <Stack justifyContent="space-between" style={{ background: "white", padding: 16 }}>
-            <div style={{ fontSize: 18 }}>{props.title}</div>
-            <div style={{ fontSize: 18, fontWeight: "bold" }}>{props.content}</div>
-        </Stack>
-        <Divider indent={16} />
-    </div>
 }

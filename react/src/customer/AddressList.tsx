@@ -4,20 +4,18 @@ import core from "../coffee-shop-core/CoffeeShop-core"
 import coffeeshop = core.me.haymob.coffeeshop
 import AddressListUIStore = coffeeshop.ui.customer.address.list.AddressListUIStore
 import { useNavigate } from "react-router-dom"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
 
-export default class AddressList extends SComponent<AddressListUIStore> {
-    protected store = coffeeshop.addressListUIStore()
-    render() {
-        return <AddressListView store={this.store} />
-    }
+export default () => <AddressList store={coffeeshop.addressListUIStore()} />
+
+interface AddressListProps {
+    store: AddressListUIStore
 }
 
-function AddressListView(props: { store: AddressListUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let navigate = useNavigate()
-    let addresses = state.getAddresses()
+function AddressList({ store }: AddressListProps) {
+    const state = useStoreState(store)
+    const navigate = useNavigate()
+    const addresses = state.getAddresses()
 
     return <FlexboxGrid justify="center" style={{ marginTop: 50 }}>
         <FlexboxGrid.Item style={{ width: 500 }}>

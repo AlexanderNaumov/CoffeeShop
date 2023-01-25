@@ -8,21 +8,21 @@ import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
 import { useState } from "react"
-import SComponent from "../SComponent"
+import useStoreState from "../hooks/use_store_state"
+import useStoreEffect from "../hooks/use_store_effect"
 
-export default class Account extends SComponent<AccountUIStore> {
-    protected store = coffeeshop.accountUIStore()
-    render() {
-        return <AccountView store={this.store} />
-    }
+
+export default () => <Account store={coffeeshop.accountUIStore()} />
+
+interface AccountProps {
+    store: AccountUIStore
 }
 
-function AccountView(props: { store: AccountUIStore }) {
-    let { store } = props
-    let state = store.currentState
-    let [error, setError] = useState<string>()
+function Account({ store }: AccountProps) {
+    const state = useStoreState(store)
+    const [error, setError] = useState<string>()
 
-    store.onEffect(effect => {
+    useStoreEffect(store, effect => {
         if (effect instanceof AccountUIEffect.Error) setError(effect.message)
     })
 

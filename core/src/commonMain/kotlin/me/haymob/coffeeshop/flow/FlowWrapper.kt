@@ -8,11 +8,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import me.haymob.multiplatformannotations._JsExport
 
+@_JsExport
 interface Cancellable {
     fun cancel()
 }
 
+@_JsExport
 class FlowWrapper<T>(source: Flow<T>) : Flow<T> by source {
     fun collect(onEach: (T) -> Unit, onCompletion: (cause: Throwable?) -> Unit): Cancellable {
         val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
