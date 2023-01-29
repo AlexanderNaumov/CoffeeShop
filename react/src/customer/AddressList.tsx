@@ -1,12 +1,12 @@
 import { FlexboxGrid, List, Panel, Button } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import AddressListUIStore = coffeeshop.ui.customer.address.list.AddressListUIStore
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import AddressListUIStore = shop.ui.customer.address.list.AddressListUIStore
 import { useNavigate } from "react-router-dom"
 import useStoreState from "../hooks/use_store_state"
 
-export default () => <AddressList store={coffeeshop.addressListUIStore()} />
+export default () => <AddressList store={shop.addressListUIStore()} />
 
 interface AddressListProps {
     store: AddressListUIStore

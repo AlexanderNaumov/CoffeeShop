@@ -1,9 +1,9 @@
 import { FlexboxGrid, Panel, Form, Button, ButtonToolbar } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import EditAddressUIStore = coffeeshop.ui.customer.address.edit.EditAddressUIStore
-import EditAddressUIEffect = coffeeshop.ui.customer.address.edit.EditAddressUIEffect
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import EditAddressUIStore = shop.ui.customer.address.edit.EditAddressUIStore
+import EditAddressUIEffect = shop.ui.customer.address.edit.EditAddressUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
@@ -15,7 +15,7 @@ import useStoreEffect from "../hooks/use_store_effect"
 
 export default () => {
     const addressId = useParams().id as string
-    return < EditAddres store={coffeeshop.editAddressUIStore(addressId)} />
+    return < EditAddres store={shop.editAddressUIStore(addressId)} />
 }
 
 interface EditAddresProps {

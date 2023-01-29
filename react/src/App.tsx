@@ -7,8 +7,8 @@ import Signup from "./customer/Signup"
 import Account from "./customer/Account"
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom"
 import ProductDetail from "./catalog/ProductDetail"
-import core from "./coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
+import core from "./shop-core/Shop-core"
+import shop = core.me.haymob.shop
 import Colors from "./Colors"
 import basket from "./resources/basket.svg"
 import Cart from "./cart/Cart"
@@ -24,10 +24,10 @@ import Wishlist from "./customer/Wishlist"
 import NeedLogin from "./components/NeedLogin"
 import useStoreState from "./hooks/use_store_state"
 
-export default () => <App store={coffeeshop.customerUIStore()} />
+export default () => <App store={shop.customerUIStore()} />
 
 interface AppProps {
-    store: coffeeshop.ui.customer.CustomerUIStore
+    store: shop.ui.customer.CustomerUIStore
 }
 
 function App({ store }: AppProps) {
@@ -36,7 +36,7 @@ function App({ store }: AppProps) {
     const state = useStoreState(store)
 
     useEffect(() => {
-        coffeeshop.startApp()
+        shop.startApp()
     }, [])
 
 

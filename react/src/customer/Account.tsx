@@ -1,9 +1,9 @@
 import { FlexboxGrid, Panel, Form, Button } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import AccountUIStore = coffeeshop.ui.customer.account.AccountUIStore
-import AccountUIEffect = coffeeshop.ui.customer.account.AccountUIEffect
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import AccountUIStore = shop.ui.customer.account.AccountUIStore
+import AccountUIEffect = shop.ui.customer.account.AccountUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
@@ -12,7 +12,7 @@ import useStoreState from "../hooks/use_store_state"
 import useStoreEffect from "../hooks/use_store_effect"
 
 
-export default () => <Account store={coffeeshop.accountUIStore()} />
+export default () => <Account store={shop.accountUIStore()} />
 
 interface AccountProps {
     store: AccountUIStore

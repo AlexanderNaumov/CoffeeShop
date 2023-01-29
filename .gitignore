@@ -38,7 +38,7 @@ yarn-error.log*
 
 react/.parcel-cache
 react/dist
-react/src/coffee-shop-core
+react/src/shop-core
 
 # typescript
 *.tsbuildinfo

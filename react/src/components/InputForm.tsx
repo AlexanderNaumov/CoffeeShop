@@ -1,7 +1,7 @@
 import { Form } from "rsuite"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import Field = core.me.haymob.coffeeshop.entities.Field
-import FieldType = core.me.haymob.coffeeshop.entities.FieldType
+import core from "../shop-core/Shop-core"
+import Field = core.me.haymob.shop.entities.Field
+import FieldType = core.me.haymob.shop.entities.FieldType
 
 interface InputFormProps {
     field: Field

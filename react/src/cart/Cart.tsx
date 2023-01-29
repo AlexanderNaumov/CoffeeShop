@@ -1,7 +1,7 @@
 import { List, Stack, Checkbox, Button, ButtonToolbar } from "rsuite"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import CartUIStore = coffeeshop.ui.cart.CartUIStore
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import CartUIStore = shop.ui.cart.CartUIStore
 import { useNavigate } from "react-router-dom"
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import ProductLoader from "../components/ProductLoader"
@@ -10,7 +10,7 @@ import useStoreState from "../hooks/use_store_state"
 
 type CloseCart = () => void
 
-export default (props: { closeCart: CloseCart }) => <Cart store={coffeeshop.cartUIStore()} closeCart={props.closeCart} />
+export default (props: { closeCart: CloseCart }) => <Cart store={shop.cartUIStore()} closeCart={props.closeCart} />
 
 interface CartProps {
     store: CartUIStore

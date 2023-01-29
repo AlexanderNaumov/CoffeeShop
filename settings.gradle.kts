@@ -6,9 +6,9 @@ pluginManagement {
     }
 }
 
-rootProject.name = "CoffeeShop"
+rootProject.name = "Shop"
 include(":android")
 include(":core")
-include(":CoffeeShopSDK")
+include(":ShopSDK")
 include(":Preferences")
 include(":MultiplatformAnnotations")

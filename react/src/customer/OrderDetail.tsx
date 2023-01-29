@@ -1,8 +1,8 @@
 import { FlexboxGrid, List, Panel, Button, ButtonToolbar, Stack } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import OrderDetailUIStore = coffeeshop.ui.customer.order.detail.OrderDetailUIStore
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import OrderDetailUIStore = shop.ui.customer.order.detail.OrderDetailUIStore
 import { useParams } from "react-router-dom"
 import FullScreenLoader from "../components/FullScreenLoader"
 import OrderDetailHeader from "../components/OrderDetailHeader"
@@ -13,7 +13,7 @@ type OpenCart = () => void
 
 export default (props: { openCart: OpenCart }) => {
     const orderId = useParams().id as string
-    return <OrderDetail store={coffeeshop.orderDetailUIStore(orderId)} openCart={props.openCart} />
+    return <OrderDetail store={shop.orderDetailUIStore(orderId)} openCart={props.openCart} />
 }
 
 interface OrderDetailProps {

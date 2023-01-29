@@ -27,7 +27,7 @@ kotlin {
             dependencies {
                 implementation("io.insert-koin:koin-core:3.2.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                implementation(project(":CoffeeShopSDK"))
+                implementation(project(":ShopSDK"))
                 implementation(project(":Preferences"))
                 implementation(project(":MultiplatformAnnotations"))
             }
@@ -70,13 +70,13 @@ android {
         minSdk = 21
         targetSdk = 33
     }
-    namespace = "me.haymob.coffeeshop"
+    namespace = "me.haymob.shop"
 }
 
 tasks {
     register<Copy>("copyNpm") {
         from(layout.buildDirectory.file("packages/js"))
-        into(layout.buildDirectory.file("../../react/src/coffee-shop-core"))
+        into(layout.buildDirectory.file("../../react/src/shop-core"))
     }
 //    named<dev.petuska.npm.publish.task.NpmAssembleTask>("assembleJsPackage").configure {
 //        dependsOn("copyNpm")

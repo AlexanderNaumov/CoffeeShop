@@ -1,9 +1,9 @@
 import { FlexboxGrid, List, Panel, Button, ButtonToolbar, Stack, Modal } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
-import CheckoutUIEffect = coffeeshop.ui.cart.checkout.CheckoutUIEffect
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import CheckoutUIStore = shop.ui.cart.checkout.CheckoutUIStore
+import CheckoutUIEffect = shop.ui.cart.checkout.CheckoutUIEffect
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import FullScreenLoader from "../components/FullScreenLoader"
@@ -14,7 +14,7 @@ import useStoreState from "../hooks/use_store_state"
 import useStoreEffect from "../hooks/use_store_effect"
 import CheckoutCell from "../components/CheckoutCell"
 
-export default () => <Checkout store={coffeeshop.checkoutUIStore()} />
+export default () => <Checkout store={shop.checkoutUIStore()} />
 
 interface CheckoutProps {
     store: CheckoutUIStore

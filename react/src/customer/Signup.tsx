@@ -1,9 +1,9 @@
 import { FlexboxGrid, Panel, Form, Button } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import SignupUIStore = coffeeshop.ui.customer.signup.SignupUIStore
-import SignupUIEffect = coffeeshop.ui.customer.signup.SignupUIEffect
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import SignupUIStore = shop.ui.customer.signup.SignupUIStore
+import SignupUIEffect = shop.ui.customer.signup.SignupUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 import useStoreState from "../hooks/use_store_state"
 import useStoreEffect from "../hooks/use_store_effect"
 
-export default () => <Signup store={coffeeshop.signupUIStore()} />
+export default () => <Signup store={shop.signupUIStore()} />
 
 interface SignupProps {
     store: SignupUIStore

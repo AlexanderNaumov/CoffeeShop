@@ -1,15 +1,15 @@
 import { FlexboxGrid, List, Panel, Stack, IconButton } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import WishlistUIStore = coffeeshop.ui.customer.wishlist.WishlistUIStore
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import WishlistUIStore = shop.ui.customer.wishlist.WishlistUIStore
 import { useNavigate } from "react-router-dom"
 import ProductLoader from "../components/ProductLoader"
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import TrashIcon from "@rsuite/icons/Trash"
 import useStoreState from "../hooks/use_store_state"
 
-export default () => <Wishlist store={coffeeshop.wishlistUIStore()} />
+export default () => <Wishlist store={shop.wishlistUIStore()} />
 
 interface WishlistProps {
     store: WishlistUIStore

@@ -1,12 +1,12 @@
 import { Nav, Modal, Button } from "rsuite"
 import { Component, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import CustomerUIStore = coffeeshop.ui.customer.CustomerUIStore
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import CustomerUIStore = shop.ui.customer.CustomerUIStore
 import useStoreState from "../hooks/use_store_state"
 
-export default () => <CustomerMenu store={coffeeshop.customerUIStore()} />
+export default () => <CustomerMenu store={shop.customerUIStore()} />
 
 interface CustomerMenuProps {
     store: CustomerUIStore

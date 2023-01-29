@@ -1,8 +1,8 @@
-import core from "./../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
+import core from "./../shop-core/Shop-core"
+import shop = core.me.haymob.shop
 import { useEffect, useState } from "react"
 
-export default function useStoreState<S extends coffeeshop.store.State>(store: coffeeshop.store.Store<S, any>) {
+export default function useStoreState<S extends shop.store.State>(store: shop.store.Store<S, any>) {
     const [state, setState] = useState<S>(store.currentState)
 
     useEffect(() => {

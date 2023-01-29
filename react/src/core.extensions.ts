@@ -1,51 +1,51 @@
-import core, { me } from "./coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import loginActions = coffeeshop.ui.customer.login.actions
-import signupActions = coffeeshop.ui.customer.signup.actions
-import accountActions = coffeeshop.ui.customer.account.actions
-import createAddressActions = coffeeshop.ui.customer.address.create.actions
-import editAddressActions = coffeeshop.ui.customer.address.edit.actions
-import catalogActions = coffeeshop.ui.catalog.actions
-import productDetailActions = coffeeshop.ui.productDetail.actions
-import cartActions = coffeeshop.ui.cart.actions
-import checkoutActions = coffeeshop.ui.cart.checkout.actions
-import wishlistActions = coffeeshop.ui.customer.wishlist.actions
-import CatalogUIState = coffeeshop.ui.catalog.CatalogUIState
-import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
-import Product = coffeeshop.entities.Product
-import Category = coffeeshop.entities.Category
-import Price = coffeeshop.entities.Price
-import Address = coffeeshop.entities.Address
-import PaymentMethod = coffeeshop.entities.PaymentMethod
-import ShippingMethod = coffeeshop.entities.ShippingMethod
-import Order = coffeeshop.entities.Order
-import LoginUIState = coffeeshop.ui.customer.login.LoginUIState
-import LoginUIStore = coffeeshop.ui.customer.login.LoginUIStore
-import Field = coffeeshop.entities.Field
-import FieldType = coffeeshop.entities.FieldType
-import SignupUIState = coffeeshop.ui.customer.signup.SignupUIState
-import SignupUIStore = coffeeshop.ui.customer.signup.SignupUIStore
-import ProductDetailUIStore = coffeeshop.ui.productDetail.ProductDetailUIStore
-import Cart = coffeeshop.entities.Cart
-import CartUIState = coffeeshop.ui.cart.CartUIState
-import CartUIStore = coffeeshop.ui.cart.CartUIStore
-import CustomerUIStore = coffeeshop.ui.customer.CustomerUIStore
-import AccountUIStore = coffeeshop.ui.customer.account.AccountUIStore
-import AccountUIState = coffeeshop.ui.customer.account.AccountUIState
-import AddressListUIState = coffeeshop.ui.customer.address.list.AddressListUIState
-import CreateAddressUIStore = coffeeshop.ui.customer.address.create.CreateAddressUIStore
-import CreateAddressUIState = coffeeshop.ui.customer.address.create.CreateAddressUIState
-import EditAddressUIStore = coffeeshop.ui.customer.address.edit.EditAddressUIStore
-import EditAddressUIState = coffeeshop.ui.customer.address.edit.EditAddressUIState
-import CheckoutUIState = coffeeshop.ui.cart.checkout.CheckoutUIState
-import CheckoutUIStore = coffeeshop.ui.cart.checkout.CheckoutUIStore
-import OrderListUIState = coffeeshop.ui.customer.order.OrderListUIState
-import OrderDetailUIStore = coffeeshop.ui.customer.order.detail.OrderDetailUIStore
-import WishlistUIState = coffeeshop.ui.customer.wishlist.WishlistUIState
-import WishlistUIStore = coffeeshop.ui.customer.wishlist.WishlistUIStore
+import core, { me } from "./shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import loginActions = shop.ui.customer.login.actions
+import signupActions = shop.ui.customer.signup.actions
+import accountActions = shop.ui.customer.account.actions
+import createAddressActions = shop.ui.customer.address.create.actions
+import editAddressActions = shop.ui.customer.address.edit.actions
+import catalogActions = shop.ui.catalog.actions
+import productDetailActions = shop.ui.productDetail.actions
+import cartActions = shop.ui.cart.actions
+import checkoutActions = shop.ui.cart.checkout.actions
+import wishlistActions = shop.ui.customer.wishlist.actions
+import CatalogUIState = shop.ui.catalog.CatalogUIState
+import CatalogUIStore = shop.ui.catalog.CatalogUIStore
+import Product = shop.entities.Product
+import Category = shop.entities.Category
+import Price = shop.entities.Price
+import Address = shop.entities.Address
+import PaymentMethod = shop.entities.PaymentMethod
+import ShippingMethod = shop.entities.ShippingMethod
+import Order = shop.entities.Order
+import LoginUIState = shop.ui.customer.login.LoginUIState
+import LoginUIStore = shop.ui.customer.login.LoginUIStore
+import Field = shop.entities.Field
+import FieldType = shop.entities.FieldType
+import SignupUIState = shop.ui.customer.signup.SignupUIState
+import SignupUIStore = shop.ui.customer.signup.SignupUIStore
+import ProductDetailUIStore = shop.ui.productDetail.ProductDetailUIStore
+import Cart = shop.entities.Cart
+import CartUIState = shop.ui.cart.CartUIState
+import CartUIStore = shop.ui.cart.CartUIStore
+import CustomerUIStore = shop.ui.customer.CustomerUIStore
+import AccountUIStore = shop.ui.customer.account.AccountUIStore
+import AccountUIState = shop.ui.customer.account.AccountUIState
+import AddressListUIState = shop.ui.customer.address.list.AddressListUIState
+import CreateAddressUIStore = shop.ui.customer.address.create.CreateAddressUIStore
+import CreateAddressUIState = shop.ui.customer.address.create.CreateAddressUIState
+import EditAddressUIStore = shop.ui.customer.address.edit.EditAddressUIStore
+import EditAddressUIState = shop.ui.customer.address.edit.EditAddressUIState
+import CheckoutUIState = shop.ui.cart.checkout.CheckoutUIState
+import CheckoutUIStore = shop.ui.cart.checkout.CheckoutUIStore
+import OrderListUIState = shop.ui.customer.order.OrderListUIState
+import OrderDetailUIStore = shop.ui.customer.order.detail.OrderDetailUIStore
+import WishlistUIState = shop.ui.customer.wishlist.WishlistUIState
+import WishlistUIStore = shop.ui.customer.wishlist.WishlistUIStore
 
-declare module "./coffee-shop-core/CoffeeShop-core" {
-    namespace me.haymob.coffeeshop.ui.catalog {
+declare module "./shop-core/Shop-core" {
+    namespace me.haymob.shop.ui.catalog {
         interface CatalogUIState {
             getCategories(): Array<Category>
         }
@@ -54,7 +54,7 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             decrementProduct(product: Product): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.productDetail {
+    namespace me.haymob.shop.ui.productDetail {
         interface ProductDetailUIStore {
             incrementProduct(): void
             decrementProduct(): void
@@ -62,7 +62,7 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             removeProductFromWishlist(): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.login {
+    namespace me.haymob.shop.ui.customer.login {
         interface LoginUIState {
             getFields(): Array<Field>
         }
@@ -71,7 +71,7 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             login(): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.signup {
+    namespace me.haymob.shop.ui.customer.signup {
         interface SignupUIState {
             getFields(): Array<Field>
         }
@@ -80,12 +80,12 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             signup(): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer {
+    namespace me.haymob.shop.ui.customer {
         interface CustomerUIStore {
             logout(): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.account {
+    namespace me.haymob.shop.ui.customer.account {
         interface AccountUIStore {
             updateCustomer(): void
             updateField(type: FieldType, value: string): void
@@ -94,12 +94,12 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             getFields(): Array<Field>
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.address.list {
+    namespace me.haymob.shop.ui.customer.address.list {
         interface AddressListUIState {
             getAddresses(): Array<Address>
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.address.create {
+    namespace me.haymob.shop.ui.customer.address.create {
         interface CreateAddressUIState {
             getFields(): Array<Field>
         }
@@ -108,7 +108,7 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             updateField(type: FieldType, value: string): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.address.edit {
+    namespace me.haymob.shop.ui.customer.address.edit {
         interface EditAddressUIState {
             getFields(): Array<Field>
         }
@@ -118,17 +118,17 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             updateField(type: FieldType, value: string): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.order {
+    namespace me.haymob.shop.ui.customer.order {
         interface OrderListUIState {
             getOrders(): Array<Order>
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.order.detail {
+    namespace me.haymob.shop.ui.customer.order.detail {
         interface OrderDetailUIStore {
             reorder(): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.customer.wishlist {
+    namespace me.haymob.shop.ui.customer.wishlist {
         interface WishlistUIState {
             getWishlist(): Array<Product>
         }
@@ -138,7 +138,7 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             removeProductFromWishlist(product: Product): void
         }
     }
-    namespace me.haymob.coffeeshop.entities {
+    namespace me.haymob.shop.entities {
         interface Category {
             getProducts(): Array<Product>
         }
@@ -154,7 +154,7 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             getProducts(): Array<Product>
         }
     }
-    namespace me.haymob.coffeeshop.ui.cart {
+    namespace me.haymob.shop.ui.cart {
         interface CartUIState {
             getSelectedItems(): Array<string>
         }
@@ -166,7 +166,7 @@ declare module "./coffee-shop-core/CoffeeShop-core" {
             removeSelectedItems(): void
         }
     }
-    namespace me.haymob.coffeeshop.ui.cart.checkout {
+    namespace me.haymob.shop.ui.cart.checkout {
         interface CheckoutUIState {
             getAddresses(): Array<Address>
         }
@@ -220,7 +220,7 @@ SignupUIStore.prototype.signup = function () {
     signupActions.signup(this)
 }
 CustomerUIStore.prototype.logout = function () {
-    coffeeshop.ui.customer.actions.logout(this)
+    shop.ui.customer.actions.logout(this)
 }
 
 CatalogUIStore.prototype.incrementProduct = function (product: Product) {
@@ -355,21 +355,21 @@ Order.prototype.getProducts = function () {
 }
 
 OrderDetailUIStore.prototype.reorder = function () {
-    coffeeshop.ui.customer.order.detail.actions.reorder(this)
+    shop.ui.customer.order.detail.actions.reorder(this)
 }
 
-WishlistUIState.prototype.getWishlist = function() {
+WishlistUIState.prototype.getWishlist = function () {
     return toArray(this.wishlist["h_1"])
 }
 
-WishlistUIStore.prototype.incrementProduct = function(product: Product) {
+WishlistUIStore.prototype.incrementProduct = function (product: Product) {
     wishlistActions.incrementProduct(this, product)
 }
 
-WishlistUIStore.prototype.decrementProduct = function(product: Product) {
+WishlistUIStore.prototype.decrementProduct = function (product: Product) {
     wishlistActions.decrementProduct(this, product)
 }
 
-WishlistUIStore.prototype.removeProductFromWishlist = function(product: Product) {
+WishlistUIStore.prototype.removeProductFromWishlist = function (product: Product) {
     wishlistActions.removeProductFromWishlist(this, product)
 }

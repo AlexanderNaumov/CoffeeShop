@@ -2,14 +2,14 @@ import { FlexboxGrid } from "rsuite"
 import "../core.extensions"
 import Colors from "../Colors"
 import { useNavigate } from "react-router-dom"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import CatalogUIStore = coffeeshop.ui.catalog.CatalogUIStore
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import CatalogUIStore = shop.ui.catalog.CatalogUIStore
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import ProductLoader from "../components/ProductLoader"
 import useStoreState from "../hooks/use_store_state"
 
-export default () => <Catalog store={coffeeshop.catalogUIStore()} />
+export default () => <Catalog store={shop.catalogUIStore()} />
 
 interface CatalogProps {
     store: CatalogUIStore

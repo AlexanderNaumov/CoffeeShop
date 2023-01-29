@@ -1,9 +1,9 @@
 import { FlexboxGrid, Panel, Form, Button } from "rsuite"
 import "../core.extensions"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import CreateAddressUIStore = coffeeshop.ui.customer.address.create.CreateAddressUIStore
-import CreateAddressUIEffect = coffeeshop.ui.customer.address.create.CreateAddressUIEffect
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import CreateAddressUIStore = shop.ui.customer.address.create.CreateAddressUIStore
+import CreateAddressUIEffect = shop.ui.customer.address.create.CreateAddressUIEffect
 import InputForm from "../components/InputForm"
 import FullScreenLoader from "../components/FullScreenLoader"
 import ErrorModal from "../components/ErrorModal"
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 import useStoreState from "../hooks/use_store_state"
 import useStoreEffect from "../hooks/use_store_effect"
 
-export default () => <CreateAddress store={coffeeshop.createAddressUIStore()} />
+export default () => <CreateAddress store={shop.createAddressUIStore()} />
 
 interface CreateAddressProps {
     store: CreateAddressUIStore

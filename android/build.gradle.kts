@@ -6,7 +6,7 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file("/Users/alexander/Developer/CoffeeShop/android/android.jks")
+            storeFile = file("/Users/alexander/Developer/Shop/android/android.jks")
             storePassword = "123456"
             keyAlias = "key0"
             keyPassword = "123456"
@@ -15,7 +15,7 @@ android {
     }
     compileSdk = 33
     defaultConfig {
-        applicationId = "me.haymob.coffeeshop.android"
+        applicationId = "me.haymob.shop.android"
         minSdk = 21
         targetSdk = 33
         versionCode = 1
@@ -36,7 +36,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.0"
     }
-    namespace = "me.haymob.coffeeshop.android"
+    namespace = "me.haymob.shop.android"
 }
 
 val composeVersion = "1.3.0"

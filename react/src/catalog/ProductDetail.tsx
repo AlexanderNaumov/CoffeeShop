@@ -1,9 +1,9 @@
 import { FlexboxGrid, Stack } from "rsuite"
 import { useParams } from "react-router-dom"
-import core from "../coffee-shop-core/CoffeeShop-core"
+import core from "../shop-core/Shop-core"
 import "../core.extensions"
-import coffeeshop = core.me.haymob.coffeeshop
-import ProductDetailUIStore = coffeeshop.ui.productDetail.ProductDetailUIStore
+import shop = core.me.haymob.shop
+import ProductDetailUIStore = shop.ui.productDetail.ProductDetailUIStore
 import ProductQtyButtons from "../components/ProductQtyButtons"
 import Divider from "../components/Divider"
 import ProductLoader from "../components/ProductLoader"
@@ -14,7 +14,7 @@ import ProductDetailInfoBlock from "../components/ProductDetailInfoBlock"
 
 export default () => {
     const productId = useParams().id as string
-    return <ProductDetail store={coffeeshop.productDetailUIStore(productId)} />
+    return <ProductDetail store={shop.productDetailUIStore(productId)} />
 }
 
 interface ProductDetailProps {

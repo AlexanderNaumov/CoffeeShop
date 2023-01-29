@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApplicationCompose">
         <activity
-            android:name=".MainActivity"
+            android:name="me.haymob.shop.android.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

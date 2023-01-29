@@ -1,7 +1,7 @@
 import { List, Stack } from "rsuite"
-import core from "../coffee-shop-core/CoffeeShop-core"
-import coffeeshop = core.me.haymob.coffeeshop
-import Product = coffeeshop.entities.Product
+import core from "../shop-core/Shop-core"
+import shop = core.me.haymob.shop
+import Product = shop.entities.Product
 
 interface OrderProductCellProps {
     product: Product
