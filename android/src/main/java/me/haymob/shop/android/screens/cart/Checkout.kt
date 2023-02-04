@@ -19,10 +19,13 @@ import me.haymob.shop.ui.cart.checkout.actions.selectShipping
 import me.haymob.shop.ui.cart.checkout.actions.setAddress
 import me.haymob.shop.android.components.*
 
-fun checkoutScreen(
+@Composable
+fun Checkout(
     navController: NavHostController,
-    store: CheckoutUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: CheckoutUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
     val successDialog = remember { mutableStateOf<String?>(null) }
 

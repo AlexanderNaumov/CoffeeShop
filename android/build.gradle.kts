@@ -55,5 +55,7 @@ dependencies {
 //    implementation("androidx.compose.foundation:foundation:1.2.1")
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("io.coil-kt:coil-compose:2.2.0")
-    implementation("com.google.accompanist:accompanist-swiperefresh:0.25.1")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.25.1") // Переписать свайп
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
 }

@@ -33,7 +33,8 @@ fun OrderItemCell(product: Product) {
                 fontSize = 18.sp
             )
             Text(
-                product.price.string,
+            //    product.price.string,
+                "",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )

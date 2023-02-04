@@ -21,10 +21,13 @@ import me.haymob.shop.ui.customer.login.LoginUIStore
 import me.haymob.shop.ui.customer.login.actions.login
 import me.haymob.shop.ui.customer.login.actions.updateField
 
-fun loginScreen(
+@Composable
+fun Login(
     navController: NavHostController,
-    store: LoginUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: LoginUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
 
     LaunchedEffect(key1 = Unit) {

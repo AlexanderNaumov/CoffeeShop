@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -27,11 +28,14 @@ import me.haymob.shop.ui.productDetail.actions.removeProductFromWishlist
 import me.haymob.shop.android.components.*
 import org.koin.core.parameter.ParametersHolder
 
-fun productDetailScreen(
+@Composable
+fun ProductDetail(
     navController: NavHostController,
     productId: String,
-    store: ProductDetailUIStore = app.koin.get { ParametersHolder(_values = mutableListOf(productId)) }
-): @Composable () -> Unit = {
+    store: ProductDetailUIStore = remember {
+        app.koin.get { ParametersHolder(_values = mutableListOf(productId)) }
+    }
+) {
     val state = store.state.collectAsState().value
     val product = state.product
     if (product != null) {
@@ -71,9 +75,9 @@ fun productDetailScreen(
                         .background(Color.White)
                         .padding(10.dp)
                 ) {
-                    ProductDetailInfoBlock("Body", "${product.body}")
-                    ProductDetailInfoBlock("Roast", "${product.roast}")
-                    ProductDetailInfoBlock("Acidity", "${product.acidity}")
+//                    ProductDetailInfoBlock("Body", "${product.body}")
+//                    ProductDetailInfoBlock("Roast", "${product.roast}")
+//                    ProductDetailInfoBlock("Acidity", "${product.acidity}")
                     Text(
                         text = product.description,
                         fontSize = 18.sp,

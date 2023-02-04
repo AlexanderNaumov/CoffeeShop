@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,10 +28,13 @@ import me.haymob.shop.ui.customer.order.OrderListUIStore
 import me.haymob.shop.ui.customer.order.actions.refreshOrders
 import java.text.DateFormat
 
-fun orderListScreen(
+@Composable
+fun OrderList(
     navController: NavHostController,
-    store: OrderListUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: OrderListUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
     val orders = state.orders.sortedByDescending { it.date }
 

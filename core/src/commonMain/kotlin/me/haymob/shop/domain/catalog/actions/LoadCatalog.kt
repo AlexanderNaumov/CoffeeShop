@@ -5,19 +5,29 @@ import me.haymob.shop.domain.catalog.CatalogStore
 import me.haymob.shop.flow.onResult
 import me.haymob.shop.mappers.CategoryMapper
 import me.haymob.shop.mappers.ProductMapper
+import me.haymob.shopsdk.entities.Product
 
 internal fun CatalogStore.loadCatalog() {
     setState { copy(isLoading = true) }
-    catalogService.categories().flatMapMerge { categories ->
-        catalogService.products(categories.map { it.objectId }).map { products ->
-            categories.map { category ->
-                CategoryMapper.categoryFromDto(category).copy(
-                    products = products.filter { product ->
-                        product.categories.edges.any { it.node.objectId == category.objectId }
-                    }.map(ProductMapper::productFromDto)
+
+    combine(
+        catalogService.collections(),
+        catalogService.products()
+    ) { collections, products ->
+        collections
+            .filter { it.children.isNotEmpty() }
+            .sortedBy { it.position }
+            .map {
+                CategoryMapper.categoryFromDto(it).copy(
+                    child = it.children.map { collection ->
+                        CategoryMapper.categoryFromDto(collection).copy(
+                            products = products
+                                .filter { it.collections.any { it.id == collection.id } }
+                                .map(ProductMapper::productFromDto)
+                        )
+                    }
                 )
             }
-        }
     }.onResult {
         setState {
             copy(

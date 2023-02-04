@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,10 +27,13 @@ import me.haymob.shop.app
 import me.haymob.shop.ui.customer.address.list.AddressListUIStore
 import me.haymob.shop.ui.customer.address.list.actions.refreshAddresses
 
-fun addressListScreen(
+@Composable
+fun AddressList(
     navController: NavHostController,
-    store: AddressListUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: AddressListUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
 
     Scaffold(

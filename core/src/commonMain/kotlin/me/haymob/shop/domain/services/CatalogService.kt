@@ -5,6 +5,6 @@ import me.haymob.shopsdk.catalog.CatalogController
 internal class CatalogService(
     private val catalogController: CatalogController
 ) {
-    fun categories() = catalogController.categories()
-    fun products(categoryIds: List<String>) = catalogController.products(categoryIds)
+    fun collections() = catalogController.collections()
+    fun products() = catalogController.products()
 }

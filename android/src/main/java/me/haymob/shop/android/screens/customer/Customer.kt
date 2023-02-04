@@ -20,10 +20,13 @@ import me.haymob.shop.ui.customer.CustomerUIStore
 import me.haymob.shop.ui.customer.actions.logout
 import me.haymob.shop.android.components.*
 
-fun customerScreen(
+@Composable
+fun Customer(
     navController: NavHostController,
-    store: CustomerUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: CustomerUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
     val openLogoutDialog = remember { mutableStateOf(false) }
     Scaffold(

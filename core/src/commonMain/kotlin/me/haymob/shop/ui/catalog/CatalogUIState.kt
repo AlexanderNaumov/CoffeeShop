@@ -9,4 +9,9 @@ data class CatalogUIState(
     val categories: List<Category> = emptyList(),
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false
-): State
+): State {
+    fun numberOfCategory(id: String): Int {
+        val index = categories.indexOfFirst { it.id == id }
+        return if (index > 0) index else 0
+    }
+}

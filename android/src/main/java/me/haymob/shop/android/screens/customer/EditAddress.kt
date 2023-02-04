@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,15 +28,16 @@ import me.haymob.shop.ui.customer.address.edit.actions.updateAddress
 import me.haymob.shop.ui.customer.address.edit.actions.updateField
 import org.koin.core.parameter.ParametersHolder
 
-fun editAddressScreen(
+@Composable
+fun EditAddress(
     navController: NavHostController,
     addressId: String,
-    store: EditAddressUIStore = app.koin.get {
-        ParametersHolder(
-            _values = mutableListOf(addressId)
-        )
+    store: EditAddressUIStore = remember {
+        app.koin.get {
+            ParametersHolder(_values = mutableListOf(addressId))
+        }
     }
-): @Composable () -> Unit = {
+) {
     val state = store.state.collectAsState().value
 
     LaunchedEffect(key1 = Unit) {

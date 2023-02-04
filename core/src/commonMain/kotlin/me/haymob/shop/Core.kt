@@ -29,11 +29,12 @@ fun coreInit() {
     val sdk = app.koin.get<me.haymob.shopsdk.ShopSDK>()
 
     sdk.config(ConfigState(
-        "http://vm71618.haymob.serv-dns.ru:1337/graphql",
+//        "http://vm71618.haymob.serv-dns.ru:1337/graphql",
+        "http://192.168.100.3:3000/shop-api",
         "lrfQ9bQKJDpFFVffvfZN",
         "2MQDMG5ett10fdzOvDWUp46hHRhd5w",
         storage.customerToken(),
-        false
+        true
     ))
 }
 

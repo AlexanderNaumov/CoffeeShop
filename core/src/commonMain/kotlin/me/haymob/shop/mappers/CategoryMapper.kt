@@ -1,12 +1,13 @@
 package me.haymob.shop.mappers
 
 import me.haymob.shop.entities.Category
-import me.haymob.shopsdk.entities.Category as CategoryDto
+import me.haymob.shopsdk.entities.Collection
 
 internal object CategoryMapper {
-    fun categoryFromDto(category: CategoryDto) = Category(
-        category.objectId,
-        category.name,
+    fun categoryFromDto(collection: Collection) = Category(
+        collection.id,
+        collection.name,
+        emptyList(),
         emptyList()
     )
 }

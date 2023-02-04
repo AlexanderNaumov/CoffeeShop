@@ -16,11 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.haymob.shop.android.extensions.Gallery
 import me.haymob.shop.android.R
+import me.haymob.shop.android.extensions.priceRange
 import me.haymob.shop.android.extensions.string
 import me.haymob.shop.entities.Product
 
 @Composable
-fun CatalogProductItem(product: Product, onClick: () -> Unit, inc: () -> Unit, dec: () -> Unit) {
+fun ProductListItem(product: Product, onClick: () -> Unit, inc: () -> Unit, dec: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -54,16 +55,11 @@ fun CatalogProductItem(product: Product, onClick: () -> Unit, inc: () -> Unit, d
                 fontSize = 17.sp
             )
             Text(
-                product.price.string,
+                product.priceRange(),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 fontSize = 17.sp
             )
-            if (product.qty == 0) {
-                ActionButton(R.drawable.ic_plus, 60.dp, inc)
-            } else {
-                ActionButtons(product.qty, inc = inc, dec = dec)
-            }
         }
         if (product.isLoading) Loader(Modifier.matchParentSize())
     }

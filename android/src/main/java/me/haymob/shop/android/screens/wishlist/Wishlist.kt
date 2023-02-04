@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,10 +27,13 @@ import me.haymob.shop.ui.customer.wishlist.actions.removeProductFromWishlist
 import me.haymob.shop.android.components.*
 
 @ExperimentalMaterialApi
-fun wishlistScreen(
+@Composable
+fun Wishlist(
     navController: NavHostController,
-    store: WishlistUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: WishlistUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
     Scaffold(
         topBar = { TopBar("Wishlist".uppercase()) },

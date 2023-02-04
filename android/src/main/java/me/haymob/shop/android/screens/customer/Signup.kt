@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,10 +26,13 @@ import me.haymob.shop.ui.customer.signup.SignupUIStore
 import me.haymob.shop.ui.customer.signup.actions.signup
 import me.haymob.shop.ui.customer.signup.actions.updateField
 
-fun signupScreen(
+@Composable
+fun Signup(
     navController: NavHostController,
-    store: SignupUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: SignupUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
 
     LaunchedEffect(key1 = Unit) {

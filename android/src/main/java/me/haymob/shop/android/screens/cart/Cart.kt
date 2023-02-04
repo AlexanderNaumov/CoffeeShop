@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,10 +29,13 @@ import me.haymob.shop.ui.cart.CartUIStore
 import me.haymob.shop.ui.cart.actions.*
 import me.haymob.shop.android.components.*
 
-fun cartScreen(
+@Composable
+fun Cart(
     navController: NavHostController,
-    store: CartUIStore = app.koin.get()
-): @Composable () -> Unit = {
+    store: CartUIStore = remember {
+        app.koin.get()
+    }
+) {
     val state = store.state.collectAsState().value
     Scaffold(
         topBar = { TopBar("Cart".uppercase()) },

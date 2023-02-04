@@ -6,6 +6,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
@@ -16,15 +17,16 @@ import me.haymob.shop.ui.customer.order.detail.actions.reorder
 import me.haymob.shop.android.components.*
 import org.koin.core.parameter.ParametersHolder
 
-fun orderDetailScreen(
+@Composable
+fun OrderDetail(
     navController: NavHostController,
     orderId: String,
-    store: OrderDetailUIStore = app.koin.get {
-        ParametersHolder(
-            _values = mutableListOf(orderId)
-        )
+    store: OrderDetailUIStore = remember {
+        app.koin.get {
+            ParametersHolder(_values = mutableListOf(orderId))
+        }
     }
-): @Composable () -> Unit = {
+) {
     val state = store.state.collectAsState().value
     val order = state.order
     if (order != null) {
