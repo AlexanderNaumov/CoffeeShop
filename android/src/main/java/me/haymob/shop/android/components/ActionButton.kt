@@ -34,9 +34,7 @@ fun ActionButton(image: Int, width: Dp, onClick: () -> Unit) {
         onClick = onClick,
         backgroundColor = Color.Gallery,
         shape = RoundedCornerShape(6.dp),
-        modifier = Modifier
-            .padding(10.dp)
-            .size(width, 20.dp)
+        modifier = Modifier.size(width, 20.dp)
     ) {
         Icon(
             painter = painterResource(image),

@@ -15,7 +15,7 @@ import me.haymob.shop.android.extensions.string
 import me.haymob.shop.entities.Product
 
 @Composable
-fun ProductInfoCell(product: Product, inc: () -> Unit, dec: () -> Unit) {
+fun ProductInfoCell(variant: Product.Variant, inc: () -> Unit, dec: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -27,20 +27,19 @@ fun ProductInfoCell(product: Product, inc: () -> Unit, dec: () -> Unit) {
     ) {
         Column {
             Text(
-                product.name,
+                variant.name,
                 fontSize = 18.sp
             )
             Text(
-//                product.price.string,
-                "",
+                variant.price.string,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
         }
-        if (product.qty == 0) {
+        if (variant.qty == 0) {
             ActionButton(R.drawable.ic_plus, 60.dp, onClick = inc)
         } else {
-            ActionButtons(product.qty, inc = inc, dec = dec)
+            ActionButtons(variant.qty, inc = inc, dec = dec)
         }
     }
 }

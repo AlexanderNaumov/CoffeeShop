@@ -10,8 +10,9 @@ internal object ProductMapper {
         product.name,
         product.description,
         product.featuredAsset.source,
-        product.variants.map(::productVariantFromDto),
+        product.assets.map { it.source },
         0,
+        product.variants.map(::productVariantFromDto),
         false,
         false
     )
@@ -20,6 +21,7 @@ internal object ProductMapper {
         variant.sku,
         variant.name,
         Price(variant.priceWithTax.toDouble() / 100, variant.currencyCode),
+        0,
         variant.stockLevel,
         variant.options.map(::productVariantOptionFromDto)
     )

@@ -65,11 +65,11 @@ fun Wishlist(
                                         product.thumbnail,
                                         Modifier.size(50.dp, 50.dp)
                                     )
-                                    ProductInfoCell(
-                                        product,
-                                        inc = { store.incrementProduct(product) },
-                                        dec = { store.decrementProduct(product) }
-                                    )
+//                                    ProductInfoCell(
+//                                        product,
+//                                        inc = { store.incrementProduct(product) },
+//                                        dec = { store.decrementProduct(product) }
+//                                    )
                                 }
                             }
 

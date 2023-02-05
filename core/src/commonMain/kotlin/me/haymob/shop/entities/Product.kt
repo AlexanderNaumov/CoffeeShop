@@ -8,8 +8,9 @@ data class Product(
     val name: String,
     val description: String,
     val thumbnail: String,
-    val variants: List<Variant>,
+    val images: List<String>,
     val qty: Int,
+    val variants: List<Variant>,
     val isLoading: Boolean,
     val isOnWishlist: Boolean
 ) {
@@ -17,6 +18,7 @@ data class Product(
         val sku: String,
         val name: String,
         val price: Price,
+        val qty: Int,
         val stockLevel: String,
         val options: List<Option>
     ) {

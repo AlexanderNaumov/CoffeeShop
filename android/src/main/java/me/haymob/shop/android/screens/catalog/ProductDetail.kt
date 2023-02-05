@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -18,17 +16,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.accompanist.pager.ExperimentalPagerApi
 import me.haymob.shop.android.extensions.Porcelain
 import me.haymob.shop.app
 import me.haymob.shop.ui.productDetail.ProductDetailUIStore
-import me.haymob.shop.ui.productDetail.actions.addProductToWishlist
-import me.haymob.shop.ui.productDetail.actions.decrementProduct
-import me.haymob.shop.ui.productDetail.actions.incrementProduct
-import me.haymob.shop.ui.productDetail.actions.removeProductFromWishlist
 import me.haymob.shop.android.components.*
+import me.haymob.shop.ui.productDetail.actions.*
 import org.koin.core.parameter.ParametersHolder
 
 @Composable
+@ExperimentalPagerApi
 fun ProductDetail(
     navController: NavHostController,
     productId: String,
@@ -38,46 +35,47 @@ fun ProductDetail(
 ) {
     val state = store.state.collectAsState().value
     val product = state.product
-    if (product != null) {
+    val variant = state.currentVariant
+
+    if (product != null && variant != null) {
         Scaffold(
             topBar = {
                 TopBar(
                     product.name.uppercase(),
                     TopBarNavigationType.Back(onAction = navController::popBackStack),
-                    if (product.isOnWishlist) {
-                        TopBarActionType.Button(Icons.Filled.Favorite,
-                            onAction = { store.removeProductFromWishlist() }
-                        )
+                    if (state.isShowWishlist) {
+                        if (product.isOnWishlist) {
+                            TopBarActionType.Button(Icons.Filled.Favorite, onAction = { store.removeProductFromWishlist() })
+                        } else {
+                            TopBarActionType.Button(Icons.Filled.FavoriteBorder, onAction = { store.addProductToWishlist() })
+                        }
                     } else {
-                        TopBarActionType.Button(Icons.Filled.FavoriteBorder,
-                            onAction = { store.addProductToWishlist() }
-                        )
+                        TopBarActionType.None
                     }
                 )
             }, backgroundColor = Color.Porcelain
         ) { _ ->
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Box(Modifier.aspectRatio(320f / 240)) {
-                    ProductImage(
-                        product.thumbnail,
-                        Modifier
-                            .padding(12.dp)
-                            .fillMaxSize()
-                    )
+                    ProductImages(product.images)
                     if (product.isLoading) Loader(Modifier.matchParentSize())
                 }
-                ProductInfoCell(product,
+                ProductDetailInfoCell(
+                    product.variants,
+                    state.selectedOption,
+                    selectVariant = { store.selectOption(it) },
                     inc = { store.incrementProduct() },
-                    dec = { store.decrementProduct() })
+                    dec = { store.decrementProduct() }
+                )
                 Divider()
                 Column(
                     modifier = Modifier
                         .background(Color.White)
-                        .padding(10.dp)
+                        .padding(horizontal = 12.dp)
                 ) {
-//                    ProductDetailInfoBlock("Body", "${product.body}")
-//                    ProductDetailInfoBlock("Roast", "${product.roast}")
-//                    ProductDetailInfoBlock("Acidity", "${product.acidity}")
+                    variant.options.forEach {
+                        ProductDetailOptionCell(it.groupName.replaceFirstChar(Char::titlecase), it.name)
+                    }
                     Text(
                         text = product.description,
                         fontSize = 18.sp,

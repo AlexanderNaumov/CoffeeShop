@@ -74,11 +74,7 @@ fun Catalog(
                                 ProductListItem(
                                     product,
                                     onClick = {
-                                        navController.navigate(
-                                            NavigationItem.ProductDetail.route(
-                                                product.id
-                                            )
-                                        )
+                                        navController.navigate(NavigationItem.ProductDetail.route(product.id))
                                     },
                                     inc = { store.incrementProduct(product) },
                                     dec = { store.decrementProduct(product) }

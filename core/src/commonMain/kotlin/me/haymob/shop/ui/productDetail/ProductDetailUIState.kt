@@ -7,5 +7,9 @@ import me.haymob.multiplatformannotations._JsExport
 @_JsExport
 data class ProductDetailUIState(
     val product: Product? = null,
-    val isShowWishlist: Boolean = false
-): State
+    val isShowWishlist: Boolean = false,
+    var selectedOption: Int = 0
+): State {
+    val currentVariant: Product.Variant?
+        get() = product?.variants?.get(selectedOption)
+}

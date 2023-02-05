@@ -18,7 +18,7 @@ class ProductDetailUIStore internal constructor(
     init {
         catalogStore.state.onEach {
             setState {
-                copy(product = it.categories.flatMap { it.products }.find { it.id == productId })
+                copy(product = it.categories.flatMap { it.child }.flatMap { it.products }.find { it.id == productId })
             }
         }.launchIn(scope)
         customerStore.state.onEach {
